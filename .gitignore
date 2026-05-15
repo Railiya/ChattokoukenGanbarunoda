@@ -22,6 +22,12 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+.vs/
+*.user
+*.suo
+*.ckgprofile
+*.userosscache
+*.rsuser
 
 # .NET Core
 project.lock.json
