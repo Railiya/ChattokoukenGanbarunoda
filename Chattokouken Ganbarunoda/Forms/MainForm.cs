@@ -111,10 +111,11 @@ namespace CKG.Forms
 
             if (updateCheck.isLatest == false && string.IsNullOrEmpty(updateCheck.latestVersion) == false)
             {
-                DialogResult dialogResult = MessageBox.Show("New Version Available",
+                DialogResult dialogResult = MessageBox.Show(
                     $"Current Version: {updateCheck.currentVersion}\n" +
                     $"Latest Version: {updateCheck.latestVersion}\n\n" +
                     $"Would you like to open the release page?",
+                    "New Version Available",
                     MessageBoxButtons.OKCancel);
 
                 if (dialogResult == DialogResult.OK)

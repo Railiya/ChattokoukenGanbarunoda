@@ -4,7 +4,6 @@
 ![framework](https://img.shields.io/badge/framework-.NET-512BD4)
 ![license](https://img.shields.io/badge/license-MIT-2EA043)
 ![release](https://img.shields.io/badge/version-v0.1.1-orange)
-[![ko-fi](https://img.shields.io/badge/Ko--fi-Support-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/glingy)
 
 [English](../README.md) | [한국어](README_KR.md) | [日本語](README_JP.md)
 
@@ -266,7 +265,7 @@ WinForm은 윈도우에서만 동작하는 제약이 있는 것이다.. 그리�
 
 <br>
 
-[Ko-fi](https://ko-fi.com/glingy) 에서 지원해줄 수 있는 것이다! 해주면 고마운 것이다!
+[Ko-fi](https://ko-fi.com/glingy) 또는 [Sponsors](https://github.com/sponsors/Railiya) 에서 지원해줄 수 있는 것이다! 해주면 고마운 것이다!
 
 <br>
 <a id="faq"></a>

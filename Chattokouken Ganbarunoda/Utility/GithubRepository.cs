@@ -26,7 +26,7 @@ namespace CKG
 
                 string latestTag = doc.RootElement.GetProperty("tag_name").GetString();
                 string currentVersion = $"v{Application.ProductVersion}";
-                bool isLatest = latestTag == currentVersion;
+                bool isLatest = IsLatest(latestTag, currentVersion);
 
                 //Return true if it's latest version
                 return new SUpdateCheckResult(isLatest, currentVersion, latestTag);
@@ -46,6 +46,14 @@ namespace CKG
             };
 
             Process.Start(processStartInfo);
+        }
+
+        private static bool IsLatest(string latest, string current)
+        {
+            Version latestVer = Version.Parse(latest.Substring(1));
+            Version currentVer = Version.Parse(current.Substring(1));
+
+            return currentVer >= latestVer;
         }
     }
 }

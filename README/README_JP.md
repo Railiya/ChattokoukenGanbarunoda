@@ -4,7 +4,6 @@
 ![framework](https://img.shields.io/badge/framework-.NET-512BD4)
 ![license](https://img.shields.io/badge/license-MIT-2EA043)
 ![release](https://img.shields.io/badge/version-v0.1.1-orange)
-[![ko-fi](https://img.shields.io/badge/Ko--fi-Support-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/glingy)
 
 [English](../README.md) | [한국어](README_KR.md) | [日本語](README_JP.md)
 
@@ -266,7 +265,7 @@ WinForms はWindowsでしか動かないのだ... しかも正直あまり綺麗
 
 <br>
 
-[Ko-fi](https://ko-fi.com/glingy) から支援できるのだ！かなり励みになるのだ！
+[Ko-fi](https://ko-fi.com/glingy) または [Sponsors](https://github.com/sponsors/Railiya) から支援できるのだ！かなり励みになるのだ！
 
 <br>
 <a id="faq"></a>

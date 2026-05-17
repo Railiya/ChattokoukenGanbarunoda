@@ -4,7 +4,6 @@
 ![framework](https://img.shields.io/badge/framework-.NET-512BD4)
 ![license](https://img.shields.io/badge/license-MIT-2EA043)
 ![release](https://img.shields.io/badge/version-v0.1.1-orange)
-[![ko-fi](https://img.shields.io/badge/Ko--fi-Support-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/glingy)
 
 [English](README.md) | [한국어](README/README_KR.md) | [日本語](README/README_JP.md)
 
@@ -267,7 +266,7 @@ WinForms only works on Windows... and honestly, it is not very pretty... Because
 
 <br>
 
-You can support the project through [Ko-fi](https://ko-fi.com/glingy)! It would be appreciated!
+You can support the project through [Ko-fi](https://ko-fi.com/glingy) or [Sponsors](https://github.com/sponsors/Railiya)! It would be appreciated!
 
 <br>
 <a id="faq"></a>
