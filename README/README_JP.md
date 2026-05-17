@@ -3,7 +3,7 @@
 ![platform](https://img.shields.io/badge/platform-Windows-0078D6)
 ![framework](https://img.shields.io/badge/framework-.NET-512BD4)
 ![license](https://img.shields.io/badge/license-MIT-2EA043)
-![release](https://img.shields.io/badge/version-v0.1.1-orange)
+![release](https://img.shields.io/github/v/release/Railiya/ChattokoukenGanbarunoda?color=orange)
 
 [English](../README.md) | [한국어](README_KR.md) | [日本語](README_JP.md)
 
