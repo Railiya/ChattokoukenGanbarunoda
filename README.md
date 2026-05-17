@@ -10,7 +10,7 @@
 
 ### Keep Up the Chat Contributions!!
 
-> An automatic translation assistant tool that provides real-time chat translation and message forwarding!
+> An automatic translation assistant tool that provides real-time chat translation and message forwarding! But It's not specifically intended for developers.
 
 ---
 
@@ -26,7 +26,7 @@
 - [Changelog and Planned Updates!](#changelog)
 - [You Can Support the Developer!](#support)
 - [Frequently Asked Questions!](#faq)
-- [Boring and Pretentious Technical Explanation](#description)
+- [Boring and Pedantic Technical Explanation](#description)
 
 <br>
 <a id="warning"></a>
@@ -293,7 +293,7 @@ You can support the project through [Ko-fi](https://ko-fi.com/glingy)! It would 
 <br>
 <a id="description"></a>
 
-## 🛠️ Boring and Pretentious Technical Explanation
+## 🛠️ Boring and Pedantic Technical Explanation
 
 <br>
 
