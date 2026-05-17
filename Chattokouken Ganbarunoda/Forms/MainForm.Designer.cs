@@ -144,6 +144,8 @@ namespace CKG.Forms
             _menuStrip = new MenuStrip();
             _ckgMenuItem = new ToolStripMenuItem();
             _exitMenuItem = new ToolStripMenuItem();
+            _githubMenuItem = new ToolStripMenuItem();
+            _ckgMenuSeparator = new ToolStripSeparator();
             _generalPanel.SuspendLayout();
             _translationPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)_requestTimeoutField).BeginInit();
@@ -1452,7 +1454,7 @@ namespace CKG.Forms
             // 
             // _ckgMenuItem
             // 
-            _ckgMenuItem.DropDownItems.AddRange(new ToolStripItem[] { _exitMenuItem });
+            _ckgMenuItem.DropDownItems.AddRange(new ToolStripItem[] { _githubMenuItem, _ckgMenuSeparator, _exitMenuItem });
             _ckgMenuItem.Name = "_ckgMenuItem";
             _ckgMenuItem.Size = new Size(42, 20);
             _ckgMenuItem.Text = "CKG";
@@ -1460,9 +1462,21 @@ namespace CKG.Forms
             // _exitMenuItem
             // 
             _exitMenuItem.Name = "_exitMenuItem";
-            _exitMenuItem.Size = new Size(93, 22);
+            _exitMenuItem.Size = new Size(180, 22);
             _exitMenuItem.Text = "Exit";
             _exitMenuItem.Click += _exitMenuItem_Click;
+            // 
+            // _githubMenuItem
+            // 
+            _githubMenuItem.Name = "_githubMenuItem";
+            _githubMenuItem.Size = new Size(180, 22);
+            _githubMenuItem.Text = "Github Page";
+            _githubMenuItem.Click += _githubMenuItem_Click;
+            // 
+            // _ckgMenuSeparator
+            // 
+            _ckgMenuSeparator.Name = "_ckgMenuSeparator";
+            _ckgMenuSeparator.Size = new Size(177, 6);
             // 
             // MainForm
             // 
@@ -1649,5 +1663,7 @@ namespace CKG.Forms
         private Button _glossarySelectButton;
         private ToolStripMenuItem _ckgMenuItem;
         private ToolStripMenuItem _exitMenuItem;
+        private ToolStripMenuItem _githubMenuItem;
+        private ToolStripSeparator _ckgMenuSeparator;
     }
 }

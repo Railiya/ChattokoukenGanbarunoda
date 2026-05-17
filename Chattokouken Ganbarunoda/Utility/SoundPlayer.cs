@@ -53,8 +53,13 @@ namespace CKG
             _output = new WaveOutEvent();
         }
 
-        public void Play(ESound sound, float volume)
+        public void Play(ESound sound, bool enabled)
         {
+            if (UserProfile.Current.NotificationEnabled == false || enabled == false)
+            {
+                return;
+            }
+
             AudioFileReader reader = _readers[sound.ToInt32()];
 
             if (reader == null)
@@ -62,7 +67,7 @@ namespace CKG
                 return;
             }
 
-            reader.Volume = volume;
+            reader.Volume = UserProfile.Current.NotificationVolume * 0.01f;
             _output.Stop();
 
             if (_currentReader != reader)

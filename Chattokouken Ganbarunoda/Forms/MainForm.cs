@@ -1,11 +1,7 @@
 using System;
-using System.Text;
-using System.Text.Json;
-using System.IO;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Threading.Tasks;
 using CKG.Controls;
 using CKG.Translator;
 using CKG.Input;
@@ -15,11 +11,8 @@ namespace CKG.Forms
     public partial class MainForm : Form
     {
         private const string PROJECT_NAME = "Chattokouken Ganbarunoda!!";
-        private const string PROFILE_EXT = ".ckgprofile";
 
         public static event Action OnOverlaySettingChanged = null;
-        public static event Action<ECapturingState> OnCapturingStateChanged = null;
-        public static event Action<EInputMode> OnInputModeChanged = null;
 
         #region Private Members
 
@@ -33,26 +26,35 @@ namespace CKG.Forms
         private HotkeyControlGroup _translateKeyGroup = null;
         private HotkeyControlGroup _sendClipboardKeyGroup = null;
 
+        private TranslationService _translationService = null;
         private OverlayForm _overlayForm = null;
-        private CapturingHandler _capturingHandler = null;
-        private SoundPlayer _soundPlayer = null;
-        private ITranslator _currentTranslator = null;
-        private GlossaryInfo _loadedGlossary = null;
-        private StringBuilder _translationBuffer = new StringBuilder(256);
 
         private bool _isControlEventNotifyLocked = false;
-        private string _lastTranslatedText = "";
         private bool _hasShownTrayHint = false;
         private bool _isExitRequested;
 
         #endregion
 
-        #region Constructor & Disposer
+        #region Constructor and Disposer
 
         public MainForm()
         {
             InitializeComponent();
+        }
+
+        public MainForm(TranslationService translationService)
+        {
+            _translationService = translationService;
+
+            InitializeComponent();
+            InitializeControls();
+        }
+
+        private async void InitializeControls()
+        {
             Text = $"{PROJECT_NAME} (v{Application.ProductVersion})";
+
+            _isControlEventNotifyLocked = true;
 
             //Create system tray
             _trayMenu = new ContextMenuStrip();
@@ -87,7 +89,39 @@ namespace CKG.Forms
             _notificationActiveGroup.Add(_translationCompletedNotifyToggle);
             _notificationActiveGroup.Add(_notificationVolumeSlider);
 
-            InitializeControls();
+            SetLanguageSelectors();
+
+            //Load first profile or create new
+            LoadSettings(1);
+
+            //Set control events
+            _overlayAnchorSelector.OnAnchorChanged += _overlayAnchorSelector_AnchorChanged;
+            _enableCapturingKeyGroup.HotkeyChanged += _enableCapturingKeyGroup_HotkeyChanged;
+            _capturingToggleKeyGroup.HotkeyChanged += _capturingToggleKeyGroup_HotkeyChanged;
+            _translateKeyGroup.HotkeyChanged += _translateKeyGroup_HotkeyChanged;
+            _sendClipboardKeyGroup.HotkeyChanged += _sendClipboardKeyGroup_HotkeyChanged;
+
+            _isControlEventNotifyLocked = false;
+
+            //Set active overlay after profile loaded
+            SetActiveOverlay(UserProfile.Current.OverlayEnabled);
+
+            //Check new update release
+            SUpdateCheckResult updateCheck = await GithubRepository.CheckForUpdatesAsync();
+
+            if (updateCheck.isLatest == false && string.IsNullOrEmpty(updateCheck.latestVersion) == false)
+            {
+                DialogResult dialogResult = MessageBox.Show("New Version Available",
+                    $"Current Version: {updateCheck.currentVersion}\n" +
+                    $"Latest Version: {updateCheck.latestVersion}\n\n" +
+                    $"Would you like to open the release page?",
+                    MessageBoxButtons.OKCancel);
+
+                if (dialogResult == DialogResult.OK)
+                {
+                    GithubRepository.OpenGithubPage();
+                }
+            }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -106,49 +140,16 @@ namespace CKG.Forms
 
                 return;
             }
-
-            DisposeComponents();
-        }
-
-        private void InitializeControls()
-        {
-            _isControlEventNotifyLocked = true;
-
-            SetLanguageSelectors();
-
-            //Load first profile or create new
-            LoadSettings(1);
-
-            //Set control events
-            _overlayAnchorSelector.OnAnchorChanged += _overlayAnchorSelector_AnchorChanged;
-            _enableCapturingKeyGroup.HotkeyChanged += _enableCapturingKeyGroup_HotkeyChanged;
-            _capturingToggleKeyGroup.HotkeyChanged += _capturingToggleKeyGroup_HotkeyChanged;
-            _translateKeyGroup.HotkeyChanged += _translateKeyGroup_HotkeyChanged;
-            _sendClipboardKeyGroup.HotkeyChanged += _sendClipboardKeyGroup_HotkeyChanged;
-
-            //Create handlers
-            _capturingHandler = new CapturingHandler();
-            _capturingHandler.OnStateChanged += OnHandlerCapturingStateChanged;
-            _capturingHandler.OnInputModeChanged += OnHandlerInputModeChanged;
-            _soundPlayer = new SoundPlayer();
-
-            _isControlEventNotifyLocked = false;
-
-            //Set active overlay after profile loaded
-            SetActiveOverlay(UserProfile.Current.OverlayEnabled);
-        }
-
-        private void DisposeComponents()
-        {
-            _overlayForm?.Dispose();
-            _capturingHandler?.Dispose();
-            _soundPlayer?.Dispose();
-            _currentTranslator?.Dispose();
         }
 
         #endregion
 
         #region Private Menu Strip Events
+
+        private void _githubMenuItem_Click(object sender, EventArgs e)
+        {
+            GithubRepository.OpenGithubPage();
+        }
 
         private void _exitMenuItem_Click(object sender, EventArgs e)
         {
@@ -169,10 +170,10 @@ namespace CKG.Forms
         private void ExitProgram(object sender, EventArgs e)
         {
             _isExitRequested = true;
+            _overlayForm?.Dispose();
             _trayIcon.Visible = false;
             _trayIcon.Dispose();
 
-            DisposeComponents();
             Application.Exit();
         }
 
@@ -189,7 +190,7 @@ namespace CKG.Forms
 
             UserProfile.Current.StartTranslateOnBuffered = _startTranslateToggle.Checked;
             _translateKeyGroup.SetActive(!UserProfile.Current.StartTranslateOnBuffered);
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         private void _autoSendMessageToggle_CheckedChanged(object sender, EventArgs e)
@@ -201,7 +202,7 @@ namespace CKG.Forms
 
             UserProfile.Current.AutoSendMessageOnTranslated = _autoSendMessageToggle.Checked;
             _sendClipboardKeyGroup.SetActive(!UserProfile.Current.AutoSendMessageOnTranslated);
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         private void _inputMethodSelector_SelectedIndexChanged(object sender, EventArgs e)
@@ -212,7 +213,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.OutputMethodIndex = _outputMethodSelector.SelectedIndex;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         private void _defaultInputModeSelector_SelectedIndexChanged(object sender, EventArgs e)
@@ -223,7 +224,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.DefaultInputModeIndex = _defaultInputModeSelector.SelectedIndex;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         #endregion
@@ -241,7 +242,7 @@ namespace CKG.Forms
 
             _apiKeyField.Text = "";
             _glossaryIdField.Text = "";
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         private void _apiKeyField_TextChanged(object sender, EventArgs e)
@@ -252,9 +253,8 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.APIKey = _apiKeyField.Text;
-            SaveCurrentProfile();
-            InitializeTranslator((ETranslatorModel)UserProfile.Current.ModelIndex, 
-                UserProfile.Current.APIKey, UserProfile.Current.RequestTimeout);
+            ProfileManager.SaveCurrentProfile();
+            _translationService.InitializeTranslator();
         }
 
         private void _glossaryIdField_TextChanged(object sender, EventArgs e)
@@ -265,7 +265,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.GlossaryId = _glossaryIdField.Text;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         private void _glossarySelectButton_Click(object sender, EventArgs e)
@@ -277,13 +277,21 @@ namespace CKG.Forms
             }
 
             ETranslatorModel model = (ETranslatorModel)UserProfile.Current.ModelIndex;
-            GlossarySelectForm glossarySelectForm = new GlossarySelectForm(_currentTranslator, OnKeySelect);
+            GlossarySelectForm glossarySelectForm = new GlossarySelectForm(_translationService, OnKeySelect);
             glossarySelectForm.ShowDialog(this);
 
             void OnKeySelect(GlossaryInfo glossary)
             {
-                _loadedGlossary = glossary;
-                _glossaryIdField.Text = _loadedGlossary == null ? "" : glossary.Id;
+                if (glossary != null)
+                {
+                    _translationService.SetGlossary(glossary);
+                    _glossaryIdField.Text = glossary.Id;
+                }
+                else
+                {
+                    _translationService.SetGlossary(null);
+                    _glossaryIdField.Text = "";
+                }
             }
         }
 
@@ -295,7 +303,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.SourceLanguageIndex = _sourceLanguageSelector.SelectedIndex;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         private void _destinationLanguageSelector_SelectedIndexChanged(object sender, EventArgs e)
@@ -306,7 +314,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.DestinationLanguageIndex = _destinationLanguageSelector.SelectedIndex;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         private void _translationFormatField_TextChanged(object sender, EventArgs e)
@@ -317,7 +325,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.TranslationFormat = _translationFormatField.Text;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         private void _requestTimeoutField_ValueChanged(object sender, EventArgs e)
@@ -328,12 +336,8 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.RequestTimeout = (int)_requestTimeoutField.Value;
-            SaveCurrentProfile();
-
-            if (_currentTranslator != null)
-            {
-                _currentTranslator.SetTimeout(UserProfile.Current.RequestTimeout * 1000);
-            }
+            ProfileManager.SaveCurrentProfile();
+            _translationService.UpdateTimeout();
         }
 
         #endregion
@@ -348,8 +352,9 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.OverlayEnabled = _overlayEnabledToggle.Checked;
-            SetControlGroupActive(_overlayActiveGroup, _overlayEnabledToggle.Checked);
-            SaveCurrentProfile();
+            _overlayActiveGroup.SetControlGroupActive(UserProfile.Current.OverlayEnabled);
+
+            ProfileManager.SaveCurrentProfile();
             SetActiveOverlay(UserProfile.Current.OverlayEnabled);
 
             OnOverlaySettingChanged?.Invoke();
@@ -363,7 +368,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.OverlayAnchorIndex = (int)_overlayAnchorSelector.SelectedAnchor;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
 
             OnOverlaySettingChanged?.Invoke();
         }
@@ -376,7 +381,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.OverlayOffsetX = (int)_overlayOffsetXField.Value;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
 
             OnOverlaySettingChanged?.Invoke();
         }
@@ -389,7 +394,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.OverlayOffsetY = (int)_overlayOffsetYField.Value;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
 
             OnOverlaySettingChanged?.Invoke();
         }
@@ -402,7 +407,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.OverlayFontSize = (int)_overlayFontSizeField.Value;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
 
             OnOverlaySettingChanged?.Invoke();
         }
@@ -416,7 +421,7 @@ namespace CKG.Forms
 
             UserProfile.Current.OverlayOpacity = (int)_overlayOpacitySlider.Value;
             _overlayOpacityField.Text = UserProfile.Current.OverlayOpacity.ToString();
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
 
             OnOverlaySettingChanged?.Invoke();
         }
@@ -433,8 +438,9 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.NotificationEnabled = _notificationEnabledToggle.Checked;
-            SetControlGroupActive(_notificationActiveGroup, _notificationEnabledToggle.Checked);
-            SaveCurrentProfile();
+            _notificationActiveGroup.SetControlGroupActive(UserProfile.Current.NotificationEnabled);
+
+            ProfileManager.SaveCurrentProfile();
         }
 
         private void _capturingStartNotifyToggle_CheckedChanged(object sender, EventArgs e)
@@ -445,7 +451,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.NotifyOnCapturingStart = _capturingStartNotifyToggle.Checked;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         private void _translationCompletedNotifyToggle_CheckedChanged(object sender, EventArgs e)
@@ -456,7 +462,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.NotifyOnTranslationCompleted = _translationCompletedNotifyToggle.Checked;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         private void _translationFailedNotifyToggle_CheckedChanged(object sender, EventArgs e)
@@ -467,7 +473,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.NotifyOnTranslationFailed = _translationFailedNotifyToggle.Checked;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         private void _notificationVolumeSlider_ValueChanged(object sender, EventArgs e)
@@ -479,7 +485,7 @@ namespace CKG.Forms
 
             UserProfile.Current.NotificationVolume = (int)_notificationVolumeSlider.Value;
             _notificationVolumeField.Text = UserProfile.Current.NotificationVolume.ToString();
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         #endregion
@@ -494,7 +500,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.EnableCapturingKeySetting = _enableCapturingKeyGroup.KeySetting;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         private void _capturingToggleKeyGroup_HotkeyChanged(EHotkey Type, SKeySetting setting)
@@ -505,7 +511,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.CapturingToggleKeySetting = _capturingToggleKeyGroup.KeySetting;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         private void _translateKeyGroup_HotkeyChanged(EHotkey Type, SKeySetting setting)
@@ -516,7 +522,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.TranslateKeySetting = _translateKeyGroup.KeySetting;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         private void _sendClipboardKeyGroup_HotkeyChanged(EHotkey Type, SKeySetting setting)
@@ -527,7 +533,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.SendClipboardKeySetting = _sendClipboardKeyGroup.KeySetting;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         #endregion
@@ -542,7 +548,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.InputTimeout = (int)_inputTimeoutField.Value;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         private void _debugEchoModeToggle_CheckedChanged(object sender, EventArgs e)
@@ -553,7 +559,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.DebugEchoMode = _debugEchoModeToggle.Checked;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         private void _writeLogFileToggle_CheckedChanged(object sender, EventArgs e)
@@ -564,7 +570,7 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.WriteLogFile = _writeLogFileToggle.Checked;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         private void _executeOnWindowStartToggle_CheckedChanged(object sender, EventArgs e)
@@ -575,144 +581,16 @@ namespace CKG.Forms
             }
 
             UserProfile.Current.ExecuteOnWindowStart = _executeOnWindowStartToggle.Checked;
-            SaveCurrentProfile();
+            ProfileManager.SaveCurrentProfile();
         }
 
         #endregion
 
-        #region Private Callbacks
-
-        private async void OnHandlerCapturingStateChanged(ECapturingState state)
-        {
-            OnCapturingStateChanged?.Invoke(state);
-
-            //Handle state
-            switch (state)
-            {
-                case ECapturingState.Disabled:
-                {
-                    Logger.Write(state);
-
-                    _currentTranslator?.AbortTranslation();
-                    break;
-                }
-                case ECapturingState.Capturing:
-                {
-                    Logger.Write(state);
-
-                    PlaySound(ESound.CapturingStart, UserProfile.Current.NotifyOnCapturingStart);
-                    break;
-                }
-                case ECapturingState.Buffered:
-                {
-                    string text = _capturingHandler.BufferedText;
-
-                    Logger.Write(state, text);
-
-                    if (UserProfile.Current.StartTranslateOnBuffered)
-                    {
-                        _capturingHandler.SetTranslating();
-                    }
-                    break;
-                }
-                case ECapturingState.Translating:
-                {
-                    Logger.Write(state);
-
-                    string text = _capturingHandler.BufferedText;
-
-                    if (UserProfile.Current.DebugEchoMode)
-                    {
-                        _lastTranslatedText = text;
-
-                        Clipboard.SetText(_lastTranslatedText);
-                        _capturingHandler.SetTranslated();
-                    }
-                    else
-                    {
-                        SLanguagePair languagePair = GetLanguagePair();
-                        string glossaryId = null;
-
-                        if (_loadedGlossary != null && _loadedGlossary.SupportedLanguagePairs.Contains(languagePair))
-                        {
-                            glossaryId = _loadedGlossary.Id;
-                        }
-
-                        STranslationResult result = await _currentTranslator.TranslateAsync(text, languagePair, glossaryId);
-
-                        _lastTranslatedText = result.Text;
-
-                        if (result.HasException)
-                        {
-                            _capturingHandler.SetFailed();
-                        }
-                        else
-                        {
-                            Clipboard.SetText(GetTranslatedText(text, _lastTranslatedText));
-                            _capturingHandler.SetTranslated();
-                        }
-                    }
-
-                    break;
-                }
-                case ECapturingState.Translated:
-                {
-                    Logger.Write(state, Clipboard.GetText());
-
-                    if (UserProfile.Current.AutoSendMessageOnTranslated)
-                    {
-                        _capturingHandler.SendMacroMessage();
-                    }
-
-                    PlaySound(ESound.TranslationCompleted, UserProfile.Current.NotifyOnTranslationCompleted);
-                    break;
-                }
-                case ECapturingState.Failed:
-                {
-                    Logger.Write(state, _lastTranslatedText);
-
-                    PlaySound(ESound.TranslationFailed, UserProfile.Current.NotifyOnTranslationFailed);
-                    break;
-                }
-                default:
-                {
-                    Logger.Write(state);
-                    break;
-                }
-            }
-        }
-
-        private void OnHandlerInputModeChanged(EInputMode mode)
-        {
-            OnInputModeChanged?.Invoke(mode);
-        }
-
-        #endregion
-
-        #region File Management
+        #region Private Functions
 
         private async void LoadSettings(int number)
         {
-            string path = GetProfilePath(number);
-
-            if (File.Exists(path) == false)
-            {
-                UserProfile.Current = new UserProfile();
-                UserProfile.Current.ProfileName = "Default";
-                UserProfile.Current.Number = 1;
-
-                SaveCurrentProfile();
-            }
-
-            string content = File.ReadAllText(path);
-            JsonSerializerOptions options = new JsonSerializerOptions
-            {
-                IncludeFields = true,
-                WriteIndented = true
-            };
-
-            UserProfile profile = JsonSerializer.Deserialize<UserProfile>(content, options);
-            UserProfile.Current = profile;
+            UserProfile profile = UserProfile.Current;
 
             //Update controls
             _startTranslateToggle.Checked = profile.StartTranslateOnBuffered;
@@ -752,71 +630,21 @@ namespace CKG.Forms
             _executeOnWindowStartToggle.Checked = profile.ExecuteOnWindowStart;
 
             //Update controls
-            SetControlGroupActive(_overlayActiveGroup, _overlayEnabledToggle.Checked);
-            SetControlGroupActive(_notificationActiveGroup, _notificationEnabledToggle.Checked);
+            _overlayActiveGroup.SetControlGroupActive(profile.OverlayEnabled);
+            _notificationActiveGroup.SetControlGroupActive(profile.NotificationEnabled);
             _translateKeyGroup.SetActive(!profile.StartTranslateOnBuffered);
             _sendClipboardKeyGroup.SetActive(!profile.AutoSendMessageOnTranslated);
             _overlayOpacityField.Text = profile.OverlayOpacity.ToString();
             _notificationVolumeField.Text = profile.NotificationVolume.ToString();
 
             SetActiveOverlay(profile.OverlayEnabled);
-            InitializeTranslator((ETranslatorModel)profile.ModelIndex, profile.APIKey, profile.RequestTimeout);
 
-            if (string.IsNullOrEmpty(profile.GlossaryId) == false)
+            _translationService.InitializeTranslator();
+            bool glossaryLoaded = await _translationService.LoadGlossary();
+
+            if (glossaryLoaded == false)
             {
-                _loadedGlossary = await LoadGlossaryInfo();
-
-                if (_loadedGlossary == null)
-                {
-                    _glossaryIdField.Text = ""; //Failed to load glossary
-                }
-            }
-        }
-
-        private void SaveCurrentProfile()
-        {
-            UserProfile profile = UserProfile.Current;
-            string path = GetProfilePath(profile.Number);
-
-            JsonSerializerOptions options = new JsonSerializerOptions
-            {
-                IncludeFields = true,
-                WriteIndented = true
-            };
-
-            File.WriteAllText(path, JsonSerializer.Serialize(UserProfile.Current, options));
-        }
-
-        private string GetProfilePath(int number)
-        {
-            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string profileDir = Path.Combine(baseDir, "Profiles");
-
-            Directory.CreateDirectory(profileDir);
-            return Path.Combine(profileDir, $"profile{number}{PROFILE_EXT}");
-        }
-
-        private void PlaySound(ESound sound, bool enabled)
-        {
-            if (UserProfile.Current.NotificationEnabled == false || enabled == false)
-            {
-                return;
-            }
-
-            float volume = UserProfile.Current.NotificationVolume * 0.01f;
-
-            _soundPlayer.Play(sound, volume);
-        }
-
-        #endregion
-
-        #region Private Functions
-
-        private void SetControlGroupActive(List<Control> controls, bool active)
-        {
-            foreach (var control in controls)
-            {
-                control.Enabled = active;
+                _glossaryIdField.Text = ""; //Failed to load glossary
             }
         }
 
@@ -856,59 +684,6 @@ namespace CKG.Forms
             {
                 _overlayForm.Hide();
             }
-        }
-
-        private void InitializeTranslator(ETranslatorModel model, string apiKey, int timeout)
-        {
-            if (string.IsNullOrEmpty(apiKey))
-            {
-                (_currentTranslator as IDisposable)?.Dispose();
-                return;
-            }
-
-            switch (model)
-            {
-                case ETranslatorModel.DeepL:
-                    _currentTranslator = new DeepLTranslator(apiKey, timeout * 1000);
-                    break;
-
-                case ETranslatorModel.Papago:
-                    break;
-
-                case ETranslatorModel.GoogleTranslate:
-                    break;
-            }
-        }
-
-        private string GetTranslatedText(string source, string translated)
-        {
-            _translationBuffer.Append(UserProfile.Current.TranslationFormat);
-            _translationBuffer.Replace("{source}", source);
-            _translationBuffer.Replace("{translated}", translated);
-
-            string output = _translationBuffer.ToString();
-            _translationBuffer.Clear();
-
-            return output;
-        }
-
-        private async Task<GlossaryInfo> LoadGlossaryInfo()
-        {
-            if (_currentTranslator == null || string.IsNullOrEmpty(UserProfile.Current.APIKey) || 
-                string.IsNullOrEmpty(UserProfile.Current.GlossaryId))
-            {
-                return null;
-            }
-
-            return await _currentTranslator.GetGlossaryAsync(UserProfile.Current.GlossaryId);
-        }
-
-        private SLanguagePair GetLanguagePair()
-        {
-            string sourceLanguage = LanguageCodeInfo.SOURCE_LANGUAGES[UserProfile.Current.SourceLanguageIndex].Code;
-            string destLanguage = LanguageCodeInfo.TARGET_LANGUAGES[UserProfile.Current.DestinationLanguageIndex].Code;
-
-            return new SLanguagePair(sourceLanguage, destLanguage);
         }
 
         #endregion

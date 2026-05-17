@@ -95,15 +95,15 @@ namespace CKG.Forms
             OnInputModeChanged((EInputMode)UserProfile.Current.DefaultInputModeIndex);
 
             MainForm.OnOverlaySettingChanged += OnOverlaySettingChanged;
-            MainForm.OnCapturingStateChanged += OnCapturingStateChanged;
-            MainForm.OnInputModeChanged += OnInputModeChanged;
+            AppController.OnCapturingStateChanged += OnCapturingStateChanged;
+            AppController.OnInputModeChanged += OnInputModeChanged;
         }
 
         private void Release()
         {
             MainForm.OnOverlaySettingChanged -= OnOverlaySettingChanged;
-            MainForm.OnCapturingStateChanged -= OnCapturingStateChanged;
-            MainForm.OnInputModeChanged -= OnInputModeChanged;
+            AppController.OnCapturingStateChanged -= OnCapturingStateChanged;
+            AppController.OnInputModeChanged -= OnInputModeChanged;
         }
 
         private void OverlayForm_Shown(object sender, EventArgs e)

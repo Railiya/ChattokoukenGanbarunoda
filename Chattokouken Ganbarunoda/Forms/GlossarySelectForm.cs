@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Threading.Tasks;
-using System.Net.Http;
-using System.Text.Json;
-using System.Net.Http.Headers;
 using CKG.Controls;
 using CKG.Translator;
 
@@ -27,13 +22,13 @@ namespace CKG.Forms
             CreateComponents();
         }
 
-        public GlossarySelectForm(ITranslator translator, Action<GlossaryInfo> OnKeySelect)
+        public GlossarySelectForm(TranslationService translationService, Action<GlossaryInfo> OnKeySelect)
         {
             InitializeComponent();
             CreateComponents();
             _onKeySelect = OnKeySelect;
 
-            StartGlossaryLoad(translator);
+            StartGlossaryLoad(translationService);
         }
 
         private void CreateComponents()
@@ -62,9 +57,9 @@ namespace CKG.Forms
 
         #region Private Glossary Load Functions
 
-        private async void StartGlossaryLoad(ITranslator translator)
+        private async void StartGlossaryLoad(TranslationService translationService)
         {
-            GlossaryInfo[] glossaries = await translator.GetGlossariesAsync();
+            GlossaryInfo[] glossaries = await translationService.LoadGlossariesAsync();
 
             SetGlossaryComponents(glossaries);
         }
