@@ -4,11 +4,29 @@
     <_LastSelectedProfileId>E:\Dotnet\Project\ChattokoukenGanbarunoda\Chattokouken Ganbarunoda\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Update="Controls\AdvancedPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Controls\AnchorSelectorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\GeneralPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Controls\HeaderButton.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\HotkeysPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\NotificationPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\OverlayPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\TranslationPanel.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Forms\GlossarySelectForm.cs">
       <SubType>Form</SubType>
@@ -20,7 +38,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Controls\SettingPanel.cs">
-      <SubType>Component</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>
 </Project>

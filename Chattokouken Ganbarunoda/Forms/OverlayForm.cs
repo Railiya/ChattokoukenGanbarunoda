@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using CKG.Controls;
 
 namespace CKG.Forms
 {
@@ -94,14 +95,14 @@ namespace CKG.Forms
             OnCapturingStateChanged(ECapturingState.Disabled);
             OnInputModeChanged((EInputMode)UserProfile.Current.DefaultInputModeIndex);
 
-            MainForm.OnOverlaySettingChanged += OnOverlaySettingChanged;
+            OverlayPanel.OnOverlaySettingChanged += OnOverlaySettingChanged;
             AppController.OnCapturingStateChanged += OnCapturingStateChanged;
             AppController.OnInputModeChanged += OnInputModeChanged;
         }
 
         private void Release()
         {
-            MainForm.OnOverlaySettingChanged -= OnOverlaySettingChanged;
+            OverlayPanel.OnOverlaySettingChanged -= OnOverlaySettingChanged;
             AppController.OnCapturingStateChanged -= OnCapturingStateChanged;
             AppController.OnInputModeChanged -= OnInputModeChanged;
         }

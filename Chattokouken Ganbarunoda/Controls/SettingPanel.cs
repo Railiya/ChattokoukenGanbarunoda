@@ -3,10 +3,10 @@ using System.Windows.Forms;
 
 namespace CKG.Controls
 {
-    public class SettingPanel : Panel
+    public class SettingPanel : UserControl
     {
-        private Label _titleLabel = null;
-        private PictureBox _iconBox = null;
+        protected Label _titleLabel = null;
+        protected PictureBox _iconBox = null;
 
         public string Title
         {
@@ -22,17 +22,17 @@ namespace CKG.Controls
 
         public SettingPanel()
         {
-            InitializeComponent();
+            InitializeBaseComponent();
             Layout += OnLayoutUpdate;
         }
 
-        private void InitializeComponent()
+        private void InitializeBaseComponent()
         {
             SuspendLayout();
 
             BackColor = Color.White;
             BorderStyle = BorderStyle.FixedSingle;
-            Padding = new Padding(16, 40, 16, 16);
+            Padding = new Padding(16, 40, 10, 16);
 
             // Icon
             _iconBox = new PictureBox();
@@ -52,7 +52,12 @@ namespace CKG.Controls
             ResumeLayout(false);
         }
 
-        private void OnLayoutUpdate(object sender, LayoutEventArgs e)
+        public virtual void UpdateProfile(UserProfile profile)
+        {
+            
+        }
+
+        protected virtual void OnLayoutUpdate(object sender, LayoutEventArgs e)
         {
             int headerHeight = 40;
             int iconY = (headerHeight - _iconBox.Height) / 2;

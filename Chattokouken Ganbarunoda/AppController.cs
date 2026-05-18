@@ -89,7 +89,7 @@ namespace CKG
 
                     if (UserProfile.Current.DebugEchoMode)
                     {
-                        Clipboard.SetText(_translationService.LastOriginalText);
+                        Clipboard.SetText(text);
                         _capturingHandler.SetTranslated();
                     }
                     else
