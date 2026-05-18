@@ -8,7 +8,7 @@ namespace CKG
 
         //Profile
         public string ProfileName = "";
-        public int Number = 1;
+        public int Number = 0;
 
         //General
         public bool StartTranslateOnBuffered = false;

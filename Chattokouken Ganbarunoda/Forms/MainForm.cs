@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using CKG.Controls;
 using CKG.Translator;
@@ -50,6 +51,9 @@ namespace CKG.Forms
 
             //Update controls by loaded profile
             UpdateProfile();
+
+            //Create profile menu items
+            RefreshProfilesMenu();
 
             //Set control events
             _generalPanel.OnToggleChanged += OnGeneralSettingToggleChanged;
@@ -221,6 +225,38 @@ namespace CKG.Forms
             {
                 _translationPanel.SetGlossaryId(""); //Failed to load glossary
             }
+        }
+
+        private void RefreshProfilesMenu()
+        {
+            List<SProfileInfo> profiles = ProfileManager.GetProfileList();
+
+            _profilesMenuItem.DropDownItems.Clear();
+
+            for (int i = 0; i < profiles.Count; i++)
+            {
+                SProfileInfo profile = profiles[i];
+                ToolStripMenuItem item = new ToolStripMenuItem(profile.Name);
+                item.Click += OnItemClick;
+
+                _profilesMenuItem.DropDownItems.Add(item);
+
+                void OnItemClick(object sender, EventArgs e)
+                {
+                    int number = profile.Number;
+
+                    ProfileManager.LoadProfile(number);
+                    UpdateProfile();
+                }
+            }
+
+            ToolStripSeparator separator = new ToolStripSeparator();
+            _profilesMenuItem.DropDownItems.Add(separator);
+
+            ToolStripMenuItem refreshItem = new ToolStripMenuItem("Refresh");
+            refreshItem.Click += (sender, e) => RefreshProfilesMenu();
+
+            _profilesMenuItem.DropDownItems.Add(refreshItem);
         }
 
         private void SetActiveOverlay(bool active)

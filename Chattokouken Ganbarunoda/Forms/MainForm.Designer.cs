@@ -44,13 +44,14 @@ namespace CKG.Forms
             _notificationPanel = new CKG.Controls.NotificationPanel();
             _hotkeysPanel = new CKG.Controls.HotkeysPanel();
             _advancedPanel = new CKG.Controls.AdvancedPanel();
+            _profilesMenuItem = new ToolStripMenuItem();
             _menuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // _menuStrip
             // 
             _menuStrip.BackColor = Color.LightGray;
-            _menuStrip.Items.AddRange(new ToolStripItem[] { _ckgMenuItem });
+            _menuStrip.Items.AddRange(new ToolStripItem[] { _ckgMenuItem, _profilesMenuItem });
             _menuStrip.Location = new Point(0, 0);
             _menuStrip.Name = "_menuStrip";
             _menuStrip.Size = new Size(734, 24);
@@ -155,6 +156,12 @@ namespace CKG.Forms
             _advancedPanel.TabIndex = 12;
             _advancedPanel.Title = "Advanced";
             // 
+            // _profilesMenuItem
+            // 
+            _profilesMenuItem.Name = "_profilesMenuItem";
+            _profilesMenuItem.Size = new Size(58, 20);
+            _profilesMenuItem.Text = "Profiles";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -195,5 +202,6 @@ namespace CKG.Forms
         private Controls.NotificationPanel _notificationPanel;
         private Controls.HotkeysPanel _hotkeysPanel;
         private Controls.AdvancedPanel _advancedPanel;
+        private ToolStripMenuItem _profilesMenuItem;
     }
 }
