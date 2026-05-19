@@ -3,11 +3,12 @@
 ![platform](https://img.shields.io/badge/platform-Windows-0078D6)
 ![framework](https://img.shields.io/badge/framework-.NET-512BD4)
 ![license](https://img.shields.io/badge/license-MIT-2EA043)
-![release](https://img.shields.io/github/v/release/Railiya/ChattokoukenGanbarunoda?color=orange)
+![release](https://img.shields.io/github/v/release/Railiya/ChattokoukenGanbarunoda)
+![downloads](https://img.shields.io/github/downloads/Railiya/ChattokoukenGanbarunoda/total)
+
+<img src="https://raw.githubusercontent.com/Railiya/ChattokoukenGanbarunoda/main/Resources/banner.png" width="75%">
 
 [English](../README.md) | [한국어](README_KR.md) | [日本語](README_JP.md)
-
-![Banner](Resources/banner.jpg)
 
 ### 채팅 공헌 힘내는 것이다!!
 
