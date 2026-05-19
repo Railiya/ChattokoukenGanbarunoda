@@ -6,7 +6,7 @@
 ![release](https://img.shields.io/github/v/release/Railiya/ChattokoukenGanbarunoda)
 ![downloads](https://img.shields.io/github/downloads/Railiya/ChattokoukenGanbarunoda/total)
 
-<img src="https://raw.githubusercontent.com/Railiya/ChattokoukenGanbarunoda/main/Resources/banner.png" width="75%">
+![Banner](Resources/banner.png)
 
 [English](../README.md) | [한국어](README_KR.md) | [日本語](README_JP.md)
 
