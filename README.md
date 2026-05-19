@@ -7,6 +7,8 @@
 
 [English](README.md) | [한국어](README/README_KR.md) | [日本語](README/README_JP.md)
 
+![Banner](README/Resources/banner.jpg)
+
 ### Keep Up the Chat Contributions!!
 
 > An automatic translation assistant tool that provides real-time chat translation and message forwarding! But It's not specifically intended for developers.

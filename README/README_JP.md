@@ -7,6 +7,8 @@
 
 [English](../README.md) | [한국어](README_KR.md) | [日本語](README_JP.md)
 
+![Banner](Resources/banner.jpg)
+
 ### チャット貢献頑張るのだ！！
 
 > > リアルタイムチャット翻訳とメッセージ送信をしてくれる自動翻訳補助ツールなのだ！ 特に開発者向けの用途というわけではないのだ。

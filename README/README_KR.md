@@ -7,6 +7,8 @@
 
 [English](../README.md) | [한국어](README_KR.md) | [日本語](README_JP.md)
 
+![Banner](Resources/banner.jpg)
+
 ### 채팅 공헌 힘내는 것이다!!
 
 > 실시간 채팅 번역 및 전송을 해주는 자동 번역 보조 툴인 것이다! 딱히 개발자 용도는 아닌 것이다!
