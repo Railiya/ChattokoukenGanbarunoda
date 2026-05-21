@@ -2,7 +2,19 @@
   "Menu": {
     "ckg.github_page": "Github Page",
     "ckg.exit": "Exit",
-    "profiles": "Profiles"
+    "profiles": "Profiles",
+    "profiles.refresh": "Refresh"
+  },
+  "Tray": {
+    "show": "Show",
+    "exit": "Exit",
+    "hint": "The program is running on system tray"
+  },
+  "Form": {
+    "select_glossary": "Select Glossary",
+    "load_glossary": "Loading DeepL glossary..",
+    "load_failed_glossary": "Load Failed: Invalid API Key",
+    "none": "None"
   },
   "General": {
     "_titleLabel": "General",

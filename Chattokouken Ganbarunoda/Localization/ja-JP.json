@@ -2,7 +2,19 @@
   "Menu": {
     "ckg.github_page": "Github ページ",
     "ckg.exit": "終了",
-    "profiles": "プロファイル"
+    "profiles": "プロファイル",
+    "profiles.refresh": "リフレッシュ"
+  },
+  "Tray": {
+    "show": "開く",
+    "exit": "終了",
+    "hint": "システムトレイで実行中です"
+  },
+  "Form": {
+    "select_glossary": "用語集の選択",
+    "load_glossary": "DeepLの用語集を読み込み中...",
+    "load_failed_glossary": "読み込み失敗：APIキーが無効です",
+    "none": "なし"
   },
   "General": {
     "_titleLabel": "一般",

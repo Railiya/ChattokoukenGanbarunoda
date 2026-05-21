@@ -18,9 +18,11 @@ namespace CKG.Forms
         private SettingPanel[] _settingPanels = null;
 
         private TranslationService _translationService = null;
+        private JsonElement _localization = default;
+
         private OverlayForm _overlayForm = null;
         private bool _hasShownTrayHint = false;
-        private bool _isExitRequested;
+        private bool _isExitRequested = false;
 
         #region Constructor and Disposer
 
@@ -32,6 +34,7 @@ namespace CKG.Forms
         public MainForm(TranslationService translationService, in JsonElement localization)
         {
             _translationService = translationService;
+            _localization = localization;
 
             InitializeComponent();
 
@@ -66,7 +69,7 @@ namespace CKG.Forms
             UpdateProfile();
 
             //Set localization
-            SetLocalization(in localization);
+            SetLocalization(in _localization);
 
             //Create profile menu items
             RefreshProfilesMenu();
@@ -86,19 +89,21 @@ namespace CKG.Forms
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (_isExitRequested == false)
+            if (_isExitRequested)
             {
-                e.Cancel = true;
-                Hide();
-
-                if (_hasShownTrayHint == false)
-                {
-                    _trayIcon.ShowBalloonTip(2000, "Chattokouken Ganbarunoda!!",
-                        "The program is running on system tray", ToolTipIcon.Info);
-                    _hasShownTrayHint = true;
-                }
-
                 return;
+            }
+
+            e.Cancel = true;
+            Hide();
+
+            if (_hasShownTrayHint == false)
+            {
+                JsonElement tray = _localization.GetProperty("Tray");
+                string hint = tray.GetProperty("hint").GetString();
+                
+                _trayIcon.ShowBalloonTip(2000, "Chattokouken Ganbarunoda!!", hint, ToolTipIcon.Info);
+                _hasShownTrayHint = true;
             }
         }
 
@@ -164,7 +169,8 @@ namespace CKG.Forms
                     break;
 
                 case ETranslatorWorkRequest.SelectGlossary:
-                    GlossarySelectForm glossarySelectForm = new GlossarySelectForm(_translationService, OnKeySelect);
+                    JsonElement form = _localization.GetProperty("Form");
+                    GlossarySelectForm glossarySelectForm = new GlossarySelectForm(_translationService, in form, OnKeySelect);
                     glossarySelectForm.ShowDialog(this);
                     break;
 
@@ -243,8 +249,9 @@ namespace CKG.Forms
 
         private void SetLocalization(in JsonElement root)
         {
-            JsonElement menu = root.GetProperty("Menu");
             JsonElement toolTip = root.GetProperty("Tooltip");
+            JsonElement menu = root.GetProperty("Menu");
+            JsonElement tray = root.GetProperty("Tray");
 
             foreach (var panel in _settingPanels)
             {
@@ -255,6 +262,10 @@ namespace CKG.Forms
             _githubMenuItem.Text = menu.GetProperty("ckg.github_page").GetString();
             _exitMenuItem.Text = menu.GetProperty("ckg.exit").GetString();
             _profilesMenuItem.Text = menu.GetProperty("profiles").GetString();
+
+            //set text of tray menu
+            _trayMenu.Items[0].Text = tray.GetProperty("show").GetString();
+            _trayMenu.Items[1].Text = tray.GetProperty("exit").GetString();
         }
 
         private void RefreshProfilesMenu()
@@ -283,7 +294,8 @@ namespace CKG.Forms
             ToolStripSeparator separator = new ToolStripSeparator();
             _profilesMenuItem.DropDownItems.Add(separator);
 
-            ToolStripMenuItem refreshItem = new ToolStripMenuItem("Refresh");
+            JsonElement menu = _localization.GetProperty("Menu");
+            ToolStripMenuItem refreshItem = new ToolStripMenuItem(menu.GetProperty("profiles.refresh").GetString());
             refreshItem.Click += (sender, e) => RefreshProfilesMenu();
 
             _profilesMenuItem.DropDownItems.Add(refreshItem);

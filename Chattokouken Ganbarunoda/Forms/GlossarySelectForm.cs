@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json;
 using System.Drawing;
 using System.Windows.Forms;
 using CKG.Controls;
@@ -12,6 +13,7 @@ namespace CKG.Forms
         private const int ITEM_MARGIN = 6;
 
         private Label _stateLabel = null;
+        private JsonElement _localization = default;
         private Action<GlossaryInfo> _onKeySelect = null;
 
         #region Constructor
@@ -19,20 +21,24 @@ namespace CKG.Forms
         public GlossarySelectForm()
         {
             InitializeComponent();
-            CreateComponents();
         }
 
-        public GlossarySelectForm(TranslationService translationService, Action<GlossaryInfo> OnKeySelect)
+        public GlossarySelectForm(TranslationService translationService, 
+            in JsonElement localization, Action<GlossaryInfo> OnKeySelect)
         {
             InitializeComponent();
-            CreateComponents();
+            
+            _localization = localization;
             _onKeySelect = OnKeySelect;
 
+            CreateComponents();
             StartGlossaryLoad(translationService);
         }
 
         private void CreateComponents()
         {
+            Text = _localization.GetProperty("select_glossary").GetString();
+
             //set invisible layout panel
             _itemLayoutPanel.Visible = false;
 
@@ -41,7 +47,7 @@ namespace CKG.Forms
             _stateLabel.Dock = DockStyle.Fill;
             _stateLabel.TextAlign = ContentAlignment.MiddleCenter;
             _stateLabel.Font = new Font(this.Font.FontFamily, 12f, FontStyle.Bold);
-            _stateLabel.Text = "Loading DeepL glossary..";
+            _stateLabel.Text = _localization.GetProperty("load_glossary").GetString();
             _stateLabel.BringToFront();
             Controls.Add(_stateLabel);
 
@@ -72,7 +78,7 @@ namespace CKG.Forms
         {
             if (glossaries == null)
             {
-                _stateLabel.Text = "Load Failed: Invalid API Key";
+                _stateLabel.Text = _localization.GetProperty("load_failed_glossary").GetString();
                 return;
             }
 
@@ -99,8 +105,10 @@ namespace CKG.Forms
 
         private void AddHeaderButton(GlossaryInfo glossary, int buttonWidth)
         {
+            string noneText = _localization.GetProperty("none").GetString();
+
             HeaderButton button = new HeaderButton();
-            button.Header = glossary == null ? "None" : $"{glossary.Name} ({glossary.EntryCount})";
+            button.Header = glossary == null ? noneText : $"{glossary.Name} ({glossary.EntryCount})";
             button.Content = glossary == null ? "" : glossary.Id;
             button.Width = buttonWidth;
             button.Height = ITEM_HEIGHT;

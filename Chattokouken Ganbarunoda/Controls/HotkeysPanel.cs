@@ -74,6 +74,7 @@ namespace CKG.Controls
             }
 
             AppDataManager.SaveCurrentProfile();
+            OnHotkeyChanged?.Invoke(type, setting);
         }
     }
 }

@@ -2,7 +2,19 @@
   "Menu": {
     "ckg.github_page": "Github 페이지",
     "ckg.exit": "종료",
-    "profiles": "프로파일"
+    "profiles": "프로파일",
+    "profiles.refresh": "새로고침"
+  },
+  "Tray": {
+    "show": "열기",
+    "exit": "종료",
+    "hint": "시스템 트레이에서 실행 중 입니다"
+  },
+  "Form": {
+    "select_glossary": "용어집 선택",
+    "load_glossary": "DeepL 용어집 불러오는 중..",
+    "load_failed_glossary": "불러오기 실패: API 키가 유효하지 않습니다",
+    "none": "없음"
   },
   "General": {
     "_titleLabel": "일반",
