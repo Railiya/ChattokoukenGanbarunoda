@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Windows.Forms;
 using CKG.Forms;
 
 namespace CKG.Controls
 {
     public partial class AdvancedPanel : SettingPanel
     {
+        protected override string LocalizationKey => "Advanced";
+
         public AdvancedPanel()
         {
             InitializeComponent();
@@ -26,7 +29,7 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.InputTimeout = (int)_inputTimeoutField.Value;
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
         }
 
         private void _debugEchoModeToggle_CheckedChanged(object sender, EventArgs e)
@@ -37,7 +40,7 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.DebugEchoMode = _debugEchoModeToggle.Checked;
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
         }
 
         private void _writeLogFileToggle_CheckedChanged(object sender, EventArgs e)
@@ -48,7 +51,7 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.WriteLogFile = _writeLogFileToggle.Checked;
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
         }
 
         private void _executeOnWindowStartToggle_CheckedChanged(object sender, EventArgs e)
@@ -59,7 +62,7 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.ExecuteOnWindowStart = _executeOnWindowStartToggle.Checked;
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
         }
     }
 }

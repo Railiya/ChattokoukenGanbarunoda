@@ -1,12 +1,17 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Text.Json;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace CKG.Controls
 {
-    public class SettingPanel : UserControl
+    public abstract class SettingPanel : UserControl
     {
+        protected abstract string LocalizationKey { get; }
+
         protected Label _titleLabel = null;
         protected PictureBox _iconBox = null;
+        protected ToolTip _toolTip = null;
 
         public string Title
         {
@@ -36,6 +41,7 @@ namespace CKG.Controls
 
             // Icon
             _iconBox = new PictureBox();
+            _iconBox.Name = "_iconBox";
             _iconBox.Size = new Size(30, 30);
             _iconBox.Location = new Point(12, 10);
             _iconBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -43,6 +49,7 @@ namespace CKG.Controls
 
             // Title
             _titleLabel = new Label();
+            _titleLabel.Name = "_titleLabel";
             _titleLabel.AutoSize = true;
             _titleLabel.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             _titleLabel.Location = new Point(12, 10);
@@ -52,9 +59,56 @@ namespace CKG.Controls
             ResumeLayout(false);
         }
 
-        public virtual void UpdateProfile(UserProfile profile)
+        public abstract void UpdateProfile(UserProfile profile);
+
+        public void SetLocalization(in JsonElement root, in JsonElement tooltip)
         {
-            
+            JsonElement element = root.GetProperty(LocalizationKey);
+            JsonElement property = default;
+
+            foreach (Control control in GetControls())
+            {
+                string name = control.Name;
+
+                if (string.IsNullOrEmpty(name))
+                {
+                    continue;
+                }
+
+                //Set text of controls
+                if (element.TryGetProperty(name, out property))
+                {
+                    if (control is ComboBox selector) //Set combo box
+                    {
+                        int selectedIndex = selector.SelectedIndex;
+                        int length = property.GetArrayLength();
+
+                        selector.Items.Clear();
+
+                        for (int i = 0; i < length; i++)
+                        {
+                            selector.Items.Add(property[i].GetString());
+                        }
+
+                        selector.SelectedIndex = selectedIndex;
+                    }
+                    else //Set else (Label, Toggle etc..)
+                    {
+                        control.Text = property.GetString();
+                    }
+                }
+
+                //Set tooltip of controls
+                if (tooltip.TryGetProperty(name, out property))
+                {
+                    if (_toolTip == null)
+                    {
+                        _toolTip = new ToolTip();
+                    }
+
+                    _toolTip.SetToolTip(control, property.GetString());
+                }
+            }
         }
 
         protected virtual void OnLayoutUpdate(object sender, LayoutEventArgs e)
@@ -65,6 +119,28 @@ namespace CKG.Controls
 
             _iconBox.Location = new Point(12, iconY);
             _titleLabel.Location = new Point(_iconBox.Right + 6, titleY);
+        }
+
+        private List<Control> GetControls()
+        {
+            List<Control> result = new List<Control>();
+
+            foreach (Control control in Controls)
+            {
+                if (control is Panel panel)
+                {
+                    foreach (Control childControl in panel.Controls)
+                    {
+                        result.Add(childControl);
+                    }
+                }
+                else
+                {
+                    result.Add(control);
+                }
+            }
+
+            return result;
         }
     }
 }

@@ -1,0 +1,83 @@
+﻿{
+  "Menu": {
+    "ckg.github_page": "Github 페이지",
+    "ckg.exit": "종료",
+    "profiles": "프로파일"
+  },
+  "General": {
+    "_titleLabel": "일반",
+    "_startTranslateToggle": "버퍼 상태 진입 시 자동 번역 요청",
+    "_autoSendMessageToggle": "번역 완료 시 클립보드 자동 전송",
+    "_inputMethodLabel": "입력 방식",
+    "_inputMethodSelector": [
+        "직접 입력",
+        "오버레이 입력"
+    ],
+    "_outputMethodLabel": "출력 방식",
+    "_outputMethodSelector": [
+      "클립보드 붙여넣기",
+      "입력 시뮬레이션"
+    ],
+    "_defaultInputModeLabel": "기본 입력 모드",
+    "_defaultInputModeSelector": [
+      "알파벳",
+      "한글"
+    ],
+    "_inputModeHintLabel": "한영키를 눌러 인풋 모드를 전환합니다. \nCtrl (또는 Alt, Shift)를 누른 상태에서 한영키를 누르면 IME 언어 모드만 변경할 수 있습니다"
+  },
+  "Translation": {
+    "_titleLabel": "번역",
+    "_modelLabel": "모델",
+    "_apiKeyLabel": "API 키 및 용어집 ID",
+    "_sourceLanguageLabel": "입력 언어",
+    "_destinationLanguage": "대상 언어",
+    "_translationFormatLabel": "번역 양식",
+    "_translationFormatHintLabel": "사용 가능한 키워드: {source}, {translated}",
+    "_requestTimeoutLabel": "요청 타임아웃 (초)",
+    "_requestTimeoutDefaultLabel": "(기본값: 3)"
+  },
+  "Overlay": {
+    "_titleLabel": "오버레이",
+    "_overlayEnabledToggle": "활성화",
+    "_anchorLabel": "앵커",
+    "_overlayOffsetXLabel": "오프셋 X:",
+    "_overlayOffsetYLabel": "오프셋 Y:",
+    "_overlayFontSizeLabel": "폰트 크기:",
+    "_overlayOpacityLabel": "투명도"
+  },
+  "Notification": {
+    "_titleLabel": "알림",
+    "_notificationEnabledToggle": "활성화",
+    "_capturingStartNotifyToggle": "캡처 시작할 때",
+    "_translationCompletedNotifyToggle": "번역 완료됐을 때",
+    "_translationFailedNotifyToggle": "번역 실패했을 때",
+    "_notificationVolumeLabel": "음량"
+  },
+  "Hotkeys": {
+    "_titleLabel": "단축키",
+    "_enableCapturingLabel": "캡처 활성화",
+    "_capturingToggleLabel": "캡처 토글",
+    "_translateLabel": "번역 요청",
+    "_sendClipboardLabel": "클립보드 전송",
+    "_hotkeysHintLabel": "단축키를 설정하려면 Key 버튼을 누르고 원하는 키를 눌러주세요"
+  },
+  "Advanced": {
+    "_titleLabel": "고급",
+    "_inputTimeoutLabel": "입력 타임아웃 (초)",
+    "_inputTimeoutHintLabel": "(0: 비활성화)",
+    "_debugEchoModeToggle": "디버그 에코 모드",
+    "_writeLogFileToggle": "로그 파일 작성",
+    "_executeOnWindowStartToggle": "윈도우 시작시 자동 실행"
+  },
+  "Tooltip": {
+    "_startTranslateToggle": "입력이 완료되고 버퍼 상태가 되면 자동으로 번역 요청을 보냅니다",
+    "_autoSendMessageToggle": "번역이 완료되면 자동으로 클립보드 전송을 시작합니다",
+    "_inputMethodLabel": "채팅 원문을 입력하는 방식\n\t직접 입력 : 게임 또는 메신저의 채팅에 입력합니다. 키 입력을 통해 글자를 조합합니다.\n\t오버레이 입력 : 프로그램의 인풋 필드에 입력합니다. 직접 입력을 지원하지 않는 언어의 경우 사용합니다.",
+    "_outputMethodLabel": "입력 매크로의 작동 방식입니다\n\t클립보드 붙여넣기 : 클립보드 내용을 붙여 넣는 방식입니다\n\t입력 시뮬레이션 : 클립보드 내용을 한글자씩 입력하는 방식입니다 (붙여넣기가 지원되지 않는 게임에서 사용합니다)",
+    "_defaultInputModeLabel": "프로그램 최초 언어 입력 모드입니다",
+    "_enableCapturingLabel": "프로그램의 키 입력 상태를 켜거나 끕니다",
+    "_capturingToggleLabel": "입력의 시작과 끝입니다 (게임에서 사용할 경우 채팅 단축키에 맞춰주세요)",
+    "_translateLabel": "번역 요청을 보냅니다",
+    "_sendClipboardLabel": "클립보드 내용 입력 매크로를 실행합니다"
+  }
+}

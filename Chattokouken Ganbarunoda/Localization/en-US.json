@@ -1,0 +1,83 @@
+﻿{
+  "Menu": {
+    "ckg.github_page": "Github Page",
+    "ckg.exit": "Exit",
+    "profiles": "Profiles"
+  },
+  "General": {
+    "_titleLabel": "General",
+    "_startTranslateToggle": "Start Translate on Buffered",
+    "_autoSendMessageToggle": "Auto Send Message on Translated",
+    "_inputMethodLabel": "Input Method",
+    "_inputMethodSelector": [
+        "Direct Input",
+        "Overlay Input"
+    ],
+    "_outputMethodLabel": "Output Method",
+    "_outputMethodSelector": [
+      "Clipboard Paste",
+      "Input Simulation"
+    ],
+    "_defaultInputModeLabel": "Default Input Mode",
+    "_defaultInputModeSelector": [
+      "Alphabet",
+      "Hangul"
+    ],
+    "_inputModeHintLabel": "Press the Han/Eng key to switch Input Mode. \nTo change only the IME language, press it together with Ctrl (or Alt, Shift)"
+  },
+  "Translation": {
+    "_titleLabel": "Translation",
+    "_modelLabel": "Model",
+    "_apiKeyLabel": "API Key and Glossary ID",
+    "_sourceLanguageLabel": "Source Language",
+    "_destinationLanguage": "Destination Language",
+    "_translationFormatLabel": "Translation Format",
+    "_translationFormatHintLabel": "Available Keywords: {source}, {translated}",
+    "_requestTimeoutLabel": "Request Timeout (sec)",
+    "_requestTimeoutDefaultLabel": "(Default: 3)"
+  },
+  "Overlay": {
+    "_titleLabel": "Overlay",
+    "_overlayEnabledToggle": "Enabled",
+    "_anchorLabel": "Anchor",
+    "_overlayOffsetXLabel": "Offset X:",
+    "_overlayOffsetYLabel": "Offset Y:",
+    "_overlayFontSizeLabel": "Font Size:",
+    "_overlayOpacityLabel": "Opacity"
+  },
+  "Notification": {
+    "_titleLabel": "Notification",
+    "_notificationEnabledToggle": "Enabled",
+    "_capturingStartNotifyToggle": "On Capturing Start",
+    "_translationCompletedNotifyToggle": "On Translation Completed",
+    "_translationFailedNotifyToggle": "On Translation Failed",
+    "_notificationVolumeLabel": "Volume"
+  },
+  "Hotkeys": {
+    "_titleLabel": "Hotkeys",
+    "_enableCapturingLabel": "Enable Capturing",
+    "_capturingToggleLabel": "Capturing Toggle",
+    "_translateLabel": "Request Translation",
+    "_sendClipboardLabel": "Send Clipboard",
+    "_hotkeysHintLabel": "Click the key button and press any key to set hotkey"
+  },
+  "Advanced": {
+    "_titleLabel": "Advanced",
+    "_inputTimeoutLabel": "Input Timeout (sec)",
+    "_inputTimeoutHintLabel": "(0: Disabled)",
+    "_debugEchoModeToggle": "Debug Echo Mode",
+    "_writeLogFileToggle": "Write Log File",
+    "_executeOnWindowStartToggle": "Execute on Window Start"
+  },
+  "Tooltip": {
+    "_startTranslateToggle": "Automatically sends a translation request once input is completed and enters the buffered state",
+    "_autoSendMessageToggle": "Automatically executes the input macro when translation is completed",
+    "_inputMethodLabel": "Method of entering the original chat text\n\tDirect Input: Types directly into the chat window of a game or messenger. Text is composed by pressing keys.\n\tOverlay Input: Types into the program's input field. This is used for languages that do not support Direct Input.",
+    "_outputMethodLabel": "Determines how the input macro behaves\n\tClipboard Paste : Pastes clipboard contents directly\n\tInput Simulation : Types clipboard contents character by character (useful for games where pasting is blocked)",
+    "_defaultInputModeLabel": "Initial Korean/English input mode of the program",
+    "_enableCapturingLabel": "Enables or disables keyboard capturing",
+    "_capturingToggleLabel": "Starts or finishes input capturing (should match the chat hotkey in games)",
+    "_translateLabel": "Sends a translation request",
+    "_sendClipboardLabel": "Executes the clipboard input macro"
+  }
+}

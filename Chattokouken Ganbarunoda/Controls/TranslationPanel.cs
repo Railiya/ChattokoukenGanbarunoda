@@ -16,6 +16,8 @@ namespace CKG.Controls
     {
         public Action<ETranslatorWorkRequest> OnRequestTranslatorWork = null;
 
+        protected override string LocalizationKey => "Translation";
+
         public TranslationPanel() : base()
         {
             InitializeComponent();
@@ -51,7 +53,7 @@ namespace CKG.Controls
 
             _apiKeyField.Text = "";
             _glossaryIdField.Text = "";
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
         }
 
         private void _apiKeyField_TextChanged(object sender, EventArgs e)
@@ -62,7 +64,7 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.APIKey = _apiKeyField.Text;
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
 
             OnRequestTranslatorWork?.Invoke(ETranslatorWorkRequest.InitializeTranslator);
         }
@@ -75,7 +77,7 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.GlossaryId = _glossaryIdField.Text;
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
         }
 
         private void _glossarySelectButton_Click(object sender, EventArgs e)
@@ -97,7 +99,7 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.SourceLanguageIndex = _sourceLanguageSelector.SelectedIndex;
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
         }
 
         private void _destinationLanguageSelector_SelectedIndexChanged(object sender, EventArgs e)
@@ -108,7 +110,7 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.DestinationLanguageIndex = _destinationLanguageSelector.SelectedIndex;
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
         }
 
         private void _translationFormatField_TextChanged(object sender, EventArgs e)
@@ -119,7 +121,7 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.TranslationFormat = _translationFormatField.Text;
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
         }
 
         private void _requestTimeoutField_ValueChanged(object sender, EventArgs e)
@@ -130,7 +132,7 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.RequestTimeout = (int)_requestTimeoutField.Value;
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
 
             OnRequestTranslatorWork?.Invoke(ETranslatorWorkRequest.UpdateTimeout);
         }

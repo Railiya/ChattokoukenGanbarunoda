@@ -11,7 +11,11 @@ namespace CKG.Controls
 
     public partial class GeneralPanel : SettingPanel
     {
+        public static event Action<EInputMethod> OnInputMethodChanged = null;
+
         public Action<EGeneralSettingToggle, bool> OnToggleChanged = null;
+
+        protected override string LocalizationKey => "General";
 
         public GeneralPanel() : base()
         {
@@ -22,6 +26,7 @@ namespace CKG.Controls
         {
             _startTranslateToggle.Checked = profile.StartTranslateOnBuffered;
             _autoSendMessageToggle.Checked = profile.AutoSendMessageOnTranslated;
+            _inputMethodSelector.SelectedIndex = profile.InputMethodIndex;
             _outputMethodSelector.SelectedIndex = profile.OutputMethodIndex;
             _defaultInputModeSelector.SelectedIndex = profile.DefaultInputModeIndex;
         }
@@ -37,7 +42,7 @@ namespace CKG.Controls
             UserProfile.Current.StartTranslateOnBuffered = toggle;
 
             OnToggleChanged?.Invoke(EGeneralSettingToggle.StartTranslateOnBuffered, toggle);
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
         }
 
         private void _autoSendMessageToggle_CheckedChanged(object sender, EventArgs e)
@@ -51,7 +56,21 @@ namespace CKG.Controls
             UserProfile.Current.AutoSendMessageOnTranslated = toggle;
 
             OnToggleChanged?.Invoke(EGeneralSettingToggle.AutoSendMessageOnTranslated, toggle);
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
+        }
+
+        private void _inputMethodSelector_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (MainForm.LockControlEvents)
+            {
+                return;
+            }
+
+            int index = _inputMethodSelector.SelectedIndex;
+            UserProfile.Current.InputMethodIndex = index;
+            AppDataManager.SaveCurrentProfile();
+
+            OnInputMethodChanged?.Invoke((EInputMethod)index);
         }
 
         private void _outputMethodSelector_SelectedIndexChanged(object sender, EventArgs e)
@@ -62,7 +81,7 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.OutputMethodIndex = _outputMethodSelector.SelectedIndex;
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
         }
 
         private void _defaultInputModeSelector_SelectedIndexChanged(object sender, EventArgs e)
@@ -73,7 +92,7 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.DefaultInputModeIndex = _defaultInputModeSelector.SelectedIndex;
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
         }
     }
 }

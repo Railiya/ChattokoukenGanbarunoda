@@ -8,6 +8,8 @@ namespace CKG.Controls
     {
         public event Action<EHotkey, SKeySetting> OnHotkeyChanged = null;
 
+        protected override string LocalizationKey => "Hotkeys";
+
         private HotkeyControlGroup[] _hotkeyControlGroups = null;
 
         public HotkeysPanel()
@@ -71,7 +73,7 @@ namespace CKG.Controls
                     break;
             }
 
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
         }
     }
 }

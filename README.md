@@ -127,7 +127,7 @@ When the X button is pressed, the program does not fully close and instead minim
 
 ## ⚙️ How to Configure It!
 
-![MainForm](README/Resources/main_form.jpg)
+![MainForm](README/Resources/form_en.jpg)
 
 ### General
 
@@ -137,9 +137,12 @@ When the X button is pressed, the program does not fully close and instead minim
 |---|---|
 | Start Translate on Buffered | Automatically sends a translation request once input is completed and enters the buffered state |
 | Auto Send Message on Translated | Automatically executes the input macro when translation is completed |
+| Input Method | Method of entering the original chat text |
 | Output Method | Determines how the input macro behaves |
 | Default Input Mode | Initial Korean/English input mode of the program |
 
+- Input Method - Direct Input : Types directly into the chat window of a game or messenger. Text is composed by pressing keys.
+- Input Method - Overlay Input : Types into the program's input field. This is used for languages that do not support Direct Input.
 - Output Method - Clipboard Paste : Pastes clipboard contents directly
 - Output Method - Input Simulating : Types clipboard contents character by character (useful for games where pasting is blocked)
 
@@ -216,7 +219,7 @@ When the X button is pressed, the program does not fully close and instead minim
 
 ## 📄 Changelog and Planned Updates!
 
-Please check [CHANGELOG.md](../CHANGELOG.md) for update history! Unfortunately, there is no Japanese version...
+Please check [CHANGELOG.md](CHANGELOG.md) for update history! Unfortunately, there is no Japanese version...
 
 <br>
 

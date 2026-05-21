@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using System.Windows.Forms;
 using CKG.Forms;
 using CKG.Translator;
@@ -17,12 +18,14 @@ namespace CKG
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            ProfileManager.LoadDefaultProfile();
+            Config config = AppDataManager.LoadConfig();
+            JsonElement localization = AppDataManager.LoadLocalization(config.LanguageCode);
+            AppDataManager.LoadDefaultProfile();
 
             using TranslationService translationService = new TranslationService();
             using AppController appController = new AppController(translationService);
 
-            Application.Run(new MainForm(translationService));
+            Application.Run(new MainForm(translationService, in localization));
         }
     }
 }

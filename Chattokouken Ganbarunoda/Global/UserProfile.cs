@@ -13,6 +13,7 @@ namespace CKG
         //General
         public bool StartTranslateOnBuffered = false;
         public bool AutoSendMessageOnTranslated = false;
+        public int InputMethodIndex = 0;
         public int OutputMethodIndex = 0;
         public int DefaultInputModeIndex = 0;
 

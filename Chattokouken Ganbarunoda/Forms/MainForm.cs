@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using CKG.Controls;
@@ -14,6 +15,7 @@ namespace CKG.Forms
 
         private ContextMenuStrip _trayMenu = null;
         private NotifyIcon _trayIcon = null;
+        private SettingPanel[] _settingPanels = null;
 
         private TranslationService _translationService = null;
         private OverlayForm _overlayForm = null;
@@ -27,7 +29,7 @@ namespace CKG.Forms
             InitializeComponent();
         }
 
-        public MainForm(TranslationService translationService)
+        public MainForm(TranslationService translationService, in JsonElement localization)
         {
             _translationService = translationService;
 
@@ -49,8 +51,22 @@ namespace CKG.Forms
             _trayIcon.ContextMenuStrip = _trayMenu;
             _trayIcon.DoubleClick += ShowProgram;
 
+            //Set setting panels
+            _settingPanels = new SettingPanel[]
+            {
+                _generalPanel,
+                _translationPanel,
+                _overlayPanel,
+                _notificationPanel,
+                _hotkeysPanel,
+                _advancedPanel
+            };
+
             //Update controls by loaded profile
             UpdateProfile();
+
+            //Set localization
+            SetLocalization(in localization);
 
             //Create profile menu items
             RefreshProfilesMenu();
@@ -207,12 +223,10 @@ namespace CKG.Forms
             UserProfile profile = UserProfile.Current;
 
             //Update controls
-            _generalPanel.UpdateProfile(profile);
-            _translationPanel.UpdateProfile(profile);
-            _overlayPanel.UpdateProfile(profile);
-            _notificationPanel.UpdateProfile(profile);
-            _hotkeysPanel.UpdateProfile(profile);
-            _advancedPanel.UpdateProfile(profile);
+            foreach (var panel in _settingPanels)
+            {
+                panel.UpdateProfile(profile);
+            }
 
             _hotkeysPanel.SetGroupActive(EHotkey.Translate, !profile.StartTranslateOnBuffered);
             _hotkeysPanel.SetGroupActive(EHotkey.SendClipboard, !profile.AutoSendMessageOnTranslated);
@@ -227,9 +241,25 @@ namespace CKG.Forms
             }
         }
 
+        private void SetLocalization(in JsonElement root)
+        {
+            JsonElement menu = root.GetProperty("Menu");
+            JsonElement toolTip = root.GetProperty("Tooltip");
+
+            foreach (var panel in _settingPanels)
+            {
+                panel.SetLocalization(in root, in toolTip);
+            }
+
+            //Set text of menu items
+            _githubMenuItem.Text = menu.GetProperty("ckg.github_page").GetString();
+            _exitMenuItem.Text = menu.GetProperty("ckg.exit").GetString();
+            _profilesMenuItem.Text = menu.GetProperty("profiles").GetString();
+        }
+
         private void RefreshProfilesMenu()
         {
-            List<SProfileInfo> profiles = ProfileManager.GetProfileList();
+            List<SProfileInfo> profiles = AppDataManager.GetProfileList();
 
             _profilesMenuItem.DropDownItems.Clear();
 
@@ -245,7 +275,7 @@ namespace CKG.Forms
                 {
                     int number = profile.Number;
 
-                    ProfileManager.LoadProfile(number);
+                    AppDataManager.LoadProfile(number);
                     UpdateProfile();
                 }
             }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             _inputModeHintLabel = new System.Windows.Forms.Label();
             _defaultInputModeSelector = new System.Windows.Forms.ComboBox();
             _defaultInputModeLabel = new System.Windows.Forms.Label();
@@ -35,6 +36,9 @@
             _outputMethodLabel = new System.Windows.Forms.Label();
             _autoSendMessageToggle = new System.Windows.Forms.CheckBox();
             _startTranslateToggle = new System.Windows.Forms.CheckBox();
+            _inputMethodSelector = new System.Windows.Forms.ComboBox();
+            _inputMethodLabel = new System.Windows.Forms.Label();
+            toolTip1 = new System.Windows.Forms.ToolTip(components);
             ((System.ComponentModel.ISupportInitialize)_iconBox).BeginInit();
             SuspendLayout();
             // 
@@ -53,10 +57,10 @@
             // 
             _inputModeHintLabel.Font = new System.Drawing.Font("맑은 고딕", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 129);
             _inputModeHintLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            _inputModeHintLabel.Location = new System.Drawing.Point(16, 230);
+            _inputModeHintLabel.Location = new System.Drawing.Point(16, 290);
             _inputModeHintLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             _inputModeHintLabel.Name = "_inputModeHintLabel";
-            _inputModeHintLabel.Size = new System.Drawing.Size(265, 74);
+            _inputModeHintLabel.Size = new System.Drawing.Size(265, 44);
             _inputModeHintLabel.TabIndex = 14;
             _inputModeHintLabel.Text = "Press the Han/Eng key to switch Input Mode.\r\nTo change only the IME language, press it together with Ctrl (or Alt, Shift)";
             _inputModeHintLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -67,7 +71,7 @@
             _defaultInputModeSelector.FormattingEnabled = true;
             _defaultInputModeSelector.ItemHeight = 15;
             _defaultInputModeSelector.Items.AddRange(new object[] { "Alphabet", "Hangul" });
-            _defaultInputModeSelector.Location = new System.Drawing.Point(16, 205);
+            _defaultInputModeSelector.Location = new System.Drawing.Point(16, 265);
             _defaultInputModeSelector.Name = "_defaultInputModeSelector";
             _defaultInputModeSelector.Size = new System.Drawing.Size(265, 23);
             _defaultInputModeSelector.TabIndex = 13;
@@ -75,7 +79,7 @@
             // 
             // _defaultInputModeLabel
             // 
-            _defaultInputModeLabel.Location = new System.Drawing.Point(16, 185);
+            _defaultInputModeLabel.Location = new System.Drawing.Point(16, 245);
             _defaultInputModeLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             _defaultInputModeLabel.Name = "_defaultInputModeLabel";
             _defaultInputModeLabel.Size = new System.Drawing.Size(265, 20);
@@ -88,7 +92,7 @@
             _outputMethodSelector.FormattingEnabled = true;
             _outputMethodSelector.ItemHeight = 15;
             _outputMethodSelector.Items.AddRange(new object[] { "Clipboard Paste", "Input Simulation" });
-            _outputMethodSelector.Location = new System.Drawing.Point(16, 145);
+            _outputMethodSelector.Location = new System.Drawing.Point(16, 205);
             _outputMethodSelector.Name = "_outputMethodSelector";
             _outputMethodSelector.Size = new System.Drawing.Size(265, 23);
             _outputMethodSelector.TabIndex = 11;
@@ -96,10 +100,10 @@
             // 
             // _outputMethodLabel
             // 
-            _outputMethodLabel.Location = new System.Drawing.Point(16, 125);
+            _outputMethodLabel.Location = new System.Drawing.Point(16, 185);
             _outputMethodLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             _outputMethodLabel.Name = "_outputMethodLabel";
-            _outputMethodLabel.Size = new System.Drawing.Size(265, 20);
+            _outputMethodLabel.Size = new System.Drawing.Size(271, 20);
             _outputMethodLabel.TabIndex = 10;
             _outputMethodLabel.Text = "Output Method";
             // 
@@ -125,8 +129,31 @@
             _startTranslateToggle.UseVisualStyleBackColor = true;
             _startTranslateToggle.CheckedChanged += _startTranslateToggle_CheckedChanged;
             // 
+            // _inputMethodSelector
+            // 
+            _inputMethodSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            _inputMethodSelector.FormattingEnabled = true;
+            _inputMethodSelector.ItemHeight = 15;
+            _inputMethodSelector.Items.AddRange(new object[] { "Direct Input", "Overlay Input" });
+            _inputMethodSelector.Location = new System.Drawing.Point(16, 145);
+            _inputMethodSelector.Name = "_inputMethodSelector";
+            _inputMethodSelector.Size = new System.Drawing.Size(265, 23);
+            _inputMethodSelector.TabIndex = 16;
+            _inputMethodSelector.SelectedIndexChanged += _inputMethodSelector_SelectedIndexChanged;
+            // 
+            // _inputMethodLabel
+            // 
+            _inputMethodLabel.Location = new System.Drawing.Point(16, 125);
+            _inputMethodLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            _inputMethodLabel.Name = "_inputMethodLabel";
+            _inputMethodLabel.Size = new System.Drawing.Size(265, 20);
+            _inputMethodLabel.TabIndex = 15;
+            _inputMethodLabel.Text = "Input Method";
+            // 
             // GeneralPanel
             // 
+            Controls.Add(_inputMethodSelector);
+            Controls.Add(_inputMethodLabel);
             Controls.Add(_inputModeHintLabel);
             Controls.Add(_defaultInputModeSelector);
             Controls.Add(_defaultInputModeLabel);
@@ -136,10 +163,8 @@
             Controls.Add(_startTranslateToggle);
             Icon = Properties.Resources.general_icon;
             Name = "GeneralPanel";
-            Size = new System.Drawing.Size(300, 320);
+            Size = new System.Drawing.Size(300, 350);
             Title = "General";
-            Controls.SetChildIndex(_titleLabel, 0);
-            Controls.SetChildIndex(_iconBox, 0);
             Controls.SetChildIndex(_startTranslateToggle, 0);
             Controls.SetChildIndex(_autoSendMessageToggle, 0);
             Controls.SetChildIndex(_outputMethodLabel, 0);
@@ -147,6 +172,10 @@
             Controls.SetChildIndex(_defaultInputModeLabel, 0);
             Controls.SetChildIndex(_defaultInputModeSelector, 0);
             Controls.SetChildIndex(_inputModeHintLabel, 0);
+            Controls.SetChildIndex(_titleLabel, 0);
+            Controls.SetChildIndex(_iconBox, 0);
+            Controls.SetChildIndex(_inputMethodLabel, 0);
+            Controls.SetChildIndex(_inputMethodSelector, 0);
             ((System.ComponentModel.ISupportInitialize)_iconBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -161,5 +190,8 @@
         private System.Windows.Forms.Label _outputMethodLabel;
         private System.Windows.Forms.CheckBox _autoSendMessageToggle;
         private System.Windows.Forms.CheckBox _startTranslateToggle;
+        private System.Windows.Forms.ComboBox _inputMethodSelector;
+        private System.Windows.Forms.Label _inputMethodLabel;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

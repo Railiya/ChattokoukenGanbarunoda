@@ -7,6 +7,8 @@ namespace CKG.Controls
 {
     public partial class NotificationPanel : SettingPanel
     {
+        protected override string LocalizationKey => "Notification";
+
         private List<Control> _notificationActiveGroup = null;
 
         public NotificationPanel()
@@ -44,7 +46,7 @@ namespace CKG.Controls
             UserProfile.Current.NotificationEnabled = toggle;
             _notificationActiveGroup.SetControlGroupActive(toggle);
 
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
         }
 
         private void _capturingStartNotifyToggle_CheckedChanged(object sender, EventArgs e)
@@ -55,7 +57,7 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.NotifyOnCapturingStart = _capturingStartNotifyToggle.Checked;
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
         }
 
         private void _translationCompletedNotifyToggle_CheckedChanged(object sender, EventArgs e)
@@ -66,7 +68,7 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.NotifyOnTranslationCompleted = _translationCompletedNotifyToggle.Checked;
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
         }
 
         private void _translationFailedNotifyToggle_CheckedChanged(object sender, EventArgs e)
@@ -77,7 +79,7 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.NotifyOnTranslationFailed = _translationFailedNotifyToggle.Checked;
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
         }
 
         private void _notificationVolumeSlider_ValueChanged(object sender, EventArgs e)
@@ -91,7 +93,7 @@ namespace CKG.Controls
             UserProfile.Current.NotificationVolume = value;
             _notificationVolumeField.Text = value.ToString();
 
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
         }
     }
 }

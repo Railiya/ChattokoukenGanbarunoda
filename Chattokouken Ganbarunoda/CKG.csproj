@@ -16,17 +16,29 @@
     <SelfContained>true</SelfContained>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-    <Version>0.1.3</Version>
+    <Version>0.1.4</Version>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Localization\en-US.json" />
+    <None Remove="Localization\ja-JP.json" />
+    <None Remove="Localization\ko-KR.json" />
     <None Remove="Sounds\capturing_start.wav" />
     <None Remove="Sounds\translation_completed.wav" />
     <None Remove="Sounds\translation_failed.wav" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Localization\en-US.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Localization\ja-JP.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Localization\ko-KR.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sounds\capturing_start.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -25,6 +25,8 @@ namespace CKG.Input
 
         private StringBuilder _buffer = new StringBuilder(128);
         private byte[] _keyboardState = new byte[256];
+
+        private EInputMethod _inputMethod = EInputMethod.DirectInput;
         private bool _isDisposed = false;
 
         public CapturingHandler()
@@ -107,6 +109,15 @@ namespace CKG.Input
             }
         }
 
+        public void SetInputMethod(EInputMethod method)
+        {
+            ResetBffer();
+            State = ECapturingState.Idle;
+            _inputMethod = method;
+
+            OnStateChanged?.Invoke(State);
+        }
+
         #endregion
 
         #region Private Key Handle Functions
@@ -134,7 +145,7 @@ namespace CKG.Input
                 return;
             }
 
-            if (key == Keys.HangulMode || key == Keys.HanguelMode)
+            if (_inputMethod == EInputMethod.DirectInput && (key == Keys.HangulMode || key == Keys.HanguelMode))
             {
                 bool ctrl = (Control.ModifierKeys & Keys.Control) != 0;
                 bool alt = (Control.ModifierKeys & Keys.Alt) != 0;
@@ -191,8 +202,16 @@ namespace CKG.Input
         {
             if (IsHotkeyPressed(UserProfile.Current.CapturingToggleKeySetting, key))
             {
-                FlushComposerToBuffer();
-                BufferedText = _buffer.ToString();
+                switch (_inputMethod)
+                {
+                    case EInputMethod.DirectInput:
+                        FlushComposerToBuffer();
+                        BufferedText = _buffer.ToString();
+                        break;
+
+                    case EInputMethod.OverlayInput:
+                        break;
+                }
 
                 if (string.IsNullOrEmpty(BufferedText))
                 {
@@ -206,25 +225,28 @@ namespace CKG.Input
                 return;
             }
 
-            if (key == Keys.Back)
+            if (_inputMethod == EInputMethod.DirectInput)
             {
-                HandleBackspace();
-                return;
-            }
+                if (key == Keys.Back)
+                {
+                    HandleBackspace();
+                    return;
+                }
 
-            if (TryUpdateKeyboardState() == false)
-            {
-                return;
-            }
+                if (TryUpdateKeyboardState() == false)
+                {
+                    return;
+                }
 
-            if (_commonComposer.TryGetChar(key, _keyboardState, out char common))
-            {
-                FlushComposerToBuffer();
-                _buffer.Append(common);
-                return;
-            }
+                if (_commonComposer.TryGetChar(key, _keyboardState, out char common))
+                {
+                    FlushComposerToBuffer();
+                    _buffer.Append(common);
+                    return;
+                }
 
-            _currentComposer.Input(key, _keyboardState);
+                _currentComposer.Input(key, _keyboardState);
+            }
         }
 
         private void HandleBufferedState(Keys key)

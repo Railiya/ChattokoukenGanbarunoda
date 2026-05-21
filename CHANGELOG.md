@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.1.4
+
+**추가 사항**
+- 일반 및 단축키 설정에 툴팁 추가
+- 로컬라제이션 추가 (영어, 한국어, 일본어 지원)
+
+**Added**
+- Tooltip added on General and Hotkeys settings
+- Support localization of English, Korean and Japanese
+
 ## v0.1.3
 
 **핫픽스**

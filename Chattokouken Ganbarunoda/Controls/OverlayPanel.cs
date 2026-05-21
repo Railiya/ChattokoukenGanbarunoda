@@ -12,8 +12,9 @@ namespace CKG.Controls
 
         public event Action<bool> OnOverlayToggleChanged = null;
 
+        protected override string LocalizationKey => "Overlay";
+
         private List<Control> _overlayActiveGroup = null;
-        
 
         public OverlayPanel()
         {
@@ -55,7 +56,7 @@ namespace CKG.Controls
             UserProfile.Current.OverlayEnabled = toggle;
             _overlayActiveGroup.SetControlGroupActive(toggle);
 
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
 
             OnOverlayToggleChanged?.Invoke(toggle);
             OnOverlaySettingChanged?.Invoke();
@@ -69,7 +70,7 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.OverlayAnchorIndex = (int)_overlayAnchorSelector.SelectedAnchor;
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
 
             OnOverlaySettingChanged?.Invoke();
         }
@@ -82,7 +83,7 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.OverlayOffsetX = (int)_overlayOffsetXField.Value;
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
 
             OnOverlaySettingChanged?.Invoke();
         }
@@ -95,7 +96,7 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.OverlayOffsetY = (int)_overlayOffsetYField.Value;
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
 
             OnOverlaySettingChanged?.Invoke();
         }
@@ -108,7 +109,7 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.OverlayFontSize = (int)_overlayFontSizeField.Value;
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
 
             OnOverlaySettingChanged?.Invoke();
         }
@@ -124,7 +125,7 @@ namespace CKG.Controls
             UserProfile.Current.OverlayOpacity = value;
             _overlayOpacityField.Text = value.ToString();
 
-            ProfileManager.SaveCurrentProfile();
+            AppDataManager.SaveCurrentProfile();
             OnOverlaySettingChanged?.Invoke();
         }
     }

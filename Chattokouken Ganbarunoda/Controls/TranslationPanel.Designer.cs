@@ -252,7 +252,7 @@
             Controls.Add(_modelLabel);
             Icon = Properties.Resources.translation_icon;
             Name = "TranslationPanel";
-            Size = new System.Drawing.Size(400, 320);
+            Size = new System.Drawing.Size(400, 350);
             Title = "Translation";
             Controls.SetChildIndex(_titleLabel, 0);
             Controls.SetChildIndex(_iconBox, 0);

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using CKG.Forms;
 using CKG.Input;
 using CKG.Translator;
+using CKG.Controls;
 
 namespace CKG
 {
@@ -29,6 +25,8 @@ namespace CKG
             _capturingHandler.OnStateChanged += OnHandlerCapturingStateChanged;
             _capturingHandler.OnInputModeChanged += OnHandlerInputModeChanged;
             _soundPlayer = new SoundPlayer();
+
+            GeneralPanel.OnInputMethodChanged += OnInputMethodChanged;
         }
 
         public void Dispose()
@@ -37,6 +35,8 @@ namespace CKG
             {
                 return;
             }
+
+            GeneralPanel.OnInputMethodChanged -= OnInputMethodChanged;
 
             _capturingHandler?.Dispose();
             _soundPlayer?.Dispose();
@@ -139,6 +139,11 @@ namespace CKG
         private void OnHandlerInputModeChanged(EInputMode mode)
         {
             OnInputModeChanged?.Invoke(mode);
+        }
+
+        private void OnInputMethodChanged(EInputMethod method)
+        {
+            _capturingHandler.SetInputMethod(method);
         }
 
         #endregion
