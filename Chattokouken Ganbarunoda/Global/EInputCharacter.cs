@@ -1,7 +1,7 @@
 ﻿
 namespace CKG
 {
-    public enum EInputMode
+    public enum EInputCharacter
     {
         Alphabet,
         Hangul

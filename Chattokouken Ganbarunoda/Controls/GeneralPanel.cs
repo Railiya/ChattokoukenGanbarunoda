@@ -28,7 +28,7 @@ namespace CKG.Controls
             _autoSendMessageToggle.Checked = profile.AutoSendMessageOnTranslated;
             _inputMethodSelector.SelectedIndex = profile.InputMethodIndex;
             _outputMethodSelector.SelectedIndex = profile.OutputMethodIndex;
-            _defaultInputModeSelector.SelectedIndex = profile.DefaultInputModeIndex;
+            _defaultInputCharacterSelector.SelectedIndex = profile.DefaultInputCharacterIndex;
         }
 
         private void _startTranslateToggle_CheckedChanged(object sender, EventArgs e)
@@ -91,7 +91,7 @@ namespace CKG.Controls
                 return;
             }
 
-            UserProfile.Current.DefaultInputModeIndex = _defaultInputModeSelector.SelectedIndex;
+            UserProfile.Current.DefaultInputCharacterIndex = _defaultInputCharacterSelector.SelectedIndex;
             AppDataManager.SaveCurrentProfile();
         }
     }

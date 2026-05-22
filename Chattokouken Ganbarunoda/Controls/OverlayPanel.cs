@@ -45,6 +45,19 @@ namespace CKG.Controls
             _overlayActiveGroup.SetControlGroupActive(profile.OverlayEnabled);
         }
 
+        public void LockEnabled(bool isLocked)
+        {
+            if (isLocked)
+            {
+                _overlayEnabledToggle.Checked = true;
+                _overlayEnabledToggle.Enabled = false;
+            }
+            else
+            {
+                _overlayEnabledToggle.Enabled = true;
+            }
+        }
+
         private void _overlayEnabledToggle_CheckedChanged(object sender, EventArgs e)
         {
             if (MainForm.LockControlEvents)

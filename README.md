@@ -139,7 +139,7 @@ When the X button is pressed, the program does not fully close and instead minim
 | Auto Send Message on Translated | Automatically executes the input macro when translation is completed |
 | Input Method | Method of entering the original chat text |
 | Output Method | Determines how the input macro behaves |
-| Default Input Mode | Initial Korean/English input mode of the program |
+| Default Input Character | Initial Korean/English input character mode of the program |
 
 - Input Method - Direct Input : Types directly into the chat window of a game or messenger. Text is composed by pressing keys.
 - Input Method - Overlay Input : Types into the program's input field. This is used for languages that do not support Direct Input.
@@ -315,17 +315,40 @@ Another issue is the inability to process mouse events. Since the system only re
 As mentioned in the warning section above, this program behaves similarly to a macro, so using it in games with anti-cheat systems may be risky. The responsibility for using this program always belongs to the user. Just in case, here are the Win32 functions used by this program:
 
 ```cs
+/* user32.dll */
+
+//KeyInputObserver.cs
+extern nint SetWindowsHookEx(int idHook, HookProc lpfn, nint hMod, uint dwThreadId);
+extern bool UnhookWindowsHookEx(nint hhk);
+extern nint CallNextHookEx(nint hhk, int nCode, nint wParam, nint lParam);
+
+//KeyMacroHandler.cs
 extern void keybd_event(byte bVk, byte bScan, uint dwFlags, nuint dwExtraInfo);
 extern uint SendInput(uint nInputs, INPUT[] pInputs, int cbSize);
 extern bool BlockInput(bool fBlockIt);
 
-extern nint SetWindowsHookEx(int idHook, HookProc lpfn, nint hMod, uint dwThreadId);
-extern bool UnhookWindowsHookEx(nint hhk);
-extern nint CallNextHookEx(nint hhk, int nCode, nint wParam, nint lParam);
-extern nint GetModuleHandle(string lpModuleName);
-
+//CapturingHandler.cs
 extern short GetKeyState(int nVirtKey);
 extern short GetAsyncKeyState(int vKey);
 extern bool GetKeyboardState(byte[] lpKeyState);
 extern nint GetKeyboardLayout(uint idThread);
+
+//CapturingHandler.cs (Used For Overlay Input)
+extern IntPtr GetForegroundWindow();
+extern bool SetForegroundWindow(IntPtr hWnd);
+extern bool AllowSetForegroundWindow(uint dwProcessId);
+extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
+extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+//OverlayForm.cs (Used For Overlay Input)
+extern int GetWindowLong(IntPtr hWnd, int nIndex);
+extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+/* kernel32.dll */
+
+//KeyInputObserver.cs
+extern nint GetModuleHandle(string lpModuleName);
+
+//CapturingHandler.cs (Used For Overlay Input)
+extern uint GetCurrentThreadId();
 ```

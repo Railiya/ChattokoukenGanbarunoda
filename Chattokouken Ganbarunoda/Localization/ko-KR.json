@@ -30,8 +30,8 @@
       "클립보드 붙여넣기",
       "입력 시뮬레이션"
     ],
-    "_defaultInputModeLabel": "기본 입력 모드",
-    "_defaultInputModeSelector": [
+    "_defaultInputCharacterLabel": "기본 입력 문자",
+    "_defaultInputCharacterSelector": [
       "알파벳",
       "한글"
     ],

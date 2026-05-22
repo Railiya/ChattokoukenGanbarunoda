@@ -78,6 +78,7 @@ namespace CKG.Forms
             _generalPanel.OnToggleChanged += OnGeneralSettingToggleChanged;
             _translationPanel.OnRequestTranslatorWork += OnRequestTranslatorWork;
             _overlayPanel.OnOverlayToggleChanged += OnOverlayToggleChanged;
+            GeneralPanel.OnInputMethodChanged += OnInputMethodChanged;
 
             LockControlEvents = false;
 
@@ -87,10 +88,18 @@ namespace CKG.Forms
             CheckForUpdatesAsync();
         }
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            Activate();
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
             if (_isExitRequested)
             {
+                GeneralPanel.OnInputMethodChanged -= OnInputMethodChanged;
+                base.OnFormClosing(e);
                 return;
             }
 
@@ -101,7 +110,7 @@ namespace CKG.Forms
             {
                 JsonElement tray = _localization.GetProperty("Tray");
                 string hint = tray.GetProperty("hint").GetString();
-                
+
                 _trayIcon.ShowBalloonTip(2000, "Chattokouken Ganbarunoda!!", hint, ToolTipIcon.Info);
                 _hasShownTrayHint = true;
             }
@@ -199,6 +208,11 @@ namespace CKG.Forms
             SetActiveOverlay(toggle);
         }
 
+        private void OnInputMethodChanged(EInputMethod method)
+        {
+            _overlayPanel.LockEnabled(method == EInputMethod.OverlayInput);
+        }
+
         #endregion
 
         #region Private Functions
@@ -236,6 +250,7 @@ namespace CKG.Forms
 
             _hotkeysPanel.SetGroupActive(EHotkey.Translate, !profile.StartTranslateOnBuffered);
             _hotkeysPanel.SetGroupActive(EHotkey.SendClipboard, !profile.AutoSendMessageOnTranslated);
+            _overlayPanel.LockEnabled((EInputMethod)profile.InputMethodIndex == EInputMethod.OverlayInput);
             SetActiveOverlay(profile.OverlayEnabled);
 
             _translationService.InitializeTranslator();

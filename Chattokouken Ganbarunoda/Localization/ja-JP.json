@@ -30,8 +30,8 @@
       "クリップボード貼り付け",
       "入力シミュレーション"
     ],
-    "_defaultInputModeLabel": "初期入力モード",
-    "_defaultInputModeSelector": [
+    "_defaultInputCharacterLabel": "初期入力文字",
+    "_defaultInputCharacterSelector": [
       "アルファベット",
       "ハングル"
     ],

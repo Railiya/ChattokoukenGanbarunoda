@@ -15,7 +15,7 @@ namespace CKG
         public bool AutoSendMessageOnTranslated = false;
         public int InputMethodIndex = 0;
         public int OutputMethodIndex = 0;
-        public int DefaultInputModeIndex = 0;
+        public int DefaultInputCharacterIndex = 0;
 
         //Translation
         public int ModelIndex = 0;

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using CKG.Composer;
 
@@ -8,11 +10,14 @@ namespace CKG.Input
 {
     public sealed class CapturingHandler : IDisposable
     {
+        public static event Action<bool> OnInputToggleBefore = null;
+        public static event Func<bool, bool, string> OnInputToggle = null;
+
         public event Action<ECapturingState> OnStateChanged = null;
-        public event Action<EInputMode> OnInputModeChanged = null;
+        public event Action<EInputCharacter> OnInputCharacterChanged = null;
 
         public ECapturingState State { get; private set; } = ECapturingState.Disabled;
-        public EInputMode InputMode { get; private set; } = EInputMode.Alphabet;
+        public EInputCharacter InputCharacter { get; private set; } = EInputCharacter.Alphabet;
         public string BufferedText { get; private set; }
 
         private KeyInputObserver _keyObserver = null;
@@ -27,6 +32,7 @@ namespace CKG.Input
         private byte[] _keyboardState = new byte[256];
 
         private EInputMethod _inputMethod = EInputMethod.DirectInput;
+        private IntPtr _cachedForegroundWindow = IntPtr.Zero;
         private bool _isDisposed = false;
 
         public CapturingHandler()
@@ -38,7 +44,8 @@ namespace CKG.Input
             _keyMacro = new KeyMacroHandler();
 
             //Set default input mode
-            SwitchInputMode((EInputMode)UserProfile.Current.DefaultInputModeIndex);
+            SetInputMethod((EInputMethod)UserProfile.Current.InputMethodIndex);
+            SwitchInputCharacter((EInputCharacter)UserProfile.Current.DefaultInputCharacterIndex);
         }
 
         public void Dispose()
@@ -111,9 +118,15 @@ namespace CKG.Input
 
         public void SetInputMethod(EInputMethod method)
         {
+            _inputMethod = method;
+
+            if (State == ECapturingState.Disabled)
+            {
+                return;
+            }
+
             ResetBffer();
             State = ECapturingState.Idle;
-            _inputMethod = method;
 
             OnStateChanged?.Invoke(State);
         }
@@ -133,6 +146,7 @@ namespace CKG.Input
                 else
                 {
                     SetState(ECapturingState.Disabled);
+                    DeactivateInput();
                 }
 
                 return;
@@ -153,7 +167,7 @@ namespace CKG.Input
 
                 if (ctrl == false && alt == false && shift == false)
                 {
-                    SwitchInputMode(GetNextInputMode());
+                    SwitchInputCharacter(GetNextInputMode());
                 }
 
                 return;
@@ -195,6 +209,7 @@ namespace CKG.Input
             {
                 ResetBffer();
                 SetState(ECapturingState.Capturing);
+                TryActiveOverlayInput();
             }
         }
 
@@ -210,6 +225,9 @@ namespace CKG.Input
                         break;
 
                     case EInputMethod.OverlayInput:
+                        OnInputToggleBefore?.Invoke(false);
+                        BufferedText = OnInputToggle?.Invoke(false, true);
+                        DeactivateInput();
                         break;
                 }
 
@@ -262,6 +280,7 @@ namespace CKG.Input
             {
                 ResetBffer();
                 SetState(ECapturingState.Capturing);
+                TryActiveOverlayInput();
                 return;
             }
         }
@@ -278,6 +297,7 @@ namespace CKG.Input
             {
                 ResetBffer();
                 SetState(ECapturingState.Capturing);
+                TryActiveOverlayInput();
                 return;
             }
         }
@@ -288,6 +308,7 @@ namespace CKG.Input
             {
                 ResetBffer();
                 SetState(ECapturingState.Capturing);
+                TryActiveOverlayInput();
             }
         }
 
@@ -359,18 +380,18 @@ namespace CKG.Input
             _buffer.Append(_currentComposer.Commit());
         }
 
-        private void SwitchInputMode(EInputMode inputMode)
+        private void SwitchInputCharacter(EInputCharacter inputCharacter)
         {
             FlushComposerToBuffer();
 
-            InputMode = inputMode;
-            _currentComposer = InputMode switch
+            InputCharacter = inputCharacter;
+            _currentComposer = InputCharacter switch
             {
-                EInputMode.Hangul => _hangulComposer,
+                EInputCharacter.Hangul => _hangulComposer,
                 _ => _alphabetComposer,
             };
 
-            OnInputModeChanged?.Invoke(InputMode);
+            OnInputCharacterChanged?.Invoke(InputCharacter);
         }
 
         private void ResetBffer()
@@ -392,16 +413,57 @@ namespace CKG.Input
             return true;
         }
 
-        private EInputMode GetNextInputMode()
+        private EInputCharacter GetNextInputMode()
         {
             nint hkl = GetKeyboardLayout(0);
             ushort lcid = (ushort)((uint)hkl & 0xFFFF);
 
             return lcid switch
             {
-                0x0412 => InputMode == EInputMode.Hangul ? EInputMode.Alphabet : EInputMode.Hangul,
-                _ => EInputMode.Alphabet,
+                0x0412 => InputCharacter == EInputCharacter.Hangul ? EInputCharacter.Alphabet : EInputCharacter.Hangul,
+                _ => EInputCharacter.Alphabet,
             };
+        }
+
+        private async void TryActiveOverlayInput()
+        {
+            if (_inputMethod != EInputMethod.OverlayInput)
+            {
+                return;
+            }
+
+            OnInputToggleBefore?.Invoke(true);
+
+            await ActivateInput(CKG.Forms.OverlayForm.HandlePtr);
+
+            OnInputToggle?.Invoke(true, false);
+        }
+
+        private async Task ActivateInput(IntPtr overlayHandle)
+        {
+            _cachedForegroundWindow = GetForegroundWindow();
+            uint foregroundThread = GetWindowThreadProcessId(_cachedForegroundWindow, out _);
+            uint currentThread = GetCurrentThreadId();
+
+            //This function is remains for stability
+            AllowSetForegroundWindow((uint)Process.GetCurrentProcess().Id);
+
+            AttachThreadInput(currentThread, foregroundThread, true);
+            SetForegroundWindow(overlayHandle);
+            AttachThreadInput(currentThread, foregroundThread, false);
+
+            await Task.Delay(100);
+        }
+
+        private void DeactivateInput()
+        {
+            if (_cachedForegroundWindow == IntPtr.Zero)
+            {
+                return;
+            }
+
+            SetForegroundWindow(_cachedForegroundWindow);
+            _cachedForegroundWindow = IntPtr.Zero;
         }
 
         #endregion
@@ -419,6 +481,26 @@ namespace CKG.Input
 
         [DllImport("user32.dll")]
         private static extern nint GetKeyboardLayout(uint idThread);
+
+        /* Used For Overlay Input */
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        private static extern bool AllowSetForegroundWindow(uint dwProcessId);
+
+        [DllImport("user32.dll")]
+        private static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
+
+        [DllImport("user32.dll")]
+        private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+        [DllImport("kernel32.dll")]
+        private static extern uint GetCurrentThreadId();
 
         #endregion
     }

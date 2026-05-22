@@ -183,7 +183,6 @@ namespace CKG.Forms
             MinimizeBox = false;
             Name = "MainForm";
             Text = "Chattokouken Ganbarunoda!!";
-            FormClosing += MainForm_FormClosing;
             _menuStrip.ResumeLayout(false);
             _menuStrip.PerformLayout();
             ResumeLayout(false);

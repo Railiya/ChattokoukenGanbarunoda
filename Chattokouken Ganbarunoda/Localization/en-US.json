@@ -30,8 +30,8 @@
       "Clipboard Paste",
       "Input Simulation"
     ],
-    "_defaultInputModeLabel": "Default Input Mode",
-    "_defaultInputModeSelector": [
+    "_defaultInputCharacterLabel": "Default Input Character",
+    "_defaultInputCharacterSelector": [
       "Alphabet",
       "Hangul"
     ],

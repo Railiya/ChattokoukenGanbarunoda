@@ -30,8 +30,8 @@
         {
             components = new System.ComponentModel.Container();
             _inputModeHintLabel = new System.Windows.Forms.Label();
-            _defaultInputModeSelector = new System.Windows.Forms.ComboBox();
-            _defaultInputModeLabel = new System.Windows.Forms.Label();
+            _defaultInputCharacterSelector = new System.Windows.Forms.ComboBox();
+            _defaultInputCharacterLabel = new System.Windows.Forms.Label();
             _outputMethodSelector = new System.Windows.Forms.ComboBox();
             _outputMethodLabel = new System.Windows.Forms.Label();
             _autoSendMessageToggle = new System.Windows.Forms.CheckBox();
@@ -65,26 +65,26 @@
             _inputModeHintLabel.Text = "Press the Han/Eng key to switch Input Mode.\r\nTo change only the IME language, press it together with Ctrl (or Alt, Shift)";
             _inputModeHintLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // _defaultInputModeSelector
+            // _defaultInputCharacterSelector
             // 
-            _defaultInputModeSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            _defaultInputModeSelector.FormattingEnabled = true;
-            _defaultInputModeSelector.ItemHeight = 15;
-            _defaultInputModeSelector.Items.AddRange(new object[] { "Alphabet", "Hangul" });
-            _defaultInputModeSelector.Location = new System.Drawing.Point(16, 265);
-            _defaultInputModeSelector.Name = "_defaultInputModeSelector";
-            _defaultInputModeSelector.Size = new System.Drawing.Size(265, 23);
-            _defaultInputModeSelector.TabIndex = 13;
-            _defaultInputModeSelector.SelectedIndexChanged += _defaultInputModeSelector_SelectedIndexChanged;
+            _defaultInputCharacterSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            _defaultInputCharacterSelector.FormattingEnabled = true;
+            _defaultInputCharacterSelector.ItemHeight = 15;
+            _defaultInputCharacterSelector.Items.AddRange(new object[] { "Alphabet", "Hangul" });
+            _defaultInputCharacterSelector.Location = new System.Drawing.Point(16, 265);
+            _defaultInputCharacterSelector.Name = "_defaultInputCharacterSelector";
+            _defaultInputCharacterSelector.Size = new System.Drawing.Size(265, 23);
+            _defaultInputCharacterSelector.TabIndex = 13;
+            _defaultInputCharacterSelector.SelectedIndexChanged += _defaultInputModeSelector_SelectedIndexChanged;
             // 
-            // _defaultInputModeLabel
+            // _defaultInputCharacterLabel
             // 
-            _defaultInputModeLabel.Location = new System.Drawing.Point(16, 245);
-            _defaultInputModeLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            _defaultInputModeLabel.Name = "_defaultInputModeLabel";
-            _defaultInputModeLabel.Size = new System.Drawing.Size(265, 20);
-            _defaultInputModeLabel.TabIndex = 12;
-            _defaultInputModeLabel.Text = "Default Input Mode";
+            _defaultInputCharacterLabel.Location = new System.Drawing.Point(16, 245);
+            _defaultInputCharacterLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            _defaultInputCharacterLabel.Name = "_defaultInputCharacterLabel";
+            _defaultInputCharacterLabel.Size = new System.Drawing.Size(265, 20);
+            _defaultInputCharacterLabel.TabIndex = 12;
+            _defaultInputCharacterLabel.Text = "Default Input Character";
             // 
             // _outputMethodSelector
             // 
@@ -155,8 +155,8 @@
             Controls.Add(_inputMethodSelector);
             Controls.Add(_inputMethodLabel);
             Controls.Add(_inputModeHintLabel);
-            Controls.Add(_defaultInputModeSelector);
-            Controls.Add(_defaultInputModeLabel);
+            Controls.Add(_defaultInputCharacterSelector);
+            Controls.Add(_defaultInputCharacterLabel);
             Controls.Add(_outputMethodSelector);
             Controls.Add(_outputMethodLabel);
             Controls.Add(_autoSendMessageToggle);
@@ -169,8 +169,8 @@
             Controls.SetChildIndex(_autoSendMessageToggle, 0);
             Controls.SetChildIndex(_outputMethodLabel, 0);
             Controls.SetChildIndex(_outputMethodSelector, 0);
-            Controls.SetChildIndex(_defaultInputModeLabel, 0);
-            Controls.SetChildIndex(_defaultInputModeSelector, 0);
+            Controls.SetChildIndex(_defaultInputCharacterLabel, 0);
+            Controls.SetChildIndex(_defaultInputCharacterSelector, 0);
             Controls.SetChildIndex(_inputModeHintLabel, 0);
             Controls.SetChildIndex(_titleLabel, 0);
             Controls.SetChildIndex(_iconBox, 0);
@@ -184,8 +184,8 @@
         #endregion
 
         private System.Windows.Forms.Label _inputModeHintLabel;
-        private System.Windows.Forms.ComboBox _defaultInputModeSelector;
-        private System.Windows.Forms.Label _defaultInputModeLabel;
+        private System.Windows.Forms.ComboBox _defaultInputCharacterSelector;
+        private System.Windows.Forms.Label _defaultInputCharacterLabel;
         private System.Windows.Forms.ComboBox _outputMethodSelector;
         private System.Windows.Forms.Label _outputMethodLabel;
         private System.Windows.Forms.CheckBox _autoSendMessageToggle;

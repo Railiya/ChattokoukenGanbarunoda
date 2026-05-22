@@ -5,9 +5,9 @@ using System.Windows.Forms;
 
 namespace CKG.Controls
 {
-    public abstract class SettingPanel : UserControl
+    public class SettingPanel : UserControl
     {
-        protected abstract string LocalizationKey { get; }
+        protected virtual string LocalizationKey { get; }
 
         protected Label _titleLabel = null;
         protected PictureBox _iconBox = null;
@@ -59,7 +59,7 @@ namespace CKG.Controls
             ResumeLayout(false);
         }
 
-        public abstract void UpdateProfile(UserProfile profile);
+        public virtual void UpdateProfile(UserProfile profile) { }
 
         public void SetLocalization(in JsonElement root, in JsonElement tooltip)
         {

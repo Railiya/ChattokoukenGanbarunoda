@@ -9,7 +9,7 @@ namespace CKG
     public class AppController : IDisposable
     {
         public static event Action<ECapturingState> OnCapturingStateChanged = null;
-        public static event Action<EInputMode> OnInputModeChanged = null;
+        public static event Action<EInputCharacter> OnInputCharacterChanged = null;
 
         private CapturingHandler _capturingHandler = null;
         private TranslationService _translationService = null;
@@ -23,7 +23,7 @@ namespace CKG
 
             _capturingHandler = new CapturingHandler();
             _capturingHandler.OnStateChanged += OnHandlerCapturingStateChanged;
-            _capturingHandler.OnInputModeChanged += OnHandlerInputModeChanged;
+            _capturingHandler.OnInputCharacterChanged += OnHandlerInputModeChanged;
             _soundPlayer = new SoundPlayer();
 
             GeneralPanel.OnInputMethodChanged += OnInputMethodChanged;
@@ -136,9 +136,9 @@ namespace CKG
             }
         }
 
-        private void OnHandlerInputModeChanged(EInputMode mode)
+        private void OnHandlerInputModeChanged(EInputCharacter mode)
         {
-            OnInputModeChanged?.Invoke(mode);
+            OnInputCharacterChanged?.Invoke(mode);
         }
 
         private void OnInputMethodChanged(EInputMethod method)
