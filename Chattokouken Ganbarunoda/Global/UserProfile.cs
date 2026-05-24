@@ -12,7 +12,10 @@ namespace CKG
 
         //General
         public bool StartTranslateOnBuffered = false;
-        public bool AutoSendMessageOnTranslated = false;
+        public bool AutoSendClipboardOnTranslated = false;
+        public bool StartCapturingOnSendClipboard = false;
+        public bool SkipChatStartOnSendClipboard = false;
+        public bool SkipChatStartOnSendOriginalText = false;
         public int InputMethodIndex = 0;
         public int OutputMethodIndex = 0;
         public int DefaultInputCharacterIndex = 0;

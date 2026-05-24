@@ -58,7 +58,7 @@
             _translationFailedNotifyToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             _translationFailedNotifyToggle.Location = new System.Drawing.Point(35, 155);
             _translationFailedNotifyToggle.Name = "_translationFailedNotifyToggle";
-            _translationFailedNotifyToggle.Size = new System.Drawing.Size(347, 20);
+            _translationFailedNotifyToggle.Size = new System.Drawing.Size(246, 20);
             _translationFailedNotifyToggle.TabIndex = 42;
             _translationFailedNotifyToggle.Text = "On Translation Failed";
             _translationFailedNotifyToggle.UseVisualStyleBackColor = true;
@@ -67,7 +67,7 @@
             // _notificationVolumeField
             // 
             _notificationVolumeField.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            _notificationVolumeField.Location = new System.Drawing.Point(319, 194);
+            _notificationVolumeField.Location = new System.Drawing.Point(218, 194);
             _notificationVolumeField.Name = "_notificationVolumeField";
             _notificationVolumeField.ReadOnly = true;
             _notificationVolumeField.Size = new System.Drawing.Size(40, 23);
@@ -77,7 +77,7 @@
             // 
             // _notificationVolumeHintLabel
             // 
-            _notificationVolumeHintLabel.Location = new System.Drawing.Point(362, 197);
+            _notificationVolumeHintLabel.Location = new System.Drawing.Point(261, 197);
             _notificationVolumeHintLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             _notificationVolumeHintLabel.Name = "_notificationVolumeHintLabel";
             _notificationVolumeHintLabel.Size = new System.Drawing.Size(20, 20);
@@ -91,7 +91,7 @@
             _translationCompletedNotifyToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             _translationCompletedNotifyToggle.Location = new System.Drawing.Point(35, 120);
             _translationCompletedNotifyToggle.Name = "_translationCompletedNotifyToggle";
-            _translationCompletedNotifyToggle.Size = new System.Drawing.Size(347, 20);
+            _translationCompletedNotifyToggle.Size = new System.Drawing.Size(246, 20);
             _translationCompletedNotifyToggle.TabIndex = 38;
             _translationCompletedNotifyToggle.Text = "On Translation Completed";
             _translationCompletedNotifyToggle.UseVisualStyleBackColor = true;
@@ -113,7 +113,7 @@
             _capturingStartNotifyToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             _capturingStartNotifyToggle.Location = new System.Drawing.Point(35, 85);
             _capturingStartNotifyToggle.Name = "_capturingStartNotifyToggle";
-            _capturingStartNotifyToggle.Size = new System.Drawing.Size(347, 20);
+            _capturingStartNotifyToggle.Size = new System.Drawing.Size(246, 20);
             _capturingStartNotifyToggle.TabIndex = 35;
             _capturingStartNotifyToggle.Text = "On Capturing Start";
             _capturingStartNotifyToggle.UseVisualStyleBackColor = true;
@@ -126,7 +126,7 @@
             _notificationVolumeSlider.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             _notificationVolumeSlider.Maximum = 100;
             _notificationVolumeSlider.Name = "_notificationVolumeSlider";
-            _notificationVolumeSlider.Size = new System.Drawing.Size(242, 23);
+            _notificationVolumeSlider.Size = new System.Drawing.Size(141, 23);
             _notificationVolumeSlider.TabIndex = 39;
             _notificationVolumeSlider.TickStyle = System.Windows.Forms.TickStyle.None;
             _notificationVolumeSlider.Value = 80;
@@ -139,7 +139,7 @@
             _notificationEnabledToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             _notificationEnabledToggle.Location = new System.Drawing.Point(19, 50);
             _notificationEnabledToggle.Name = "_notificationEnabledToggle";
-            _notificationEnabledToggle.Size = new System.Drawing.Size(260, 20);
+            _notificationEnabledToggle.Size = new System.Drawing.Size(262, 20);
             _notificationEnabledToggle.TabIndex = 37;
             _notificationEnabledToggle.Text = "Enabled";
             _notificationEnabledToggle.UseVisualStyleBackColor = true;
@@ -159,7 +159,8 @@
             Controls.Add(_notificationEnabledToggle);
             Icon = Properties.Resources.notification_icon;
             Name = "NotificationPanel";
-            Size = new System.Drawing.Size(400, 260);
+            Padding = new System.Windows.Forms.Padding(16, 40, 16, 16);
+            Size = new System.Drawing.Size(300, 260);
             Title = "Notification";
             Controls.SetChildIndex(_titleLabel, 0);
             Controls.SetChildIndex(_iconBox, 0);

@@ -54,7 +54,7 @@
             _debugEchoModeToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             _debugEchoModeToggle.Location = new System.Drawing.Point(19, 87);
             _debugEchoModeToggle.Name = "_debugEchoModeToggle";
-            _debugEchoModeToggle.Size = new System.Drawing.Size(260, 20);
+            _debugEchoModeToggle.Size = new System.Drawing.Size(262, 20);
             _debugEchoModeToggle.TabIndex = 27;
             _debugEchoModeToggle.Text = "Debug Echo Mode";
             _debugEchoModeToggle.UseVisualStyleBackColor = true;
@@ -66,7 +66,7 @@
             _executeOnWindowStartToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             _executeOnWindowStartToggle.Location = new System.Drawing.Point(19, 157);
             _executeOnWindowStartToggle.Name = "_executeOnWindowStartToggle";
-            _executeOnWindowStartToggle.Size = new System.Drawing.Size(260, 20);
+            _executeOnWindowStartToggle.Size = new System.Drawing.Size(262, 20);
             _executeOnWindowStartToggle.TabIndex = 26;
             _executeOnWindowStartToggle.Text = "Execute on Window Start";
             _executeOnWindowStartToggle.UseVisualStyleBackColor = true;
@@ -77,7 +77,7 @@
             _writeLogFileToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             _writeLogFileToggle.Location = new System.Drawing.Point(19, 122);
             _writeLogFileToggle.Name = "_writeLogFileToggle";
-            _writeLogFileToggle.Size = new System.Drawing.Size(260, 20);
+            _writeLogFileToggle.Size = new System.Drawing.Size(262, 20);
             _writeLogFileToggle.TabIndex = 22;
             _writeLogFileToggle.Text = "Write Log File";
             _writeLogFileToggle.UseVisualStyleBackColor = true;
@@ -88,7 +88,7 @@
             _inputTimeoutHintLabel.Location = new System.Drawing.Point(200, 50);
             _inputTimeoutHintLabel.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
             _inputTimeoutHintLabel.Name = "_inputTimeoutHintLabel";
-            _inputTimeoutHintLabel.Size = new System.Drawing.Size(79, 20);
+            _inputTimeoutHintLabel.Size = new System.Drawing.Size(84, 20);
             _inputTimeoutHintLabel.TabIndex = 23;
             _inputTimeoutHintLabel.Text = "(0: Disabled)";
             // 
@@ -126,6 +126,7 @@
             Controls.Add(_inputTimeoutField);
             Icon = Properties.Resources.advanced_icon;
             Name = "AdvancedPanel";
+            Padding = new System.Windows.Forms.Padding(16, 40, 16, 16);
             Size = new System.Drawing.Size(300, 230);
             Title = "Advanced";
             Controls.SetChildIndex(_titleLabel, 0);

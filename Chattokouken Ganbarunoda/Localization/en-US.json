@@ -19,7 +19,10 @@
   "General": {
     "_titleLabel": "General",
     "_startTranslateToggle": "Start Translate on Buffered",
-    "_autoSendMessageToggle": "Auto Send Message on Translated",
+    "_autoSendClipboardToggle": "Auto Send Clipboard on Translated",
+    "_startCapturingToggle": "Start Capturing on Send Clipboard",
+    "_outputSkipChatStartToggle": "Skip Chat Start Input Step on Send Clipboard",
+    "_overlayInputSkipChatStartToggle": "(Overlay Input) Skip Chat Start Input Step on Send Original Text",
     "_inputMethodLabel": "Input Method",
     "_inputMethodSelector": [
         "Direct Input",
@@ -35,7 +38,7 @@
       "Alphabet",
       "Hangul"
     ],
-    "_inputModeHintLabel": "Press the Han/Eng key to switch Input Mode. \nTo change only the IME language, press it together with Ctrl (or Alt, Shift)"
+    "_directInputHint": "Direct Input Hint: \nPress the Han/Eng key to switch Input Mode. \nTo change only the IME language, press it together with Ctrl (or Alt, Shift)"
   },
   "Translation": {
     "_titleLabel": "Translation",
@@ -67,10 +70,10 @@
   },
   "Hotkeys": {
     "_titleLabel": "Hotkeys",
-    "_enableCapturingLabel": "Enable Capturing",
-    "_capturingToggleLabel": "Capturing Toggle",
-    "_translateLabel": "Request Translation",
-    "_sendClipboardLabel": "Send Clipboard",
+    "_enableCapturingKeyGroup": "Enable Capturing",
+    "_chatToggleKeyGroup": "Chat Toggle",
+    "_requestTranslateKeyGroup": "Request Translation",
+    "_sendClipboardKeyGroup": "Send Clipboard",
     "_hotkeysHintLabel": "Click the key button and press any key to set hotkey"
   },
   "Advanced": {
@@ -84,6 +87,9 @@
   "Tooltip": {
     "_startTranslateToggle": "Automatically sends a translation request once input is completed and enters the buffered state",
     "_autoSendMessageToggle": "Automatically executes the input macro when translation is completed",
+    "_startCapturingToggle": "Once Send Clipboard is completed, it automatically switches to the Capturing State for the next text Input.",
+    "_outputSkipChatStartToggle": "Skips the chat open Input step during the Send Clipboard process.",
+    "_overlayInputSkipChatStartToggle": "Skips the chat open Input step when sending the Original Text while using Overlay Input.",
     "_inputMethodLabel": "Method of entering the original chat text\n\tDirect Input: Types directly into the chat window of a game or messenger. Text is composed by pressing keys.\n\tOverlay Input: Types into the program's input field. This is used for languages that do not support Direct Input.",
     "_outputMethodLabel": "Determines how the input macro behaves\n\tClipboard Paste : Pastes clipboard contents directly\n\tInput Simulation : Types clipboard contents character by character (useful for games where pasting is blocked)",
     "_defaultInputModeLabel": "Initial Korean/English input mode of the program",

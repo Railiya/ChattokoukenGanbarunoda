@@ -64,7 +64,7 @@
             _glossarySelectButton.BackgroundImage = Properties.Resources.select_icon;
             _glossarySelectButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             _glossarySelectButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            _glossarySelectButton.Location = new System.Drawing.Point(345, 100);
+            _glossarySelectButton.Location = new System.Drawing.Point(447, 100);
             _glossarySelectButton.Name = "_glossarySelectButton";
             _glossarySelectButton.Size = new System.Drawing.Size(34, 23);
             _glossarySelectButton.TabIndex = 36;
@@ -74,40 +74,40 @@
             // _glossaryIdField
             // 
             _glossaryIdField.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            _glossaryIdField.Location = new System.Drawing.Point(169, 100);
+            _glossaryIdField.Location = new System.Drawing.Point(181, 100);
             _glossaryIdField.Name = "_glossaryIdField";
             _glossaryIdField.PlaceholderText = "Glossary ID";
             _glossaryIdField.ReadOnly = true;
-            _glossaryIdField.Size = new System.Drawing.Size(170, 23);
+            _glossaryIdField.Size = new System.Drawing.Size(260, 23);
             _glossaryIdField.TabIndex = 35;
             _glossaryIdField.TextChanged += _glossaryIdField_TextChanged;
             // 
             // _requestTimeoutDefaultLabel
             // 
-            _requestTimeoutDefaultLabel.Location = new System.Drawing.Point(215, 279);
+            _requestTimeoutDefaultLabel.Location = new System.Drawing.Point(384, 223);
             _requestTimeoutDefaultLabel.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
             _requestTimeoutDefaultLabel.Name = "_requestTimeoutDefaultLabel";
-            _requestTimeoutDefaultLabel.Size = new System.Drawing.Size(164, 20);
+            _requestTimeoutDefaultLabel.Size = new System.Drawing.Size(97, 20);
             _requestTimeoutDefaultLabel.TabIndex = 34;
             _requestTimeoutDefaultLabel.Text = "(Default: 3)";
             // 
             // _requestTimeoutLabel
             // 
-            _requestTimeoutLabel.Location = new System.Drawing.Point(16, 279);
+            _requestTimeoutLabel.Location = new System.Drawing.Point(256, 200);
             _requestTimeoutLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             _requestTimeoutLabel.Name = "_requestTimeoutLabel";
-            _requestTimeoutLabel.Size = new System.Drawing.Size(130, 20);
+            _requestTimeoutLabel.Size = new System.Drawing.Size(225, 20);
             _requestTimeoutLabel.TabIndex = 33;
             _requestTimeoutLabel.Text = "Request Timeout (sec)";
             // 
             // _requestTimeoutField
             // 
             _requestTimeoutField.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            _requestTimeoutField.Location = new System.Drawing.Point(152, 276);
+            _requestTimeoutField.Location = new System.Drawing.Point(256, 220);
             _requestTimeoutField.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
             _requestTimeoutField.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             _requestTimeoutField.Name = "_requestTimeoutField";
-            _requestTimeoutField.Size = new System.Drawing.Size(60, 23);
+            _requestTimeoutField.Size = new System.Drawing.Size(125, 23);
             _requestTimeoutField.TabIndex = 32;
             _requestTimeoutField.Value = new decimal(new int[] { 3, 0, 0, 0 });
             _requestTimeoutField.ValueChanged += _requestTimeoutField_ValueChanged;
@@ -119,17 +119,16 @@
             _translationFormatHintLabel.Location = new System.Drawing.Point(16, 245);
             _translationFormatHintLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             _translationFormatHintLabel.Name = "_translationFormatHintLabel";
-            _translationFormatHintLabel.Size = new System.Drawing.Size(363, 20);
+            _translationFormatHintLabel.Size = new System.Drawing.Size(465, 19);
             _translationFormatHintLabel.TabIndex = 31;
-            _translationFormatHintLabel.Text = "Availiable Keywords: {source}, {translated}";
-            _translationFormatHintLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            _translationFormatHintLabel.Text = "Available Keywords: {source}, {translated}";
             // 
             // _translationFormatField
             // 
             _translationFormatField.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             _translationFormatField.Location = new System.Drawing.Point(16, 220);
             _translationFormatField.Name = "_translationFormatField";
-            _translationFormatField.Size = new System.Drawing.Size(363, 23);
+            _translationFormatField.Size = new System.Drawing.Size(225, 23);
             _translationFormatField.TabIndex = 30;
             _translationFormatField.Text = "({translated})";
             _translationFormatField.TextChanged += _translationFormatField_TextChanged;
@@ -139,16 +138,16 @@
             _translationFormatLabel.Location = new System.Drawing.Point(16, 200);
             _translationFormatLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             _translationFormatLabel.Name = "_translationFormatLabel";
-            _translationFormatLabel.Size = new System.Drawing.Size(363, 20);
+            _translationFormatLabel.Size = new System.Drawing.Size(225, 20);
             _translationFormatLabel.TabIndex = 29;
             _translationFormatLabel.Text = "Translation Format";
             // 
             // _destinationLanguage
             // 
-            _destinationLanguage.Location = new System.Drawing.Point(204, 140);
+            _destinationLanguage.Location = new System.Drawing.Point(254, 140);
             _destinationLanguage.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             _destinationLanguage.Name = "_destinationLanguage";
-            _destinationLanguage.Size = new System.Drawing.Size(175, 20);
+            _destinationLanguage.Size = new System.Drawing.Size(227, 20);
             _destinationLanguage.TabIndex = 28;
             _destinationLanguage.Text = "Destination Language";
             // 
@@ -158,10 +157,9 @@
             _destinationLanguageSelector.FormattingEnabled = true;
             _destinationLanguageSelector.IntegralHeight = false;
             _destinationLanguageSelector.ItemHeight = 15;
-            _destinationLanguageSelector.Location = new System.Drawing.Point(204, 160);
-            _destinationLanguageSelector.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
+            _destinationLanguageSelector.Location = new System.Drawing.Point(256, 160);
             _destinationLanguageSelector.Name = "_destinationLanguageSelector";
-            _destinationLanguageSelector.Size = new System.Drawing.Size(175, 23);
+            _destinationLanguageSelector.Size = new System.Drawing.Size(225, 23);
             _destinationLanguageSelector.TabIndex = 27;
             _destinationLanguageSelector.SelectedIndexChanged += _destinationLanguageSelector_SelectedIndexChanged;
             // 
@@ -174,7 +172,7 @@
             _sourceLanguageSelector.Location = new System.Drawing.Point(16, 160);
             _sourceLanguageSelector.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             _sourceLanguageSelector.Name = "_sourceLanguageSelector";
-            _sourceLanguageSelector.Size = new System.Drawing.Size(175, 23);
+            _sourceLanguageSelector.Size = new System.Drawing.Size(225, 23);
             _sourceLanguageSelector.TabIndex = 26;
             _sourceLanguageSelector.SelectedIndexChanged += _sourceLanguageSelector_SelectedIndexChanged;
             // 
@@ -183,26 +181,26 @@
             _sourceLanguageLabel.Location = new System.Drawing.Point(16, 140);
             _sourceLanguageLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             _sourceLanguageLabel.Name = "_sourceLanguageLabel";
-            _sourceLanguageLabel.Size = new System.Drawing.Size(175, 20);
+            _sourceLanguageLabel.Size = new System.Drawing.Size(225, 20);
             _sourceLanguageLabel.TabIndex = 25;
             _sourceLanguageLabel.Text = "Source Language";
             // 
             // _apiKeyField
             // 
             _apiKeyField.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            _apiKeyField.Location = new System.Drawing.Point(169, 70);
+            _apiKeyField.Location = new System.Drawing.Point(181, 70);
             _apiKeyField.Name = "_apiKeyField";
             _apiKeyField.PlaceholderText = "API Key";
-            _apiKeyField.Size = new System.Drawing.Size(210, 23);
+            _apiKeyField.Size = new System.Drawing.Size(300, 23);
             _apiKeyField.TabIndex = 24;
             _apiKeyField.TextChanged += _apiKeyField_TextChanged;
             // 
             // _apiKeyLabel
             // 
-            _apiKeyLabel.Location = new System.Drawing.Point(169, 50);
+            _apiKeyLabel.Location = new System.Drawing.Point(181, 50);
             _apiKeyLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             _apiKeyLabel.Name = "_apiKeyLabel";
-            _apiKeyLabel.Size = new System.Drawing.Size(210, 20);
+            _apiKeyLabel.Size = new System.Drawing.Size(300, 20);
             _apiKeyLabel.TabIndex = 23;
             _apiKeyLabel.Text = "API Key and Glossary ID";
             // 
@@ -217,7 +215,7 @@
             _modelSelector.Location = new System.Drawing.Point(16, 70);
             _modelSelector.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             _modelSelector.Name = "_modelSelector";
-            _modelSelector.Size = new System.Drawing.Size(140, 23);
+            _modelSelector.Size = new System.Drawing.Size(150, 23);
             _modelSelector.TabIndex = 22;
             _modelSelector.SelectedIndexChanged += _modelSelector_SelectedIndexChanged;
             // 
@@ -226,7 +224,7 @@
             _modelLabel.Location = new System.Drawing.Point(16, 50);
             _modelLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             _modelLabel.Name = "_modelLabel";
-            _modelLabel.Size = new System.Drawing.Size(140, 20);
+            _modelLabel.Size = new System.Drawing.Size(150, 20);
             _modelLabel.TabIndex = 21;
             _modelLabel.Text = "Model";
             // 
@@ -252,7 +250,8 @@
             Controls.Add(_modelLabel);
             Icon = Properties.Resources.translation_icon;
             Name = "TranslationPanel";
-            Size = new System.Drawing.Size(400, 350);
+            Padding = new System.Windows.Forms.Padding(16, 40, 16, 16);
+            Size = new System.Drawing.Size(500, 280);
             Title = "Translation";
             Controls.SetChildIndex(_titleLabel, 0);
             Controls.SetChildIndex(_iconBox, 0);

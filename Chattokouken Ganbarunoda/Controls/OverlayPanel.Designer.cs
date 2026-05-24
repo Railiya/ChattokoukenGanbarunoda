@@ -63,7 +63,7 @@
             // _overlayOpacityField
             // 
             _overlayOpacityField.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            _overlayOpacityField.Location = new System.Drawing.Point(216, 214);
+            _overlayOpacityField.Location = new System.Drawing.Point(218, 214);
             _overlayOpacityField.Name = "_overlayOpacityField";
             _overlayOpacityField.ReadOnly = true;
             _overlayOpacityField.Size = new System.Drawing.Size(40, 23);
@@ -73,7 +73,7 @@
             // 
             // _overlayOpacityHintLabel
             // 
-            _overlayOpacityHintLabel.Location = new System.Drawing.Point(259, 217);
+            _overlayOpacityHintLabel.Location = new System.Drawing.Point(261, 217);
             _overlayOpacityHintLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             _overlayOpacityHintLabel.Name = "_overlayOpacityHintLabel";
             _overlayOpacityHintLabel.Size = new System.Drawing.Size(20, 20);
@@ -96,7 +96,7 @@
             _overlayOpacitySlider.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             _overlayOpacitySlider.Maximum = 100;
             _overlayOpacitySlider.Name = "_overlayOpacitySlider";
-            _overlayOpacitySlider.Size = new System.Drawing.Size(141, 23);
+            _overlayOpacitySlider.Size = new System.Drawing.Size(143, 23);
             _overlayOpacitySlider.TabIndex = 41;
             _overlayOpacitySlider.TickStyle = System.Windows.Forms.TickStyle.None;
             _overlayOpacitySlider.Value = 80;
@@ -104,7 +104,7 @@
             // 
             // _overlayFontSizeHintLabel
             // 
-            _overlayFontSizeHintLabel.Location = new System.Drawing.Point(259, 175);
+            _overlayFontSizeHintLabel.Location = new System.Drawing.Point(261, 175);
             _overlayFontSizeHintLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             _overlayFontSizeHintLabel.Name = "_overlayFontSizeHintLabel";
             _overlayFontSizeHintLabel.Size = new System.Drawing.Size(20, 20);
@@ -116,7 +116,7 @@
             _overlayFontSizeLabel.Location = new System.Drawing.Point(116, 175);
             _overlayFontSizeLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             _overlayFontSizeLabel.Name = "_overlayFontSizeLabel";
-            _overlayFontSizeLabel.Size = new System.Drawing.Size(74, 20);
+            _overlayFontSizeLabel.Size = new System.Drawing.Size(76, 20);
             _overlayFontSizeLabel.TabIndex = 39;
             _overlayFontSizeLabel.Text = "Font Size:";
             _overlayFontSizeLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -124,7 +124,7 @@
             // _overlayFontSizeField
             // 
             _overlayFontSizeField.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            _overlayFontSizeField.Location = new System.Drawing.Point(196, 172);
+            _overlayFontSizeField.Location = new System.Drawing.Point(198, 172);
             _overlayFontSizeField.Name = "_overlayFontSizeField";
             _overlayFontSizeField.Size = new System.Drawing.Size(60, 23);
             _overlayFontSizeField.TabIndex = 38;
@@ -136,7 +136,7 @@
             _overlayOffsetYLabel.Location = new System.Drawing.Point(116, 142);
             _overlayOffsetYLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             _overlayOffsetYLabel.Name = "_overlayOffsetYLabel";
-            _overlayOffsetYLabel.Size = new System.Drawing.Size(74, 20);
+            _overlayOffsetYLabel.Size = new System.Drawing.Size(76, 20);
             _overlayOffsetYLabel.TabIndex = 37;
             _overlayOffsetYLabel.Text = "Offset Y:";
             _overlayOffsetYLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -145,7 +145,7 @@
             // 
             _overlayOffsetYField.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             _overlayOffsetYField.Increment = new decimal(new int[] { 10, 0, 0, 0 });
-            _overlayOffsetYField.Location = new System.Drawing.Point(196, 139);
+            _overlayOffsetYField.Location = new System.Drawing.Point(198, 139);
             _overlayOffsetYField.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
             _overlayOffsetYField.Name = "_overlayOffsetYField";
             _overlayOffsetYField.Size = new System.Drawing.Size(60, 23);
@@ -157,7 +157,7 @@
             _overlayOffsetXLabel.Location = new System.Drawing.Point(116, 108);
             _overlayOffsetXLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             _overlayOffsetXLabel.Name = "_overlayOffsetXLabel";
-            _overlayOffsetXLabel.Size = new System.Drawing.Size(74, 20);
+            _overlayOffsetXLabel.Size = new System.Drawing.Size(76, 20);
             _overlayOffsetXLabel.TabIndex = 35;
             _overlayOffsetXLabel.Text = "Offset X:";
             _overlayOffsetXLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -166,7 +166,7 @@
             // 
             _overlayOffsetXField.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             _overlayOffsetXField.Increment = new decimal(new int[] { 10, 0, 0, 0 });
-            _overlayOffsetXField.Location = new System.Drawing.Point(196, 105);
+            _overlayOffsetXField.Location = new System.Drawing.Point(198, 105);
             _overlayOffsetXField.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
             _overlayOffsetXField.Name = "_overlayOffsetXField";
             _overlayOffsetXField.Size = new System.Drawing.Size(60, 23);
@@ -199,7 +199,7 @@
             _overlayEnabledToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             _overlayEnabledToggle.Location = new System.Drawing.Point(19, 50);
             _overlayEnabledToggle.Name = "_overlayEnabledToggle";
-            _overlayEnabledToggle.Size = new System.Drawing.Size(260, 20);
+            _overlayEnabledToggle.Size = new System.Drawing.Size(262, 20);
             _overlayEnabledToggle.TabIndex = 31;
             _overlayEnabledToggle.Text = "Enabled";
             _overlayEnabledToggle.UseVisualStyleBackColor = true;
@@ -225,6 +225,7 @@
             Controls.Add(_overlayEnabledToggle);
             Icon = Properties.Resources.overlay_icon;
             Name = "OverlayPanel";
+            Padding = new System.Windows.Forms.Padding(16, 40, 16, 16);
             Size = new System.Drawing.Size(300, 260);
             Title = "Overlay";
             Controls.SetChildIndex(_titleLabel, 0);

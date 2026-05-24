@@ -160,7 +160,7 @@ namespace CKG.Forms
             switch (setting)
             {
                 case EGeneralSettingToggle.StartTranslateOnBuffered:
-                    _hotkeysPanel.SetGroupActive(EHotkey.Translate, !toggle);
+                    _hotkeysPanel.SetGroupActive(EHotkey.RequestTranslate, !toggle);
                     break;
 
                 case EGeneralSettingToggle.AutoSendMessageOnTranslated:
@@ -248,8 +248,8 @@ namespace CKG.Forms
                 panel.UpdateProfile(profile);
             }
 
-            _hotkeysPanel.SetGroupActive(EHotkey.Translate, !profile.StartTranslateOnBuffered);
-            _hotkeysPanel.SetGroupActive(EHotkey.SendClipboard, !profile.AutoSendMessageOnTranslated);
+            _hotkeysPanel.SetGroupActive(EHotkey.RequestTranslate, !profile.StartTranslateOnBuffered);
+            _hotkeysPanel.SetGroupActive(EHotkey.SendClipboard, !profile.AutoSendClipboardOnTranslated);
             _overlayPanel.LockEnabled((EInputMethod)profile.InputMethodIndex == EInputMethod.OverlayInput);
             SetActiveOverlay(profile.OverlayEnabled);
 

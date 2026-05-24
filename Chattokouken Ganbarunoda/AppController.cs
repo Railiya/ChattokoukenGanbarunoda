@@ -113,7 +113,7 @@ namespace CKG
                 {
                     Logger.Write(state, Clipboard.GetText());
 
-                    if (UserProfile.Current.AutoSendMessageOnTranslated)
+                    if (UserProfile.Current.AutoSendClipboardOnTranslated)
                     {
                         _capturingHandler.SendMacroMessage();
                     }

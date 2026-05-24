@@ -4,8 +4,8 @@ namespace CKG
     public enum EHotkey
     {
         EnableCapturing,
-        CapturingToggle,
-        Translate,
+        ChatToggle,
+        RequestTranslate,
         SendClipboard
     }
 }

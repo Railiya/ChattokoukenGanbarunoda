@@ -6,7 +6,10 @@ namespace CKG.Controls
     public enum EGeneralSettingToggle
     {
         StartTranslateOnBuffered,
-        AutoSendMessageOnTranslated
+        AutoSendMessageOnTranslated,
+        StartCapturingOnSendClipboard,
+        SkipChatStartOnSendClipboard,
+        SkipChatStartOnSendOriginalText
     }
 
     public partial class GeneralPanel : SettingPanel
@@ -25,7 +28,7 @@ namespace CKG.Controls
         public override void UpdateProfile(UserProfile profile)
         {
             _startTranslateToggle.Checked = profile.StartTranslateOnBuffered;
-            _autoSendMessageToggle.Checked = profile.AutoSendMessageOnTranslated;
+            _autoSendClipboardToggle.Checked = profile.AutoSendClipboardOnTranslated;
             _inputMethodSelector.SelectedIndex = profile.InputMethodIndex;
             _outputMethodSelector.SelectedIndex = profile.OutputMethodIndex;
             _defaultInputCharacterSelector.SelectedIndex = profile.DefaultInputCharacterIndex;
@@ -45,17 +48,59 @@ namespace CKG.Controls
             AppDataManager.SaveCurrentProfile();
         }
 
-        private void _autoSendMessageToggle_CheckedChanged(object sender, EventArgs e)
+        private void _autoSendClipboardToggle_CheckedChanged(object sender, EventArgs e)
         {
             if (MainForm.LockControlEvents)
             {
                 return;
             }
 
-            bool toggle = _autoSendMessageToggle.Checked;
-            UserProfile.Current.AutoSendMessageOnTranslated = toggle;
+            bool toggle = _autoSendClipboardToggle.Checked;
+            UserProfile.Current.AutoSendClipboardOnTranslated = toggle;
 
             OnToggleChanged?.Invoke(EGeneralSettingToggle.AutoSendMessageOnTranslated, toggle);
+            AppDataManager.SaveCurrentProfile();
+        }
+
+        private void _startCapturingToggle_CheckedChanged(object sender, EventArgs e)
+        {
+            if (MainForm.LockControlEvents)
+            {
+                return;
+            }
+
+            bool toggle = _startCapturingToggle.Checked;
+            UserProfile.Current.StartCapturingOnSendClipboard = toggle;
+
+            OnToggleChanged?.Invoke(EGeneralSettingToggle.StartCapturingOnSendClipboard, toggle);
+            AppDataManager.SaveCurrentProfile();
+        }
+
+        private void _outputSkipChatStartToggle_CheckedChanged(object sender, EventArgs e)
+        {
+            if (MainForm.LockControlEvents)
+            {
+                return;
+            }
+
+            bool toggle = _outputSkipChatStartToggle.Checked;
+            UserProfile.Current.SkipChatStartOnSendClipboard = toggle;
+
+            OnToggleChanged?.Invoke(EGeneralSettingToggle.SkipChatStartOnSendClipboard, toggle);
+            AppDataManager.SaveCurrentProfile();
+        }
+
+        private void _overlayInputSkipChatStartToggle_CheckedChanged(object sender, EventArgs e)
+        {
+            if (MainForm.LockControlEvents)
+            {
+                return;
+            }
+
+            bool toggle = _overlayInputSkipChatStartToggle.Checked;
+            UserProfile.Current.SkipChatStartOnSendOriginalText = toggle;
+
+            OnToggleChanged?.Invoke(EGeneralSettingToggle.SkipChatStartOnSendOriginalText, toggle);
             AppDataManager.SaveCurrentProfile();
         }
 

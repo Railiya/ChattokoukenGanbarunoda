@@ -92,6 +92,10 @@ namespace CKG.Controls
 
                         selector.SelectedIndex = selectedIndex;
                     }
+                    else if (control is HotkeyGroupRowItem keyGroup)
+                    {
+                        keyGroup.KeyText = property.GetString();
+                    }
                     else //Set else (Label, Toggle etc..)
                     {
                         control.Text = property.GetString();

@@ -54,7 +54,7 @@ namespace CKG.Forms
             _menuStrip.Items.AddRange(new ToolStripItem[] { _ckgMenuItem, _profilesMenuItem });
             _menuStrip.Location = new Point(0, 0);
             _menuStrip.Name = "_menuStrip";
-            _menuStrip.Size = new Size(734, 24);
+            _menuStrip.Size = new Size(824, 24);
             _menuStrip.TabIndex = 6;
             _menuStrip.Text = "menuStrip";
             // 
@@ -95,10 +95,11 @@ namespace CKG.Forms
             _generalPanel.BackColor = Color.White;
             _generalPanel.BorderStyle = BorderStyle.FixedSingle;
             _generalPanel.Icon = Properties.Resources.general_icon;
-            _generalPanel.Location = new Point(12, 29);
+            _generalPanel.Location = new Point(9, 30);
+            _generalPanel.Margin = new Padding(0);
             _generalPanel.Name = "_generalPanel";
             _generalPanel.Padding = new Padding(16, 40, 16, 16);
-            _generalPanel.Size = new Size(300, 358);
+            _generalPanel.Size = new Size(500, 350);
             _generalPanel.TabIndex = 7;
             _generalPanel.Title = "General";
             // 
@@ -107,10 +108,11 @@ namespace CKG.Forms
             _translationPanel.BackColor = Color.White;
             _translationPanel.BorderStyle = BorderStyle.FixedSingle;
             _translationPanel.Icon = (Image)resources.GetObject("_translationPanel.Icon");
-            _translationPanel.Location = new Point(322, 29);
+            _translationPanel.Location = new Point(9, 386);
+            _translationPanel.Margin = new Padding(0);
             _translationPanel.Name = "_translationPanel";
             _translationPanel.Padding = new Padding(16, 40, 10, 16);
-            _translationPanel.Size = new Size(400, 358);
+            _translationPanel.Size = new Size(500, 280);
             _translationPanel.TabIndex = 8;
             _translationPanel.Title = "Translation";
             // 
@@ -119,10 +121,11 @@ namespace CKG.Forms
             _overlayPanel.BackColor = Color.White;
             _overlayPanel.BorderStyle = BorderStyle.FixedSingle;
             _overlayPanel.Icon = (Image)resources.GetObject("_overlayPanel.Icon");
-            _overlayPanel.Location = new Point(12, 393);
+            _overlayPanel.Location = new Point(515, 30);
+            _overlayPanel.Margin = new Padding(0);
             _overlayPanel.Name = "_overlayPanel";
             _overlayPanel.Padding = new Padding(16, 40, 10, 16);
-            _overlayPanel.Size = new Size(300, 260);
+            _overlayPanel.Size = new Size(300, 350);
             _overlayPanel.TabIndex = 9;
             _overlayPanel.Title = "Overlay";
             // 
@@ -131,10 +134,11 @@ namespace CKG.Forms
             _notificationPanel.BackColor = Color.White;
             _notificationPanel.BorderStyle = BorderStyle.FixedSingle;
             _notificationPanel.Icon = (Image)resources.GetObject("_notificationPanel.Icon");
-            _notificationPanel.Location = new Point(322, 393);
+            _notificationPanel.Location = new Point(515, 386);
+            _notificationPanel.Margin = new Padding(0);
             _notificationPanel.Name = "_notificationPanel";
             _notificationPanel.Padding = new Padding(16, 40, 10, 16);
-            _notificationPanel.Size = new Size(400, 260);
+            _notificationPanel.Size = new Size(300, 280);
             _notificationPanel.TabIndex = 10;
             _notificationPanel.Title = "Notification";
             // 
@@ -143,10 +147,11 @@ namespace CKG.Forms
             _hotkeysPanel.BackColor = Color.White;
             _hotkeysPanel.BorderStyle = BorderStyle.FixedSingle;
             _hotkeysPanel.Icon = (Image)resources.GetObject("_hotkeysPanel.Icon");
-            _hotkeysPanel.Location = new Point(12, 659);
+            _hotkeysPanel.Location = new Point(9, 672);
+            _hotkeysPanel.Margin = new Padding(0);
             _hotkeysPanel.Name = "_hotkeysPanel";
             _hotkeysPanel.Padding = new Padding(16, 40, 10, 16);
-            _hotkeysPanel.Size = new Size(400, 230);
+            _hotkeysPanel.Size = new Size(500, 230);
             _hotkeysPanel.TabIndex = 11;
             _hotkeysPanel.Title = "Hotkeys";
             // 
@@ -155,7 +160,8 @@ namespace CKG.Forms
             _advancedPanel.BackColor = Color.White;
             _advancedPanel.BorderStyle = BorderStyle.FixedSingle;
             _advancedPanel.Icon = (Image)resources.GetObject("_advancedPanel.Icon");
-            _advancedPanel.Location = new Point(422, 659);
+            _advancedPanel.Location = new Point(515, 672);
+            _advancedPanel.Margin = new Padding(0);
             _advancedPanel.Name = "_advancedPanel";
             _advancedPanel.Padding = new Padding(16, 40, 10, 16);
             _advancedPanel.Size = new Size(300, 230);
@@ -167,7 +173,7 @@ namespace CKG.Forms
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
-            ClientSize = new Size(734, 901);
+            ClientSize = new Size(824, 911);
             Controls.Add(_advancedPanel);
             Controls.Add(_hotkeysPanel);
             Controls.Add(_notificationPanel);

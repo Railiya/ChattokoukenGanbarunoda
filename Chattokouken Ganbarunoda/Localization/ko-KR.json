@@ -19,7 +19,10 @@
   "General": {
     "_titleLabel": "일반",
     "_startTranslateToggle": "버퍼 상태 진입 시 자동 번역 요청",
-    "_autoSendMessageToggle": "번역 완료 시 클립보드 자동 전송",
+    "_autoSendClipboardToggle": "번역 완료 시 클립보드 자동 전송",
+    "_startCapturingToggle": "클립보드 전송 시 자동 캡처 전환",
+    "_outputSkipChatStartToggle": "클립보드 전송 시 채팅 시작 입력 단계 생략",
+    "_overlayInputSkipChatStartToggle": "(오버레이 입력) 원문 전송 시 채팅 시작 입력 단계 생략",
     "_inputMethodLabel": "입력 방식",
     "_inputMethodSelector": [
         "직접 입력",
@@ -35,7 +38,7 @@
       "알파벳",
       "한글"
     ],
-    "_inputModeHintLabel": "한영키를 눌러 인풋 모드를 전환합니다. \nCtrl (또는 Alt, Shift)를 누른 상태에서 한영키를 누르면 IME 언어 모드만 변경할 수 있습니다"
+    "_directInputHint": "직접 입력 힌트: \n한영키를 눌러 인풋 모드를 전환합니다. \nCtrl (또는 Alt, Shift)를 누른 상태에서 한영키를 누르면 IME 언어 모드만 변경할 수 있습니다"
   },
   "Translation": {
     "_titleLabel": "번역",
@@ -67,10 +70,10 @@
   },
   "Hotkeys": {
     "_titleLabel": "단축키",
-    "_enableCapturingLabel": "캡처 활성화",
-    "_capturingToggleLabel": "캡처 토글",
-    "_translateLabel": "번역 요청",
-    "_sendClipboardLabel": "클립보드 전송",
+    "_enableCapturingKeyGroup": "캡처 활성화",
+    "_chatToggleKeyGroup": "채팅 토글",
+    "_requestTranslateKeyGroup": "번역 요청",
+    "_sendClipboardKeyGroup": "클립보드 전송",
     "_hotkeysHintLabel": "단축키를 설정하려면 Key 버튼을 누르고 원하는 키를 눌러주세요"
   },
   "Advanced": {
@@ -84,9 +87,12 @@
   "Tooltip": {
     "_startTranslateToggle": "입력이 완료되고 버퍼 상태가 되면 자동으로 번역 요청을 보냅니다",
     "_autoSendMessageToggle": "번역이 완료되면 자동으로 클립보드 전송을 시작합니다",
+    "_startCapturingToggle": "클립보드 전송이 완료되면 다음 텍스트 입력을 위해 자동으로 캡처 상태로 전환됩니다",
+    "_outputSkipChatStartToggle": "클립보드 전송 과정 중 채팅 시작 입력 단계를 생략합니다",
+    "_overlayInputSkipChatStartToggle": "오버레이 입력 사용 중 원문을 전송할 때 채팅 시작 입력 단계를 생략합니다",
     "_inputMethodLabel": "채팅 원문을 입력하는 방식\n\t직접 입력 : 게임 또는 메신저의 채팅에 입력합니다. 키 입력을 통해 글자를 조합합니다.\n\t오버레이 입력 : 프로그램의 인풋 필드에 입력합니다. 직접 입력을 지원하지 않는 언어의 경우 사용합니다.",
     "_outputMethodLabel": "입력 매크로의 작동 방식입니다\n\t클립보드 붙여넣기 : 클립보드 내용을 붙여 넣는 방식입니다\n\t입력 시뮬레이션 : 클립보드 내용을 한글자씩 입력하는 방식입니다 (붙여넣기가 지원되지 않는 게임에서 사용합니다)",
-    "_defaultInputModeLabel": "프로그램 최초 언어 입력 모드입니다",
+    "_defaultInputCharacterLabel": "프로그램 최초 언어 입력 모드입니다",
     "_enableCapturingLabel": "프로그램의 키 입력 상태를 켜거나 끕니다",
     "_capturingToggleLabel": "입력의 시작과 끝입니다 (게임에서 사용할 경우 채팅 단축키에 맞춰주세요)",
     "_translateLabel": "번역 요청을 보냅니다",

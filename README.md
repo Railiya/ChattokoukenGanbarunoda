@@ -199,8 +199,8 @@ When the X button is pressed, the program does not fully close and instead minim
 | Setting | Description |
 |---|---|
 | Enable Capturing | Enables or disables keyboard capturing |
-| Capturing Toggle | Starts or finishes input capturing (should match the chat hotkey in games) |
-| Translate | Sends a translation request |
+| Chat Toggle | Starts or finishes input capturing (should match the chat hotkey in games) |
+| Request Translation | Sends a translation request |
 | Send Clipboard | Executes the clipboard input macro |
 
 <br>

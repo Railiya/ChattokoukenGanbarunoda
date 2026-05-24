@@ -16,13 +16,22 @@
     <Compile Update="Controls\HeaderButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="Controls\HotkeyGroupRowItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Controls\HotkeysPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\LabelGroupRowItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Controls\NotificationPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Controls\OverlayPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\TableGroupRowItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Controls\TranslationPanel.cs">

@@ -153,7 +153,7 @@ namespace CKG.Input
             }
 
             if (IsHotkeyPressed(UserProfile.Current.SendClipboardKeySetting, key) && 
-                UserProfile.Current.AutoSendMessageOnTranslated == false)
+                UserProfile.Current.AutoSendClipboardOnTranslated == false)
             {
                 SendMacroMessage();
                 return;
