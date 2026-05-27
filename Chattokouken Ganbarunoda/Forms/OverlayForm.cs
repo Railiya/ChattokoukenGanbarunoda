@@ -290,13 +290,13 @@ namespace CKG.Forms
             string result = null;
 
             _inputField.Visible = toggle;
-            _inputField.Text = "";
 
             UpdateRect();
 
             if (toggle)
             {
                 Activate();
+                _inputField.Text = "";
                 _inputField.Select();
             }
             else if (invokeFlush)
@@ -310,7 +310,6 @@ namespace CKG.Forms
 
         private void _inputField_TextChanged(object sender, EventArgs e)
         {
-            Logger.Write(_inputField.Text);
             UpdateRect();
         }
 

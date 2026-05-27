@@ -15,21 +15,9 @@ namespace CKG.Controls
 
         public override void UpdateProfile(UserProfile profile)
         {
-            _inputTimeoutField.Value = profile.InputTimeout;
             _debugEchoModeToggle.Checked = profile.DebugEchoMode;
             _writeLogFileToggle.Checked = profile.WriteLogFile;
             _executeOnWindowStartToggle.Checked = profile.ExecuteOnWindowStart;
-        }
-
-        private void _inputTimeoutField_ValueChanged(object sender, EventArgs e)
-        {
-            if (MainForm.LockControlEvents)
-            {
-                return;
-            }
-
-            UserProfile.Current.InputTimeout = (int)_inputTimeoutField.Value;
-            AppDataManager.SaveCurrentProfile();
         }
 
         private void _debugEchoModeToggle_CheckedChanged(object sender, EventArgs e)

@@ -85,6 +85,8 @@ namespace CKG.Controls
             set => _shiftToggle.Checked = value;
         }
 
+        public Label NameLabel => _nameLabel;
+
         #endregion
 
         private Label _nameLabel = null;

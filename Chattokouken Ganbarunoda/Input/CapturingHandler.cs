@@ -33,6 +33,7 @@ namespace CKG.Input
 
         private EInputMethod _inputMethod = EInputMethod.DirectInput;
         private IntPtr _cachedForegroundWindow = IntPtr.Zero;
+        private bool _isTranslatingReserved = false;
         private bool _isDisposed = false;
 
         public CapturingHandler()
@@ -42,6 +43,7 @@ namespace CKG.Input
             _keyObserver = new KeyInputObserver();
             _keyObserver.KeyDown += OnKeyDown;
             _keyMacro = new KeyMacroHandler();
+            _keyMacro.OnMacroSended += OnMacroSended;
 
             //Set default input mode
             SetInputMethod((EInputMethod)UserProfile.Current.InputMethodIndex);
@@ -95,7 +97,7 @@ namespace CKG.Input
             SetState(ECapturingState.Failed);
         }
 
-        public void SendMacroMessage()
+        public void SendMacroMessage(bool skipChatStartInput, bool reserveTranslating = false)
         {
             string clipboard = Clipboard.GetText();
 
@@ -104,14 +106,18 @@ namespace CKG.Input
                 return;
             }
 
-            switch ((EOutputMethod)UserProfile.Current.OutputMethodIndex)
+            UserProfile profile = UserProfile.Current;
+            Keys chatKey = profile.ChatToggleKeySetting.Key;
+            _isTranslatingReserved = reserveTranslating;
+
+            switch ((EOutputMethod)profile.OutputMethodIndex)
             {
                 case EOutputMethod.ClipboardPaste:
-                    _keyMacro.SendClipboardPaste();
+                    _keyMacro.SendClipboardPaste(chatKey, skipChatStartInput);
                     break;
 
                 case EOutputMethod.InputSimulation:
-                    _keyMacro.SendInputSimulation(clipboard);
+                    _keyMacro.SendInputSimulation(clipboard, chatKey, skipChatStartInput);
                     break;
             }
         }
@@ -135,9 +141,11 @@ namespace CKG.Input
 
         #region Private Key Handle Functions
 
-        private void OnKeyDown(Keys key)
+        private async void OnKeyDown(Keys key)
         {
-            if (IsHotkeyPressed(UserProfile.Current.EnableCapturingKeySetting, key))
+            UserProfile profile = UserProfile.Current;
+
+            if (IsHotkeyPressed(profile.EnableCapturingKeySetting, key))
             {
                 if (State == ECapturingState.Disabled)
                 {
@@ -146,16 +154,16 @@ namespace CKG.Input
                 else
                 {
                     SetState(ECapturingState.Disabled);
-                    DeactivateInput();
+                    await DeactivateInput();
                 }
 
                 return;
             }
 
-            if (IsHotkeyPressed(UserProfile.Current.SendClipboardKeySetting, key) && 
-                UserProfile.Current.AutoSendClipboardOnTranslated == false)
+            if (IsHotkeyPressed(profile.SendClipboardKeySetting, key) && 
+                profile.AutoSendClipboardOnTranslated == false)
             {
-                SendMacroMessage();
+                SendMacroMessage(profile.SkipChatStartOnSendClipboard);
                 return;
             }
 
@@ -203,32 +211,50 @@ namespace CKG.Input
             }
         }
 
-        private void HandleIdleState(Keys key)
+        private void OnMacroSended()
         {
-            if (IsHotkeyPressed(UserProfile.Current.CapturingToggleKeySetting, key))
+            if (_isTranslatingReserved)
+            {
+                _isTranslatingReserved = false;
+                SetTranslating();
+            }
+            else if (UserProfile.Current.StartCapturingOnSendClipboard)
             {
                 ResetBffer();
                 SetState(ECapturingState.Capturing);
-                TryActiveOverlayInput();
             }
         }
 
-        private void HandleCapturingState(Keys key)
+        private void HandleIdleState(Keys key)
         {
-            if (IsHotkeyPressed(UserProfile.Current.CapturingToggleKeySetting, key))
+            if (IsHotkeyPressed(UserProfile.Current.ChatToggleKeySetting, key))
+            {
+                ResetBffer();
+                SetState(ECapturingState.Capturing);
+            }
+        }
+
+        private async void HandleCapturingState(Keys key)
+        {
+            if (IsHotkeyPressed(UserProfile.Current.ChatToggleKeySetting, key))
             {
                 switch (_inputMethod)
                 {
                     case EInputMethod.DirectInput:
+                    {
                         FlushComposerToBuffer();
                         BufferedText = _buffer.ToString();
                         break;
+                    }
 
                     case EInputMethod.OverlayInput:
+                    {
                         OnInputToggleBefore?.Invoke(false);
                         BufferedText = OnInputToggle?.Invoke(false, true);
-                        DeactivateInput();
+   
+                        await DeactivateInput();
                         break;
+                    }
                 }
 
                 if (string.IsNullOrEmpty(BufferedText))
@@ -276,11 +302,10 @@ namespace CKG.Input
                 return;
             }
 
-            if (IsHotkeyPressed(UserProfile.Current.CapturingToggleKeySetting, key))
+            if (IsHotkeyPressed(UserProfile.Current.ChatToggleKeySetting, key))
             {
                 ResetBffer();
                 SetState(ECapturingState.Capturing);
-                TryActiveOverlayInput();
                 return;
             }
         }
@@ -293,22 +318,20 @@ namespace CKG.Input
                 return;
             }
 
-            if (IsHotkeyPressed(UserProfile.Current.CapturingToggleKeySetting, key))
+            if (IsHotkeyPressed(UserProfile.Current.ChatToggleKeySetting, key))
             {
                 ResetBffer();
                 SetState(ECapturingState.Capturing);
-                TryActiveOverlayInput();
                 return;
             }
         }
 
         private void HandleFailedState(Keys key)
         {
-            if (IsHotkeyPressed(UserProfile.Current.CapturingToggleKeySetting, key))
+            if (IsHotkeyPressed(UserProfile.Current.ChatToggleKeySetting, key))
             {
                 ResetBffer();
                 SetState(ECapturingState.Capturing);
-                TryActiveOverlayInput();
             }
         }
 
@@ -361,6 +384,12 @@ namespace CKG.Input
 
         private void SetState(ECapturingState state)
         {
+            if (UserProfile.Current.SkipIdleState && state == ECapturingState.Idle)
+            {
+                //Check idle skip setting
+                state = ECapturingState.Capturing;
+            }
+
             if (State == state)
             {
                 return;
@@ -368,6 +397,12 @@ namespace CKG.Input
 
             State = state;
             OnStateChanged?.Invoke(State);
+
+            //Try active overlay inpuy on capturing
+            if (State == ECapturingState.Capturing)
+            {
+                TryActiveOverlayInput();
+            }
         }
 
         private void FlushComposerToBuffer()
@@ -455,7 +490,7 @@ namespace CKG.Input
             await Task.Delay(100);
         }
 
-        private void DeactivateInput()
+        private async Task DeactivateInput()
         {
             if (_cachedForegroundWindow == IntPtr.Zero)
             {
@@ -464,6 +499,8 @@ namespace CKG.Input
 
             SetForegroundWindow(_cachedForegroundWindow);
             _cachedForegroundWindow = IntPtr.Zero;
+
+            await Task.Delay(100);
         }
 
         #endregion

@@ -3,6 +3,7 @@ using System.Threading;
 using System.Collections.Concurrent;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using CKG.Forms;
 
 namespace CKG.Input
 {
@@ -29,13 +30,18 @@ namespace CKG.Input
             }
         }
 
+        public event Action OnMacroSended = null;
+
         public int IntervalMs { get; set; } = 10;
         public bool IsRunning { get; private set; }
 
         private INPUT[] _charInputs = new INPUT[2];
         private ConcurrentQueue<SMacroInput> _keyQueue = null;
+
         private ManualResetEventSlim _resetSignal = null;
         private CancellationTokenSource _cancelTokenSource = null;
+        private SynchronizationContext _syncContext = null;
+        private SendOrPostCallback _invokeMacroSendedCallback = null;
         private Thread _worker = null;
 
         private bool _isDisposed = false;
@@ -45,8 +51,24 @@ namespace CKG.Input
             _keyQueue = new ConcurrentQueue<SMacroInput>();
             _resetSignal = new ManualResetEventSlim(false);
             _cancelTokenSource = new CancellationTokenSource();
+            _invokeMacroSendedCallback = InvokeMacroSendedCallback;
             _worker = new Thread(WorkerLoop) { IsBackground = true };
             _worker.Start();
+
+            if (SynchronizationContext.Current != null)
+            {
+                _syncContext = SynchronizationContext.Current;
+            }
+            else
+            {
+                MainForm.OnFormLoad += OnMainFormLoad;
+            }
+        }
+
+        private void OnMainFormLoad()
+        {
+            _syncContext = SynchronizationContext.Current;
+            MainForm.OnFormLoad -= OnMainFormLoad;
         }
 
         public void Dispose()
@@ -68,23 +90,30 @@ namespace CKG.Input
 
         #region Public Functions
 
-        public void SendClipboardPaste()
+        public void SendClipboardPaste(Keys chatToggleKey, bool skipChatStartInput)
         {
-            EnqueueKey(Keys.Enter);
+            if (skipChatStartInput == false)
+            {
+                EnqueueKey(chatToggleKey);
+            }
+            
             EnqueueKey(Keys.Control | Keys.V);
-            EnqueueKey(Keys.Enter);
+            EnqueueKey(chatToggleKey);
         }
 
-        public void SendInputSimulation(string text)
+        public void SendInputSimulation(string text, Keys chatToggleKey, bool skipChatStartInput)
         {
-            EnqueueKey(Keys.Enter);
+            if (skipChatStartInput == false)
+            {
+                EnqueueKey(chatToggleKey);
+            }
 
             foreach (char c in text)
             {
                 EnqueueChar(c);
             }
 
-            EnqueueKey(Keys.Enter);
+            EnqueueKey(chatToggleKey);
         }
 
         #endregion
@@ -95,12 +124,14 @@ namespace CKG.Input
         {
             while (_cancelTokenSource.IsCancellationRequested == false)
             {
+                bool hasSended = false;
+
                 try
                 {
                     _resetSignal.Wait(_cancelTokenSource.Token);
                     _resetSignal.Reset();
 
-                    SetRunningState(true);
+                    SetRunningState(true, false);
 
                     while (_keyQueue.TryDequeue(out SMacroInput input))
                     {
@@ -114,12 +145,13 @@ namespace CKG.Input
                         }
 
                         Thread.Sleep(IntervalMs);
+                        hasSended = true;
                     }
                 }
                 catch (OperationCanceledException) { } //This exception is normal
                 finally
                 {
-                    SetRunningState(false);
+                    SetRunningState(false, hasSended);
                 }
             }
         }
@@ -186,10 +218,20 @@ namespace CKG.Input
             }
         }
 
-        private void SetRunningState(bool active)
+        private void SetRunningState(bool active, bool hasMacroSended)
         {
             IsRunning = active;
             BlockInput(active);
+
+            if (active == false && hasMacroSended)
+            {
+                _syncContext.Post(_invokeMacroSendedCallback, null);
+            }
+        }
+
+        private void InvokeMacroSendedCallback(object state)
+        {
+            OnMacroSended?.Invoke();
         }
 
         private void SendChar(char c)

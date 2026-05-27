@@ -11,11 +11,12 @@ namespace CKG
         public int Number = 0;
 
         //General
-        public bool StartTranslateOnBuffered = false;
-        public bool AutoSendClipboardOnTranslated = false;
+        public bool StartTranslateOnBuffered = true;
+        public bool AutoSendClipboardOnTranslated = true;
         public bool StartCapturingOnSendClipboard = false;
+        public bool SkipIdleState = false;
         public bool SkipChatStartOnSendClipboard = false;
-        public bool SkipChatStartOnSendOriginalText = false;
+        public bool SkipChatStartOnSendOriginalText = true;
         public int InputMethodIndex = 0;
         public int OutputMethodIndex = 0;
         public int DefaultInputCharacterIndex = 0;
@@ -31,7 +32,7 @@ namespace CKG
 
         //Overlay
         public bool OverlayEnabled = true;
-        public int OverlayAnchorIndex = 0;
+        public int OverlayAnchorIndex = 1;
         public int OverlayOffsetX = 0;
         public int OverlayOffsetY = 0;
         public int OverlayFontSize = 12;
@@ -46,12 +47,11 @@ namespace CKG
 
         //Hotkeys
         public SKeySetting EnableCapturingKeySetting = new SKeySetting(Keys.Scroll, false, false, false);
-        public SKeySetting CapturingToggleKeySetting = new SKeySetting(Keys.Enter, false, false, false);
+        public SKeySetting ChatToggleKeySetting = new SKeySetting(Keys.Enter, false, false, false);
         public SKeySetting TranslateKeySetting = new SKeySetting(Keys.Enter, true, false, false);
         public SKeySetting SendClipboardKeySetting = new SKeySetting(Keys.OemPipe, false, false, false);
 
         //Advanced
-        public int InputTimeout = 3;
         public bool DebugEchoMode = false;
         public bool WriteLogFile = false;
         public bool ExecuteOnWindowStart = false;

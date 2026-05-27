@@ -50,6 +50,8 @@ namespace CKG
 
         private async void OnHandlerCapturingStateChanged(ECapturingState state)
         {
+            UserProfile profile = UserProfile.Current;
+
             OnCapturingStateChanged?.Invoke(state);
 
             //Handle state
@@ -66,19 +68,26 @@ namespace CKG
                 {
                     Logger.Write(state);
 
-                    _soundPlayer.Play(ESound.CapturingStart, UserProfile.Current.NotifyOnCapturingStart);
+                    _soundPlayer.Play(ESound.CapturingStart, profile.NotifyOnCapturingStart);
                     break;
                 }
                 case ECapturingState.Buffered:
                 {
                     string text = _capturingHandler.BufferedText;
+                    bool autoTranslate = profile.StartTranslateOnBuffered;
 
                     Logger.Write(state, text);
 
-                    if (UserProfile.Current.StartTranslateOnBuffered)
+                    if ((EInputMethod)profile.InputMethodIndex == EInputMethod.OverlayInput)
+                    {
+                        Clipboard.SetText(text);
+                        _capturingHandler.SendMacroMessage(profile.SkipChatStartOnSendOriginalText, autoTranslate);
+                    }
+                    else if (autoTranslate)
                     {
                         _capturingHandler.SetTranslating();
                     }
+
                     break;
                 }
                 case ECapturingState.Translating:
@@ -87,7 +96,7 @@ namespace CKG
 
                     string text = _capturingHandler.BufferedText;
 
-                    if (UserProfile.Current.DebugEchoMode)
+                    if (profile.DebugEchoMode)
                     {
                         Clipboard.SetText(text);
                         _capturingHandler.SetTranslated();
@@ -113,19 +122,19 @@ namespace CKG
                 {
                     Logger.Write(state, Clipboard.GetText());
 
-                    if (UserProfile.Current.AutoSendClipboardOnTranslated)
+                    if (profile.AutoSendClipboardOnTranslated)
                     {
-                        _capturingHandler.SendMacroMessage();
+                        _capturingHandler.SendMacroMessage(profile.SkipChatStartOnSendClipboard);
                     }
 
-                    _soundPlayer.Play(ESound.TranslationCompleted, UserProfile.Current.NotifyOnTranslationCompleted);
+                    _soundPlayer.Play(ESound.TranslationCompleted, profile.NotifyOnTranslationCompleted);
                     break;
                 }
                 case ECapturingState.Failed:
                 {
                     Logger.Write(state, _translationService.LastTranslatedText);
 
-                    _soundPlayer.Play(ESound.TranslationFailed, UserProfile.Current.NotifyOnTranslationFailed);
+                    _soundPlayer.Play(ESound.TranslationFailed, profile.NotifyOnTranslationFailed);
                     break;
                 }
                 default:

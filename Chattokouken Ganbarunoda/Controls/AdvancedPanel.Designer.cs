@@ -31,11 +31,7 @@
             _debugEchoModeToggle = new System.Windows.Forms.CheckBox();
             _executeOnWindowStartToggle = new System.Windows.Forms.CheckBox();
             _writeLogFileToggle = new System.Windows.Forms.CheckBox();
-            _inputTimeoutHintLabel = new System.Windows.Forms.Label();
-            _inputTimeoutLabel = new System.Windows.Forms.Label();
-            _inputTimeoutField = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)_iconBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)_inputTimeoutField).BeginInit();
             SuspendLayout();
             // 
             // _titleLabel
@@ -52,7 +48,7 @@
             // _debugEchoModeToggle
             // 
             _debugEchoModeToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            _debugEchoModeToggle.Location = new System.Drawing.Point(19, 87);
+            _debugEchoModeToggle.Location = new System.Drawing.Point(19, 50);
             _debugEchoModeToggle.Name = "_debugEchoModeToggle";
             _debugEchoModeToggle.Size = new System.Drawing.Size(262, 20);
             _debugEchoModeToggle.TabIndex = 27;
@@ -64,7 +60,7 @@
             // 
             _executeOnWindowStartToggle.Enabled = false;
             _executeOnWindowStartToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            _executeOnWindowStartToggle.Location = new System.Drawing.Point(19, 157);
+            _executeOnWindowStartToggle.Location = new System.Drawing.Point(19, 120);
             _executeOnWindowStartToggle.Name = "_executeOnWindowStartToggle";
             _executeOnWindowStartToggle.Size = new System.Drawing.Size(262, 20);
             _executeOnWindowStartToggle.TabIndex = 26;
@@ -75,44 +71,13 @@
             // _writeLogFileToggle
             // 
             _writeLogFileToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            _writeLogFileToggle.Location = new System.Drawing.Point(19, 122);
+            _writeLogFileToggle.Location = new System.Drawing.Point(19, 85);
             _writeLogFileToggle.Name = "_writeLogFileToggle";
             _writeLogFileToggle.Size = new System.Drawing.Size(262, 20);
             _writeLogFileToggle.TabIndex = 22;
             _writeLogFileToggle.Text = "Write Log File";
             _writeLogFileToggle.UseVisualStyleBackColor = true;
             _writeLogFileToggle.CheckedChanged += _writeLogFileToggle_CheckedChanged;
-            // 
-            // _inputTimeoutHintLabel
-            // 
-            _inputTimeoutHintLabel.Location = new System.Drawing.Point(200, 50);
-            _inputTimeoutHintLabel.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
-            _inputTimeoutHintLabel.Name = "_inputTimeoutHintLabel";
-            _inputTimeoutHintLabel.Size = new System.Drawing.Size(84, 20);
-            _inputTimeoutHintLabel.TabIndex = 23;
-            _inputTimeoutHintLabel.Text = "(0: Disabled)";
-            // 
-            // _inputTimeoutLabel
-            // 
-            _inputTimeoutLabel.Location = new System.Drawing.Point(16, 50);
-            _inputTimeoutLabel.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            _inputTimeoutLabel.Name = "_inputTimeoutLabel";
-            _inputTimeoutLabel.Size = new System.Drawing.Size(115, 20);
-            _inputTimeoutLabel.TabIndex = 24;
-            _inputTimeoutLabel.Text = "Input Timeout (sec)";
-            // 
-            // _inputTimeoutField
-            // 
-            _inputTimeoutField.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            _inputTimeoutField.Enabled = false;
-            _inputTimeoutField.Location = new System.Drawing.Point(137, 47);
-            _inputTimeoutField.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
-            _inputTimeoutField.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            _inputTimeoutField.Name = "_inputTimeoutField";
-            _inputTimeoutField.Size = new System.Drawing.Size(60, 23);
-            _inputTimeoutField.TabIndex = 25;
-            _inputTimeoutField.Value = new decimal(new int[] { 3, 0, 0, 0 });
-            _inputTimeoutField.ValueChanged += _inputTimeoutField_ValueChanged;
             // 
             // AdvancedPanel
             // 
@@ -121,24 +86,17 @@
             Controls.Add(_debugEchoModeToggle);
             Controls.Add(_executeOnWindowStartToggle);
             Controls.Add(_writeLogFileToggle);
-            Controls.Add(_inputTimeoutHintLabel);
-            Controls.Add(_inputTimeoutLabel);
-            Controls.Add(_inputTimeoutField);
             Icon = Properties.Resources.advanced_icon;
             Name = "AdvancedPanel";
             Padding = new System.Windows.Forms.Padding(16, 40, 16, 16);
-            Size = new System.Drawing.Size(300, 230);
+            Size = new System.Drawing.Size(300, 160);
             Title = "Advanced";
             Controls.SetChildIndex(_titleLabel, 0);
             Controls.SetChildIndex(_iconBox, 0);
-            Controls.SetChildIndex(_inputTimeoutField, 0);
-            Controls.SetChildIndex(_inputTimeoutLabel, 0);
-            Controls.SetChildIndex(_inputTimeoutHintLabel, 0);
             Controls.SetChildIndex(_writeLogFileToggle, 0);
             Controls.SetChildIndex(_executeOnWindowStartToggle, 0);
             Controls.SetChildIndex(_debugEchoModeToggle, 0);
             ((System.ComponentModel.ISupportInitialize)_iconBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)_inputTimeoutField).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -148,8 +106,5 @@
         private System.Windows.Forms.CheckBox _debugEchoModeToggle;
         private System.Windows.Forms.CheckBox _executeOnWindowStartToggle;
         private System.Windows.Forms.CheckBox _writeLogFileToggle;
-        private System.Windows.Forms.Label _inputTimeoutHintLabel;
-        private System.Windows.Forms.Label _inputTimeoutLabel;
-        private System.Windows.Forms.NumericUpDown _inputTimeoutField;
     }
 }

@@ -8,6 +8,7 @@ namespace CKG.Controls
         StartTranslateOnBuffered,
         AutoSendMessageOnTranslated,
         StartCapturingOnSendClipboard,
+        SkipIdleState,
         SkipChatStartOnSendClipboard,
         SkipChatStartOnSendOriginalText
     }
@@ -29,6 +30,10 @@ namespace CKG.Controls
         {
             _startTranslateToggle.Checked = profile.StartTranslateOnBuffered;
             _autoSendClipboardToggle.Checked = profile.AutoSendClipboardOnTranslated;
+            _startCapturingToggle.Checked = profile.StartCapturingOnSendClipboard;
+            _skipIdleToggle.Checked = profile.SkipIdleState;
+            _outputSkipChatStartToggle.Checked = profile.SkipChatStartOnSendClipboard;
+            _overlayInputSkipChatStartToggle.Checked = profile.SkipChatStartOnSendOriginalText;
             _inputMethodSelector.SelectedIndex = profile.InputMethodIndex;
             _outputMethodSelector.SelectedIndex = profile.OutputMethodIndex;
             _defaultInputCharacterSelector.SelectedIndex = profile.DefaultInputCharacterIndex;
@@ -73,6 +78,20 @@ namespace CKG.Controls
             UserProfile.Current.StartCapturingOnSendClipboard = toggle;
 
             OnToggleChanged?.Invoke(EGeneralSettingToggle.StartCapturingOnSendClipboard, toggle);
+            AppDataManager.SaveCurrentProfile();
+        }
+
+        private void _skipIdleToggle_CheckedChanged(object sender, EventArgs e)
+        {
+            if (MainForm.LockControlEvents)
+            {
+                return;
+            }
+
+            bool toggle = _skipIdleToggle.Checked;
+            UserProfile.Current.SkipIdleState = toggle;
+
+            OnToggleChanged?.Invoke(EGeneralSettingToggle.SkipIdleState, toggle);
             AppDataManager.SaveCurrentProfile();
         }
 

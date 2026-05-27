@@ -32,7 +32,7 @@ namespace CKG.Controls
         public override void UpdateProfile(UserProfile profile)
         {
             _hotkeyGroups[EHotkey.EnableCapturing.ToInt32()].KeySetting = profile.EnableCapturingKeySetting;
-            _hotkeyGroups[EHotkey.ChatToggle.ToInt32()].KeySetting = profile.CapturingToggleKeySetting;
+            _hotkeyGroups[EHotkey.ChatToggle.ToInt32()].KeySetting = profile.ChatToggleKeySetting;
             _hotkeyGroups[EHotkey.RequestTranslate.ToInt32()].KeySetting = profile.TranslateKeySetting;
             _hotkeyGroups[EHotkey.SendClipboard.ToInt32()].KeySetting = profile.SendClipboardKeySetting;
         }
@@ -56,7 +56,7 @@ namespace CKG.Controls
                     break;
 
                 case EHotkey.ChatToggle:
-                    UserProfile.Current.CapturingToggleKeySetting = setting;
+                    UserProfile.Current.ChatToggleKeySetting = setting;
                     break;
 
                 case EHotkey.RequestTranslate:

@@ -11,6 +11,8 @@ namespace CKG.Forms
     {
         private const string PROJECT_NAME = "Chattokouken Ganbarunoda!!";
 
+        public static event Action OnFormLoad = null;
+
         public static bool LockControlEvents { get; private set; }
 
         private ContextMenuStrip _trayMenu = null;
@@ -92,6 +94,12 @@ namespace CKG.Forms
         {
             base.OnShown(e);
             Activate();
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            OnFormLoad?.Invoke();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)

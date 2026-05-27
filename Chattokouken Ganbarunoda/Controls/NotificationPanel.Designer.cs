@@ -160,7 +160,7 @@
             Icon = Properties.Resources.notification_icon;
             Name = "NotificationPanel";
             Padding = new System.Windows.Forms.Padding(16, 40, 16, 16);
-            Size = new System.Drawing.Size(300, 260);
+            Size = new System.Drawing.Size(300, 240);
             Title = "Notification";
             Controls.SetChildIndex(_titleLabel, 0);
             Controls.SetChildIndex(_iconBox, 0);

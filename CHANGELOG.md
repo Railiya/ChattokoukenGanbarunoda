@@ -1,14 +1,24 @@
 # Changelog
 
-## v0.1.4
+## v0.2.0
 
 **추가 사항**
 - 일반 및 단축키 설정에 툴팁 추가
 - 로컬라제이션 추가 (영어, 한국어, 일본어 지원)
+- 메신저를 위한 편의성 일반 옵션 추가
+- 오버레이 입력 기능 추가
+
+**변경 사항**
+- 프로그램 디자인 변경
 
 **Added**
 - Tooltip added on General and Hotkeys settings
 - Support localization of English, Korean and Japanese
+- Add convenient general options for messenger program
+- Add overlay input feature
+
+**Changed**
+- Program design changed
 
 ## v0.1.3
 

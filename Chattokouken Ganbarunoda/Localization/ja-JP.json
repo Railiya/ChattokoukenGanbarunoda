@@ -21,6 +21,7 @@
     "_startTranslateToggle": "バッファ状態時に自動翻訳を開始",
     "_autoSendClipboardToggle": "翻訳完了時にクリップボードへ自動送信",
     "_startCapturingToggle": "クリップボード送信時に自動でキャプチャに切り替え",
+    "_skipIdleToggle": "待機状態省略",
     "_outputSkipChatStartToggle": "クリップボード送信時 チャット開始入力段階省略",
     "_overlayInputSkipChatStartToggle": "（オーバーレイ入力）原文送信時 チャット開始入力段階省略",
     "_inputMethodLabel": "入力方式",
@@ -78,24 +79,23 @@
   },
   "Advanced": {
     "_titleLabel": "高度な設定",
-    "_inputTimeoutLabel": "入力タイムアウト (秒)",
-    "_inputTimeoutHintLabel": "(0: 無効化)",
     "_debugEchoModeToggle": "デバッグエコーモード",
     "_writeLogFileToggle": "ログファイルの作成",
     "_executeOnWindowStartToggle": "Windows起動時に自動実行"
   },
   "Tooltip": {
     "_startTranslateToggle": "入力が完了しバッファ状態になると、自動的に翻訳要求を送信します。",
-    "_autoSendMessageToggle": "翻訳が完了すると、自動的にクリップボード送信マクロを実行します。",
+    "_autoSendClipboardToggle": "翻訳が完了すると、自動的にクリップボード送信マクロを実行します。",
     "_startCapturingToggle": "クリップボード送信が完了すると、次のテキスト入力のために自動でキャプチャ状態に切り替わります。",
+    "_skipIdleToggle": "待機状態を省略し、自動でキャプチャ状態に切り替わります。",
     "_outputSkipChatStartToggle": "クリップボード送信の処理中、チャット開始の入力段階を省略します。",
     "_overlayInputSkipChatStartToggle": "オーバーレイ入力の使用中、原文を送信する際のチャット開始の入力段階を省略します。",
     "_inputMethodLabel": "チャット原文の入力方式です。\n\t直接入力 : ゲームやメッセンジャーのチャットに直接入力します。キー入力によって文字を組み合わせます。ただし、日本語は直接入力に対応していません。\n\tオーバーレイ入力 : プログラムの入力フィールドに入力します。直接入力に対応していない言語の場合に使用します。",
     "_outputMethodLabel": "入力マクロの動作方式です。\n\tクリップボード貼り付け : クリップボードの内容をそのまま貼り付けます。\n\t入力シミュレーション : クリップボードの内容を1文字ずつ入力します（貼り付けが制限されているゲームなどで使用します）。",
     "_defaultInputCharacterLabel": "プログラム起動時の初期言語入力モードです。",
-    "_enableCapturingLabel": "プログラムのキー入力キャプチャ状態をオン/オフにします。",
-    "_capturingToggleLabel": "キャプチャ入力の開始と終了です（ゲームで使用する場合は、チャットのショートカットキーに合わせて設定してください）。",
-    "_translateLabel": "翻訳要求を送信します。",
-    "_sendClipboardLabel": "クリップボード内容の入力マクロを実行します。"
+    "_enableCapturingKeyGroup": "プログラムのキー入力キャプチャ状態をオン/オフにします。",
+    "_enableCapturingKeyGroup": "キャプチャ入力の開始と終了です（ゲームで使用する場合は、チャットのショートカットキーに合わせて設定してください）。",
+    "_requestTranslateKeyGroup": "翻訳要求を送信します。",
+    "_sendClipboardKeyGroup": "クリップボード内容の入力マクロを実行します。"
   }
 }

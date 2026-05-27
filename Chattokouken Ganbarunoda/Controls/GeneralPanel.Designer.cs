@@ -40,6 +40,7 @@
             _startCapturingToggle = new System.Windows.Forms.CheckBox();
             _outputSkipChatStartToggle = new System.Windows.Forms.CheckBox();
             _overlayInputSkipChatStartToggle = new System.Windows.Forms.CheckBox();
+            _skipIdleToggle = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)_iconBox).BeginInit();
             SuspendLayout();
             // 
@@ -164,7 +165,7 @@
             // _outputSkipChatStartToggle
             // 
             _outputSkipChatStartToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            _outputSkipChatStartToggle.Location = new System.Drawing.Point(256, 90);
+            _outputSkipChatStartToggle.Location = new System.Drawing.Point(16, 130);
             _outputSkipChatStartToggle.Name = "_outputSkipChatStartToggle";
             _outputSkipChatStartToggle.Size = new System.Drawing.Size(225, 35);
             _outputSkipChatStartToggle.TabIndex = 20;
@@ -175,7 +176,7 @@
             // _overlayInputSkipChatStartToggle
             // 
             _overlayInputSkipChatStartToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            _overlayInputSkipChatStartToggle.Location = new System.Drawing.Point(16, 130);
+            _overlayInputSkipChatStartToggle.Location = new System.Drawing.Point(256, 130);
             _overlayInputSkipChatStartToggle.Name = "_overlayInputSkipChatStartToggle";
             _overlayInputSkipChatStartToggle.Size = new System.Drawing.Size(225, 35);
             _overlayInputSkipChatStartToggle.TabIndex = 21;
@@ -183,8 +184,20 @@
             _overlayInputSkipChatStartToggle.UseVisualStyleBackColor = true;
             _overlayInputSkipChatStartToggle.CheckedChanged += _overlayInputSkipChatStartToggle_CheckedChanged;
             // 
+            // _skipIdleToggle
+            // 
+            _skipIdleToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            _skipIdleToggle.Location = new System.Drawing.Point(256, 90);
+            _skipIdleToggle.Name = "_skipIdleToggle";
+            _skipIdleToggle.Size = new System.Drawing.Size(225, 35);
+            _skipIdleToggle.TabIndex = 22;
+            _skipIdleToggle.Text = "Skip Idle State";
+            _skipIdleToggle.UseVisualStyleBackColor = true;
+            _skipIdleToggle.CheckedChanged += _skipIdleToggle_CheckedChanged;
+            // 
             // GeneralPanel
             // 
+            Controls.Add(_skipIdleToggle);
             Controls.Add(_overlayInputSkipChatStartToggle);
             Controls.Add(_outputSkipChatStartToggle);
             Controls.Add(_startCapturingToggle);
@@ -216,6 +229,7 @@
             Controls.SetChildIndex(_startCapturingToggle, 0);
             Controls.SetChildIndex(_outputSkipChatStartToggle, 0);
             Controls.SetChildIndex(_overlayInputSkipChatStartToggle, 0);
+            Controls.SetChildIndex(_skipIdleToggle, 0);
             ((System.ComponentModel.ISupportInitialize)_iconBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -235,5 +249,6 @@
         private System.Windows.Forms.CheckBox _startCapturingToggle;
         private System.Windows.Forms.CheckBox _outputSkipChatStartToggle;
         private System.Windows.Forms.CheckBox _overlayInputSkipChatStartToggle;
+        private System.Windows.Forms.CheckBox _skipIdleToggle;
     }
 }

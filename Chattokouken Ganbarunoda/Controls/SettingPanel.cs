@@ -110,7 +110,14 @@ namespace CKG.Controls
                         _toolTip = new ToolTip();
                     }
 
-                    _toolTip.SetToolTip(control, property.GetString());
+                    if (control is HotkeyGroupRowItem keyGroup) //Set hotkey group label tooltip
+                    {
+                        _toolTip.SetToolTip(keyGroup.NameLabel, property.GetString());
+                    }
+                    else //Set else (Label, Toggle etc..)
+                    {
+                        _toolTip.SetToolTip(control, property.GetString());
+                    }
                 }
             }
         }
