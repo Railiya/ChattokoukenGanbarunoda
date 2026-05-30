@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.2.1
+
+**추가 사항**
+- 구글 웹 번역기 모델 추가
+- 파파고 웹 번역기 모델 추가
+
+**Added**
+- Add Google Web Translator model
+- Add Papago Web Translator model
+
 ## v0.2.0
 
 **추가 사항**
