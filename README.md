@@ -218,6 +218,18 @@ When the X button is pressed, the program does not fully close and instead minim
 
 <br>
 
+**Web Translator Hint!**
+
+Web translators can be used immediately without any additional setup! However, if they are used too heavily in a single day, usage restrictions may be applied. Since this method relies on unofficial access, it may also stop working if the authentication method changes or the service itself is modified. In that case, you will need to wait for the next update.
+
+<br>
+
+**API Translator Hint!**
+
+Models labeled with "API" require an authentication key before they can be used! Obtaining an API key may be somewhat complicated, but these services are generally more reliable and stable. Depending on the provider, a free plan may be available, while some models only offer paid plans.
+
+<br>
+
 ### Notification
 
 > Sound files are stored in the Sounds folder. They can be replaced as long as the filenames remain the same!
@@ -293,12 +305,6 @@ Please check [CHANGELOG.md](CHANGELOG.md) for update history! Unfortunately, the
 **OCR Translation**
 
 Planned separately from the original project goal. This could also serve as a fallback method when normal input does not work correctly. It also has the advantage of being able to translate messages written by other people.
-
-<br>
-
-**Input Macro Configuration**
-
-Currently, the input macro is focused mainly on games, so it always behaves like "Enter -> Input -> Enter". In messengers, the input field is usually always active, so the first Enter is unnecessary. Additional settings may be added later to handle this more flexibly.
 
 <br>
 

@@ -63,6 +63,7 @@
             // _labelGroup
             // 
             _labelGroup.CellColor = System.Drawing.Color.WhiteSmoke;
+            _labelGroup.CellHeight = 30;
             _labelGroup.CellWidths = new int[]
     {
     200,
@@ -89,6 +90,7 @@
             // _enableCapturingKeyGroup
             // 
             _enableCapturingKeyGroup.Alt = false;
+            _enableCapturingKeyGroup.CellHeight = 30;
             _enableCapturingKeyGroup.CellWidths = new int[]
     {
     200,
@@ -111,6 +113,7 @@
             // _chatToggleKeyGroup
             // 
             _chatToggleKeyGroup.Alt = false;
+            _chatToggleKeyGroup.CellHeight = 30;
             _chatToggleKeyGroup.CellWidths = new int[]
     {
     200,
@@ -133,6 +136,7 @@
             // _requestTranslateKeyGroup
             // 
             _requestTranslateKeyGroup.Alt = false;
+            _requestTranslateKeyGroup.CellHeight = 30;
             _requestTranslateKeyGroup.CellWidths = new int[]
     {
     200,
@@ -155,6 +159,7 @@
             // _sendClipboardKeyGroup
             // 
             _sendClipboardKeyGroup.Alt = false;
+            _sendClipboardKeyGroup.CellHeight = 30;
             _sendClipboardKeyGroup.CellWidths = new int[]
     {
     200,

@@ -3,8 +3,8 @@ namespace CKG
 {
     public enum ETranslatorModel
     {
-        DeepL,
-        Papago,
-        GoogleTranslate
+        GoogleTranslate_Web,
+        Papago_Web,
+        DeepL_API,
     }
 }

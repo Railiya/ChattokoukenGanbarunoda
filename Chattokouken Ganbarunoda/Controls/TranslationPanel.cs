@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using CKG.Forms;
 using CKG.Translator;
@@ -14,6 +15,25 @@ namespace CKG.Controls
 
     public partial class TranslationPanel : SettingPanel
     {
+        private struct SModelInfo
+        {
+            public bool IsApiKeyRequied;
+            public bool HasGlossary;
+
+            public SModelInfo(bool isApiKeyRequired, bool hasGlossary)
+            {
+                IsApiKeyRequied = isApiKeyRequired;
+                HasGlossary = hasGlossary;
+            }
+        }
+
+        private static readonly Dictionary<ETranslatorModel, SModelInfo> MODLE_INFO_TBALE = new Dictionary<ETranslatorModel, SModelInfo>()
+        {
+            { ETranslatorModel.GoogleTranslate_Web, new SModelInfo(false, false) },
+            { ETranslatorModel.Papago_Web, new SModelInfo(false, false) },
+            { ETranslatorModel.DeepL_API, new SModelInfo(true, true) }
+        };
+
         public Action<ETranslatorWorkRequest> OnRequestTranslatorWork = null;
 
         protected override string LocalizationKey => "Translation";
@@ -35,6 +55,8 @@ namespace CKG.Controls
             _destinationLanguageSelector.SelectedIndex = profile.DestinationLanguageIndex;
             _translationFormatField.Text = profile.TranslationFormat;
             _requestTimeoutField.Value = profile.RequestTimeout;
+
+            UpdateFieldEnabled();
         }
 
         public void SetGlossaryId(string id)
@@ -50,10 +72,10 @@ namespace CKG.Controls
             }
 
             UserProfile.Current.ModelIndex = _modelSelector.SelectedIndex;
-
-            _apiKeyField.Text = "";
-            _glossaryIdField.Text = "";
             AppDataManager.SaveCurrentProfile();
+
+            UpdateFieldEnabled();
+            OnRequestTranslatorWork?.Invoke(ETranslatorWorkRequest.InitializeTranslator);
         }
 
         private void _apiKeyField_TextChanged(object sender, EventArgs e)
@@ -145,6 +167,15 @@ namespace CKG.Controls
             {
                 comboBox.Items.Add(info.Name);
             }
+        }
+
+        private void UpdateFieldEnabled()
+        {
+            ETranslatorModel model = (ETranslatorModel)UserProfile.Current.ModelIndex;
+            SModelInfo info = MODLE_INFO_TBALE[model];
+
+            _apiKeyField.Enabled = info.IsApiKeyRequied;
+            _glossarySelectButton.Enabled = info.HasGlossary;
         }
     }
 }

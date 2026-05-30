@@ -1,7 +1,35 @@
-﻿namespace CKG.Translator
+﻿using System.Collections.Generic;
+
+namespace CKG.Translator
 {
+    public readonly record struct SLanguagePair(string Source, string Destination);
+
     public class LanguageCodeInfo
     {
+        private static readonly Dictionary<string, string> LOWER_CODE_MAP = new Dictionary<string, string>
+        {
+            { "KO",      "ko" },
+            { "EN",      "en" },
+            { "EN-US",   "en" },
+            { "EN-GB",   "en" },
+            { "JA",      "ja" },
+            { "ZH",      "zh-CN" },
+            { "ZH-HANS", "zh-CN" },
+            { "ZH-HANT", "zh-TW" },
+            { "ES",      "es" },
+            { "FR",      "fr" },
+            { "DE",      "de" },
+            { "RU",      "ru" },
+            { "PT",      "pt" },
+            { "PT-BR",   "pt" },
+            { "PT-PT",   "pt" },
+            { "ID",      "id" },
+            { "VI",      "vi" },
+            { "TH",      "th" },
+            { "AR",      "ar" },
+            { "HI",      "hi" },
+        };
+
         public static readonly LanguageCodeInfo[] SOURCE_LANGUAGES =
         {
             new LanguageCodeInfo("Arabic", "AR"),
@@ -80,6 +108,19 @@
         {
             Name = name;
             Code = code;
+        }
+
+        public static SLanguagePair ToLower(SLanguagePair pair)
+        {
+            bool hasSource = LOWER_CODE_MAP.TryGetValue(pair.Source, out string source);
+            bool hasDest = LOWER_CODE_MAP.TryGetValue(pair.Destination, out string dest);
+
+            if (hasSource == false || hasDest == false)
+            {
+                return new SLanguagePair(null, null);
+            }
+
+            return new SLanguagePair(source, dest);
         }
     }
 }

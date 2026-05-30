@@ -19,6 +19,16 @@ namespace CKG.Controls
             }
         }
 
+        public int CellHeight
+        {
+            get => _cellHeight;
+            set
+            {
+                _cellHeight = value;
+                UpdateCellLayouts();
+            }
+        }
+
         [Category("Appearance")]
         [DefaultValue(typeof(Color), "White")]
         [Browsable(true)]
@@ -40,6 +50,7 @@ namespace CKG.Controls
 
         private Panel[] _cellPanels = Array.Empty<Panel>();
         private int[] _cellWidths = new int[] { 50, 50, 50 };
+        private int _cellHeight = 30;
         private Color _cellColor = Color.White;
 
         public TableGroupRowItem()
@@ -118,7 +129,7 @@ namespace CKG.Controls
                 Panel panel = _cellPanels[i];
 
                 panel.Location = new Point(currentX, 0);
-                panel.Size = new Size(_cellWidths[i], Height);
+                panel.Size = new Size(_cellWidths[i], _cellHeight);
                 panel.BackColor = CellColor;
 
                 currentX += _cellWidths[i] - 1;

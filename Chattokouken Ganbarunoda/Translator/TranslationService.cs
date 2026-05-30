@@ -68,24 +68,26 @@ namespace CKG.Translator
         {
             ETranslatorModel model = (ETranslatorModel)UserProfile.Current.ModelIndex;
             string apiKey = UserProfile.Current.APIKey;
-            int timeout = UserProfile.Current.RequestTimeout;
+            bool hasApiKey = string.IsNullOrEmpty(apiKey) == false;
+            int timeoutMs = UserProfile.Current.RequestTimeout * 1000;
 
-            if (string.IsNullOrEmpty(apiKey))
+            if (_currentTranslator != null)
             {
                 (_currentTranslator as IDisposable)?.Dispose();
-                return;
             }
 
             switch (model)
             {
-                case ETranslatorModel.DeepL:
-                    _currentTranslator = new DeepLTranslator(apiKey, timeout * 1000);
+                case ETranslatorModel.GoogleTranslate_Web:
+                    _currentTranslator = new GoogleTranslateWebTranslator(timeoutMs);
                     break;
 
-                case ETranslatorModel.Papago:
+                case ETranslatorModel.Papago_Web:
+                    _currentTranslator = new PapagoWebTranslator(timeoutMs);
                     break;
 
-                case ETranslatorModel.GoogleTranslate:
+                case ETranslatorModel.DeepL_API:
+                    _currentTranslator = hasApiKey ? new DeepLTranslator(apiKey, timeoutMs) : null;
                     break;
             }
         }

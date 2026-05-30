@@ -207,11 +207,10 @@
             // _modelSelector
             // 
             _modelSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            _modelSelector.Enabled = false;
             _modelSelector.FormattingEnabled = true;
             _modelSelector.IntegralHeight = false;
             _modelSelector.ItemHeight = 15;
-            _modelSelector.Items.AddRange(new object[] { "DeepL", "Papago", "Google Translate" });
+            _modelSelector.Items.AddRange(new object[] { "Google Translate Web", "Papago Web", "DeepL API" });
             _modelSelector.Location = new System.Drawing.Point(16, 70);
             _modelSelector.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             _modelSelector.Name = "_modelSelector";

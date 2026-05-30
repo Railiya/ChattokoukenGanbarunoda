@@ -2,8 +2,6 @@
 
 namespace CKG.Translator
 {
-    public readonly record struct SLanguagePair(string Source, string Destination);
-
     public class GlossaryInfo
     {
         public string Name = null;
